@@ -210,19 +210,22 @@ BEGIN
     
     -- Calculate commission based on generation and grade
     IF generation = 1 THEN
-      -- Direct sponsor gets higher commission
+      -- Direct sponsor commission
       CASE sponsor_grade
+        WHEN 'Coordinateur' THEN commission_amount := membership_fee * 0.10;
         WHEN 'Mentor' THEN commission_amount := membership_fee * 0.10;
         WHEN 'Directeur' THEN commission_amount := membership_fee * 0.15;
         ELSE commission_amount := 0;
       END CASE;
     ELSE
-      -- Team members (generation 2+)
-      IF sponsor_grade IN ('Coordinateur', 'Mentor', 'Directeur') THEN
-        commission_amount := membership_fee * 0.05;
-      ELSE
-        commission_amount := 0;
-      END IF;
+      -- Team commission (generation 2 to 5)
+      CASE sponsor_grade
+        WHEN 'Leader Senior' THEN commission_amount := membership_fee * 0.05;
+        WHEN 'Coordinateur' THEN commission_amount := membership_fee * 0.05;
+        WHEN 'Mentor' THEN commission_amount := membership_fee * 0.05;
+        WHEN 'Directeur' THEN commission_amount := membership_fee * 0.075;
+        ELSE commission_amount := 0;
+      END CASE;
     END IF;
     
     -- Record transaction if commission > 0

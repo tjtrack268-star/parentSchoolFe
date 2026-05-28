@@ -6,18 +6,18 @@ export const signUpSchema = z.object({
   email: z.string().email("Email invalide").min(1, "Email requis"),
   password: z
     .string()
-    .min(8, "Le mot de passe doit contenir au moins 8 caractères")
-    .regex(/[A-Z]/, "Le mot de passe doit contenir une majuscule")
-    .regex(/[0-9]/, "Le mot de passe doit contenir un chiffre")
-    .regex(/[!@#$%^&*]/, "Le mot de passe doit contenir un caractère spécial"),
+    .min(6, "Le mot de passe doit contenir au moins 6 caractères"),
   firstName: z.string().min(2, "Prénom requis"),
   lastName: z.string().min(2, "Nom requis"),
   phone: z.string().min(10, "Numéro de téléphone invalide"),
   country: countryEnum,
   referralCode: z
     .string()
-    .max(12, "Code de parrainage invalide")
-    .regex(/^[A-Z0-9]*$/, "Code de parrainage invalide")
+    .max(32, "Code de parrainage invalide")
+    .optional(),
+  sponsorName: z
+    .string()
+    .max(150, "Nom du parrain invalide")
     .optional(),
 })
 

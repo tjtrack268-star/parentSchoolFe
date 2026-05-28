@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+:root {
+  --ps-gold: #e8b41f;
+  --ps-purple: #3f2f85;
+  --ps-lavender: #a3ade8;
+}
+
 body {
   font-family: system-ui, -apple-system, sans-serif;
+  background-color: #f8f9ff;
+  color: #1f2937;
 }

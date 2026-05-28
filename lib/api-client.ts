@@ -1,5 +1,15 @@
 import { authClient } from './auth-client'
 
+export class ApiError extends Error {
+  status: number
+
+  constructor(status: number, message: string) {
+    super(message)
+    this.name = 'ApiError'
+    this.status = status
+  }
+}
+
 export class ApiClient {
   private baseUrl: string
 
@@ -24,7 +34,22 @@ export class ApiClient {
     })
 
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`)
+      let errorDetail = ''
+      try {
+        const payload = await response.json()
+        errorDetail = payload?.error ? ` - ${payload.error}` : ''
+      } catch {
+        // Ignore invalid JSON error body
+      }
+
+      if (response.status === 401 || response.status === 403) {
+        authClient.clearToken()
+      }
+
+      throw new ApiError(
+        response.status,
+        `API error: ${response.status}${errorDetail}`
+      )
     }
 
     return response.json() as Promise<T>

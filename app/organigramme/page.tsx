@@ -4,48 +4,52 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { ChartControls } from '@/components/organigramme/chart-controls'
+import { ChartLegend } from '@/components/organigramme/chart-legend'
+import { MobileNodeList } from '@/components/organigramme/tree-views'
 import { OrganizationChart } from '@/components/dashboard/organization-chart'
-import { GRADE_COLORS } from '@/lib/constants'
-
-interface OrganigrammeNode {
-  id: string
-  firstName: string
-  lastName: string
-  email?: string
-  sponsorshipCode: string
-  gradeName: string
-  directSponsorshipsCount: number
-  totalPoints: number
-  children: OrganigrammeNode[]
-}
-
-interface TreeNode {
-  id: string
-  name: string
-  email: string
-  grade: string
-  points: number
-  children: TreeNode[]
-}
+import type { OrganigrammeNode } from '@/components/organigramme/types'
 
 export default function OrganigramPage() {
   const [data, setData] = useState<OrganigrammeNode[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [expandedNodes, setExpandedNodes] = useState<Set<string>>(new Set())
+  const [isMobile, setIsMobile] = useState(false)
+
+  const mapToChartNode = (node: OrganigrammeNode): {
+    id: string
+    name: string
+    email: string
+    grade: string
+    points: number
+    children: Array<{
+      id: string
+      name: string
+      email: string
+      grade: string
+      points: number
+      children: any[]
+    }>
+  } => ({
+    id: String(node.id),
+    name: `${node.firstName} ${node.lastName}`.trim(),
+    email: node.email || "",
+    grade: node.gradeName || "Aucun",
+    points: node.totalPoints || 0,
+    children: (node.children || []).map(mapToChartNode),
+  })
 
   useEffect(() => {
     async function fetchPublicOrganigramme() {
       try {
-        const response = await fetch('http://localhost:8080/api/organigramme/public')
+        const response = await fetch('/api/organigramme/public')
+        //const response = await fetch('/api/organigramme')
         if (!response.ok) throw new Error('Failed to fetch')
         const result = await response.json()
         setData(result)
-        if (result.length > 0) {
-          setExpandedNodes(new Set(result.map((node: OrganigrammeNode) => node.id.toString())))
-        }
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Error loading organigram')
+        setError(err instanceof Error ? err.message : 'Erreur lors du chargement')
       } finally {
         setLoading(false)
       }
@@ -54,50 +58,63 @@ export default function OrganigramPage() {
     fetchPublicOrganigramme()
   }, [])
 
-  const handleToggleNode = (nodeId: string) => {
-    const newExpandedNodes = new Set(expandedNodes)
-    if (newExpandedNodes.has(nodeId)) {
-      newExpandedNodes.delete(nodeId)
-    } else {
-      newExpandedNodes.add(nodeId)
-    }
-    setExpandedNodes(newExpandedNodes)
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const toggleNode = (id: string) => {
+    const next = new Set(expandedNodes)
+    if (next.has(id)) next.delete(id)
+    else next.add(id)
+    setExpandedNodes(next)
   }
 
-  const convertToTreeNode = (node: OrganigrammeNode): TreeNode => ({
-    id: node.id.toString(),
-    name: `${node.firstName} ${node.lastName}`,
-    email: node.email || '',
-    grade: node.gradeName,
-    points: node.totalPoints,
-    children: node.children.map(convertToTreeNode)
-  })
+  const getAllIds = (nodes: OrganigrammeNode[]): string[] => {
+    const ids: string[] = []
+    const walk = (node: OrganigrammeNode) => {
+      ids.push(String(node.id))
+      node.children.forEach(walk)
+    }
+    nodes.forEach(walk)
+    return ids
+  }
+
+  const expandAll = () => setExpandedNodes(new Set(getAllIds(data)))
+  const collapseAll = () => setExpandedNodes(new Set(data.map((node) => String(node.id))))
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
       <Header />
 
-      <main className="max-w-6xl mx-auto px-4 py-20">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
+      <main className="max-w-full mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="text-center mb-8 sm:mb-12">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
             Organigramme de la Communauté
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-base sm:text-lg text-gray-600 mb-2">
             Découvrez la structure de notre communauté Parents School.
           </p>
+          {isMobile && (
+            <p className="text-xs text-gray-500 mt-3">
+              Appuyez sur les chevrons pour développer/réduire les branches
+            </p>
+          )}
         </div>
 
         {loading && (
-          <div className="text-center py-20">
+          <div className="text-center py-16 sm:py-20">
             <div className="w-8 h-8 rounded-full border-4 border-blue-200 border-t-blue-600 animate-spin mx-auto mb-4"></div>
             <p className="text-gray-600">Chargement...</p>
           </div>
         )}
 
         {error && (
-          <div className="text-center py-20">
+          <div className="text-center py-16 sm:py-20">
             <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
-              <p className="text-red-600">Erreur: {error}</p>
+              <p className="text-red-600 text-sm">Erreur: {error}</p>
             </div>
           </div>
         )}
@@ -105,42 +122,53 @@ export default function OrganigramPage() {
         {!loading && !error && (
           <>
             {data.length > 0 ? (
-              <div className="bg-white rounded-lg shadow p-6">
-                {data.map((rootNode) => (
-                  <OrganizationChart
-                    key={rootNode.id}
-                    root={convertToTreeNode(rootNode)}
-                    expandedNodes={expandedNodes}
-                    onToggleNode={handleToggleNode}
-                  />
-                ))}
-              </div>
+              <>
+                <ChartControls onExpandAll={expandAll} onCollapseAll={collapseAll} />
+
+                {isMobile ? (
+                  <div className="space-y-4 mb-8">
+                    {data.map((rootNode) => (
+                      <div key={rootNode.id} className="bg-white rounded-lg p-4 shadow-sm">
+                        <MobileNodeList
+                          node={rootNode}
+                          level={0}
+                          expandedNodes={expandedNodes}
+                          onToggle={toggleNode}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-6 mb-8">
+                    {data.map((rootNode) => (
+                      <div key={String(rootNode.id)} className="rounded-lg bg-white/70 p-2">
+                        <OrganizationChart
+                          root={mapToChartNode(rootNode)}
+                          expandedNodes={expandedNodes}
+                          onToggleNode={toggleNode}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="text-center py-20">
+              <div className="text-center py-16 sm:py-20">
                 <div className="text-4xl mb-4">🌱</div>
                 <h3 className="text-xl font-semibold text-gray-600 mb-2">Organigramme en construction</h3>
                 <p className="text-gray-500">L'organigramme sera bientôt disponible.</p>
               </div>
             )}
-            
-            {data.length > 0 && (
-              <div className="bg-white rounded-lg shadow p-6 mt-6">
-                <h3 className="font-semibold mb-4">Légende des grades</h3>
-                <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-                  {Object.entries(GRADE_COLORS).filter(([name]) => name !== 'Aucun').map(([name, color]) => (
-                    <div key={name} className="flex items-center gap-2">
-                      <div className="h-3 w-3 rounded-full" style={{ backgroundColor: color }} />
-                      <span className="text-sm">{name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+
+            {data.length > 0 && <ChartLegend />}
           </>
         )}
 
-        <div className="text-center mt-12">
-          <Link href="/auth/signup" className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+        <div className="text-center mt-8 sm:mt-12">
+          <Link
+            href="/auth/signup"
+            className="inline-block bg-blue-600 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg hover:bg-blue-700 transition font-medium text-sm sm:text-base"
+          >
             Rejoindre la communauté
           </Link>
         </div>
@@ -150,3 +178,4 @@ export default function OrganigramPage() {
     </div>
   )
 }
+

@@ -11,11 +11,13 @@ import { authClient } from "@/lib/auth-client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Select } from "@/components/ui/select"
 
 export default function SignUpPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [sponsorSuggestions, setSponsorSuggestions] = useState<Array<{ fullName: string; code?: string; country?: string; source: string }>>([])
   const [formData, setFormData] = useState<SignUpInput>({
     email: "",
     password: "",
@@ -24,6 +26,7 @@ export default function SignUpPage() {
     phone: "",
     country: "CM",
     referralCode: "",
+    sponsorName: "",
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -31,6 +34,20 @@ export default function SignUpPage() {
     const fieldValue = e.target.value
     setFormData((prev) => ({ ...prev, [fieldName]: fieldValue }))
     setError(null)
+  }
+
+  const searchSponsors = async (query: string) => {
+    if (!query || query.trim().length < 2) {
+      setSponsorSuggestions([])
+      return
+    }
+    try {
+      const response = await fetch(`/api/sponsors/search?q=${encodeURIComponent(query.trim())}`)
+      const data = await response.json()
+      setSponsorSuggestions(Array.isArray(data) ? data : [])
+    } catch {
+      setSponsorSuggestions([])
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,6 +70,7 @@ export default function SignUpPage() {
         country: validatedData.country,
         userType: 'ORDINARY',
         sponsorCode: validatedData.referralCode || undefined,
+        sponsorName: validatedData.sponsorName || undefined,
       })
 
       // Redirect to dashboard after successful registration
@@ -105,6 +123,29 @@ export default function SignUpPage() {
 
         <div className="space-y-2">
           <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="you@example.com"
+            required
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="userType">type de membre</Label>
+          {/* <Select
+            id="userType"
+            name="userType"
+            value={formData.userType}
+            onChange={handleChange}
+            required
+          >
+            <option value="ORDINARY">Membre ordinaire</option>
+            <option value="PREMIUM">Membre premium</option>
+            <option value="ASSOCIATE">Membre associé</option>
+          </Select> */}
           <Input
             id="email"
             name="email"
@@ -170,6 +211,42 @@ export default function SignUpPage() {
             onChange={handleChange}
             placeholder="ABC12345"
           />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="sponsorName">Sponsor Name (Optional)</Label>
+          <Input
+            id="sponsorName"
+            name="sponsorName"
+            type="text"
+            value={formData.sponsorName || ""}
+            onChange={(e) => {
+              handleChange(e)
+              searchSponsors(e.target.value)
+            }}
+            placeholder="Nom du parrain"
+          />
+          {sponsorSuggestions.length > 0 && (
+            <div className="max-h-44 overflow-auto rounded-md border border-slate-200 bg-white">
+              {sponsorSuggestions.slice(0, 8).map((s, idx) => (
+                <button
+                  key={`${s.code || s.fullName}-${idx}`}
+                  type="button"
+                  className="w-full text-left px-3 py-2 text-sm hover:bg-slate-50 border-b last:border-b-0"
+                  onClick={() =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      sponsorName: s.fullName,
+                      referralCode: s.code || prev.referralCode,
+                    }))
+                  }
+                >
+                  <div className="font-medium text-slate-900">{s.fullName}</div>
+                  <div className="text-xs text-slate-500">{s.code || "Sans code"} {s.country ? `• ${s.country}` : ""}</div>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         <Button type="submit" disabled={loading} className="w-full">

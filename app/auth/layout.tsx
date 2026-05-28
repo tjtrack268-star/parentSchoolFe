@@ -11,7 +11,7 @@ export default function AuthLayout({
             <h1 className="text-3xl font-bold text-slate-900 mb-2">
               Parents School
             </h1>
-            <p className="text-slate-600">Éducation chrétienne au service des familles</p>
+            <p className="text-slate-600">École des parents par les parents et pour les parents</p>
           </div>
           {children}
         </div>

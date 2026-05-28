@@ -1,11 +1,13 @@
-import { getApiUrl, API_CONFIG } from '@/lib/api-config'
+import { getApiUrl } from '@/lib/api-config'
 import { cookies } from 'next/headers'
 import type { NextRequest } from 'next/server'
 
 export async function GET(request: NextRequest) {
   try {
     const cookieStore = await cookies()
-    const token = cookieStore.get('auth_token')?.value
+    const cookieToken = cookieStore.get('auth_token')?.value
+    const headerToken = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '')
+    const token = (cookieToken || headerToken || '').replace(/^Bearer\s+/i, '').trim()
 
     if (!token) {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), {
@@ -14,7 +16,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    const response = await fetch(getApiUrl(API_CONFIG.endpoints.users.getAll), {
+    const response = await fetch(getApiUrl('/api/fetch-user'), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -23,7 +25,16 @@ export async function GET(request: NextRequest) {
     })
 
     if (!response.ok) {
-      throw new Error(`API error: ${response.status}`)
+      const errorText = await response.text()
+      return new Response(
+        JSON.stringify({
+          error: errorText || `API error: ${response.status}`,
+        }),
+        {
+          status: response.status,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
     }
 
     const data = await response.json()
