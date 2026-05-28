@@ -1,4 +1,40 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
-export async function POST(request: Request) {\n  try {\n    const supabase = createClient()\n\n    const { data: { session } } = await supabase.auth.getSession()\n    if (!session?.user) {\n      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })\n    }\n\n    // Check if user is admin\n    const { data: profile } = await supabase\n      .from('profiles')\n      .select('is_admin')\n      .eq('id', session.user.id)\n      .single()\n\n    if (!profile?.is_admin) {\n      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })\n    }\n\n    // Call function to process monthly commissions\n    const { error } = await supabase.rpc('process_monthly_commissions')\n\n    if (error) throw error\n\n    return NextResponse.json({\n      success: true,\n      message: 'Les commissions mensuelles ont été traitées',\n    })\n  } catch (error) {\n    console.error('Error processing commissions:', error)\n    return NextResponse.json(\n      { error: 'Internal server error' },\n      { status: 500 }\n    )\n  }\n}\n"
+export async function POST(request: Request) {
+  try {
+    const supabase = createClient()
+
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // Check if user is admin
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('is_admin')
+      .eq('id', session.user.id)
+      .single()
+
+    if (!profile?.is_admin) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+
+    // Call function to process monthly commissions
+    const { error } = await supabase.rpc('process_monthly_commissions')
+
+    if (error) throw error
+
+    return NextResponse.json({
+      success: true,
+      message: 'Les commissions mensuelles ont été traitées',
+    })
+  } catch (error) {
+    console.error('Error processing commissions:', error)
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}"
