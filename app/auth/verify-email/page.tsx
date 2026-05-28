@@ -15,6 +15,7 @@ export default function VerifyEmailPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    if (!supabase) return
     const getEmail = async () => {
       const {
         data: { session },
