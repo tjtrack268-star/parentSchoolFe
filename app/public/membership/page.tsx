@@ -1,1 +1,148 @@
-'use client'\n\nimport Link from 'next/link'\nimport { Button } from '@/components/ui/button'\n\nexport default function MembershipPage() {\n  const plans = [\n    {\n      name: 'Starter',\n      price: '0',\n      description: 'Pour découvrir la plateforme',\n      features: [\n        'Accès aux ressources de base',\n        'Forum communautaire',\n        'Profil personnel',\n        'Support par email',\n      ],\n      color: 'bg-slate-50',\n      buttonColor: 'bg-slate-600',\n    },\n    {\n      name: 'Premium',\n      price: '5,000',\n      currency: 'FCFA/mois',\n      description: 'Pour les utilisateurs actifs',\n      features: [\n        'Accès complet aux ressources',\n        'Webinaires exclusifs',\n        'Support prioritaire',\n        'Système de parrainage',\n        'Tableau de bord avancé',\n      ],\n      color: 'bg-blue-50',\n      buttonColor: 'bg-blue-600',\n      highlight: true,\n    },\n    {\n      name: 'Elite',\n      price: 'Variable',\n      description: 'Pour les leaders du réseau',\n      features: [\n        'Tout Premium +',\n        'Coaching personnel',\n        'Formations certifiées',\n        'Commission MLM illimitée',\n        'Événements VIP',\n      ],\n      color: 'bg-purple-50',\n      buttonColor: 'bg-purple-600',\n    },\n  ]\n\n  return (\n    <main className=\"min-h-screen bg-gradient-to-b from-slate-50 to-white\">\n      <nav className=\"fixed w-full top-0 bg-white bg-opacity-95 backdrop-blur shadow-sm z-50\">\n        <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16\">\n          <Link href=\"/\" className=\"text-2xl font-bold text-blue-600\">\n            Parents School\n          </Link>\n          <div className=\"flex gap-4\">\n            <Link href=\"/auth/login\">\n              <Button variant=\"ghost\">Se connecter</Button>\n            </Link>\n            <Link href=\"/auth/signup\">\n              <Button>S'inscrire</Button>\n            </Link>\n          </div>\n        </div>\n      </nav>\n\n      <div className=\"pt-24 pb-20\">\n        <section className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-20\">\n          <h1 className=\"text-5xl md:text-6xl font-bold text-slate-900 mb-6\">Plans d'Adhésion</h1>\n          <p className=\"text-xl text-slate-600 max-w-3xl mx-auto\">\n            Choisissez le plan qui correspond à vos besoins et commencez votre parcours\n          </p>\n        </section>\n\n        <section className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20\">\n          <div className=\"grid md:grid-cols-3 gap-8\">\n            {plans.map((plan, index) => (\n              <div\n                key={index}\n                className={`rounded-xl border-2 p-8 flex flex-col h-full ${\n                  plan.highlight ? 'border-blue-600 shadow-2xl scale-105' : 'border-slate-200'\n                } ${plan.color}`}\n              >\n                {plan.highlight && (\n                  <div className=\"bg-blue-600 text-white px-4 py-1 rounded-full inline-block w-fit mb-4\">\n                    Recommandé\n                  </div>\n                )}\n                <h3 className=\"text-3xl font-bold text-slate-900 mb-2\">{plan.name}</h3>\n                <p className=\"text-slate-600 mb-6\">{plan.description}</p>\n                <div className=\"mb-6\">\n                  <p className=\"text-4xl font-bold text-slate-900\">{plan.price}</p>\n                  <p className=\"text-sm text-slate-600\">{plan.currency}</p>\n                </div>\n                <ul className=\"space-y-3 mb-8 flex-grow\">\n                  {plan.features.map((feature, i) => (\n                    <li key={i} className=\"flex items-start gap-3\">\n                      <span className=\"text-green-600 font-bold mt-0.5\">✓</span>\n                      <span className=\"text-slate-700\">{feature}</span>\n                    </li>\n                  ))}\n                </ul>\n                <Link href=\"/auth/signup\" className=\"w-full\">\n                  <Button className={`w-full ${plan.buttonColor} hover:opacity-90`}>\n                    Choisir ce plan\n                  </Button>\n                </Link>\n              </div>\n            ))}\n          </div>\n        </section>\n\n        <section className=\"bg-slate-100 rounded-xl p-12\">\n          <h2 className=\"text-3xl font-bold text-slate-900 mb-8 text-center\">Questions Fréquentes</h2>\n          <div className=\"grid md:grid-cols-2 gap-8\">\n            {[\n              {\n                q: 'Puis-je changer de plan à tout moment?',\n                a: 'Oui, vous pouvez passer à tout moment. Les changements prennent effet le mois suivant.',\n              },\n              {\n                q: 'Y a-t-il des frais cachés?',\n                a: 'Non, nos tarifs sont transparents. Aucun frais supplémentaire n\\'est appliqué.',\n              },\n              {\n                q: 'Comment fonctionne le système de parrainage?',\n                a: 'Gagnez des commissions en parrainant d\\'autres membres. Plus de détails dans notre guide.\n              },\n              {\n                q: 'Quelle est la politique d\\'annulation?',\n                a: 'Vous pouvez annuler à tout moment sans engagement à long terme.',\n              },\n            ].map((item, i) => (\n              <div key={i}>\n                <h3 className=\"font-bold text-slate-900 mb-2\">{item.q}</h3>\n                <p className=\"text-slate-600\">{item.a}</p>\n              </div>\n            ))}\n          </div>\n        </section>\n      </div>\n    </main>\n  )\n}\n"
+'use client'
+
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+
+export default function MembershipPage() {
+  const plans = [
+    {
+      name: 'Starter',
+      price: '0',
+      description: 'Pour découvrir la plateforme',
+      features: [
+        'Accès aux ressources de base',
+        'Forum communautaire',
+        'Profil personnel',
+        'Support par email',
+      ],
+      color: 'bg-slate-50',
+      buttonColor: 'bg-slate-600',
+    },
+    {
+      name: 'Premium',
+      price: '5,000',
+      currency: 'FCFA/mois',
+      description: 'Pour les utilisateurs actifs',
+      features: [
+        'Accès complet aux ressources',
+        'Webinaires exclusifs',
+        'Support prioritaire',
+        'Système de parrainage',
+        'Tableau de bord avancé',
+      ],
+      color: 'bg-blue-50',
+      buttonColor: 'bg-blue-600',
+      highlight: true,
+    },
+    {
+      name: 'Elite',
+      price: 'Variable',
+      description: 'Pour les leaders du réseau',
+      features: [
+        'Tout Premium +',
+        'Coaching personnel',
+        'Formations certifiées',
+        'Commission MLM illimitée',
+        'Événements VIP',
+      ],
+      color: 'bg-purple-50',
+      buttonColor: 'bg-purple-600',
+    },
+  ]
+
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <nav className="fixed w-full top-0 bg-white bg-opacity-95 backdrop-blur shadow-sm z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+          <Link href="/" className="text-2xl font-bold text-blue-600">
+            Parents School
+          </Link>
+          <div className="flex gap-4">
+            <Link href="/auth/login">
+              <Button variant="ghost">Se connecter</Button>
+            </Link>
+            <Link href="/auth/signup">
+              <Button>S'inscrire</Button>
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      <div className="pt-24 pb-20">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-20">
+          <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-6">Plans d'Adhésion</h1>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            Choisissez le plan qui correspond à vos besoins et commencez votre parcours
+          </p>
+        </section>
+
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+          <div className="grid md:grid-cols-3 gap-8">
+            {plans.map((plan, index) => (
+              <div
+                key={index}
+                className={`rounded-xl border-2 p-8 flex flex-col h-full ${
+                  plan.highlight ? 'border-blue-600 shadow-2xl scale-105' : 'border-slate-200'
+                } ${plan.color}`}
+              >
+                {plan.highlight && (
+                  <div className="bg-blue-600 text-white px-4 py-1 rounded-full inline-block w-fit mb-4">
+                    Recommandé
+                  </div>
+                )}
+                <h3 className="text-3xl font-bold text-slate-900 mb-2">{plan.name}</h3>
+                <p className="text-slate-600 mb-6">{plan.description}</p>
+                <div className="mb-6">
+                  <p className="text-4xl font-bold text-slate-900">{plan.price}</p>
+                  <p className="text-sm text-slate-600">{plan.currency}</p>
+                </div>
+                <ul className="space-y-3 mb-8 flex-grow">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="text-green-600 font-bold mt-0.5">✓</span>
+                      <span className="text-slate-700">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/auth/signup" className="w-full">
+                  <Button className={`w-full ${plan.buttonColor} hover:opacity-90`}>
+                    Choisir ce plan
+                  </Button>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-slate-100 rounded-xl p-12">
+          <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Questions Fréquentes</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            {[
+              {
+                q: 'Puis-je changer de plan à tout moment?',
+                a: 'Oui, vous pouvez passer à tout moment. Les changements prennent effet le mois suivant.',
+              },
+              {
+                q: 'Y a-t-il des frais cachés?',
+                a: 'Non, nos tarifs sont transparents. Aucun frais supplémentaire n\'est appliqué.',
+              },
+              {
+                q: 'Comment fonctionne le système de parrainage?',
+                a: 'Gagnez des commissions en parrainant d\'autres membres. Plus de détails dans notre guide.',
+              },
+              {
+                q: 'Quelle est la politique d\'annulation?',
+                a: 'Vous pouvez annuler à tout moment sans engagement à long terme.',
+              },
+            ].map((item, i) => (
+              <div key={i}>
+                <h3 className="font-bold text-slate-900 mb-2">{item.q}</h3>
+                <p className="text-slate-600">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
+  )
+}"

@@ -1,4 +1,40 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
-export async function POST(request: Request) {\n  try {\n    const supabase = createClient()\n\n    const { data: { session } } = await supabase.auth.getSession()\n    if (!session?.user) {\n      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })\n    }\n\n    // Check if user is admin\n    const { data: profile } = await supabase\n      .from('profiles')\n      .select('is_admin')\n      .eq('id', session.user.id)\n      .single()\n\n    if (!profile?.is_admin) {\n      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })\n    }\n\n    // Call the function to recalculate all user grades\n    const { error } = await supabase.rpc('calculate_all_user_grades')\n\n    if (error) throw error\n\n    return NextResponse.json({\n      success: true,\n      message: 'Les grades ont été recalculés pour tous les utilisateurs',\n    })\n  } catch (error) {\n    console.error('Error recalculating grades:', error)\n    return NextResponse.json(\n      { error: 'Internal server error' },\n      { status: 500 }\n    )\n  }\n}\n"
+export async function POST(request: Request) {
+  try {
+    const supabase = createClient()
+
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // Check if user is admin
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('is_admin')
+      .eq('id', session.user.id)
+      .single()
+
+    if (!profile?.is_admin) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+
+    // Call the function to recalculate all user grades
+    const { error } = await supabase.rpc('calculate_all_user_grades')
+
+    if (error) throw error
+
+    return NextResponse.json({
+      success: true,
+      message: 'Les grades ont été recalculés pour tous les utilisateurs',
+    })
+  } catch (error) {
+    console.error('Error recalculating grades:', error)
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}"

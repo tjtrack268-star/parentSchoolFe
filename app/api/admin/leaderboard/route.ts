@@ -1,4 +1,33 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
-export async function GET(request: Request) {\n  try {\n    const supabase = createClient()\n\n    const { data: { session } } = await supabase.auth.getSession()\n    if (!session?.user) {\n      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })\n    }\n\n    const { searchParams } = new URL(request.url)\n    const grade = searchParams.get('grade') || 'Leader'\n    const limit = parseInt(searchParams.get('limit') || '100')\n\n    // Get leaderboard for grade\n    const { data, error } = await supabase.rpc('get_grade_leaderboard', {\n      grade_name: grade,\n      limit_count: limit,\n    })\n\n    if (error) throw error\n\n    return NextResponse.json(data || [])\n  } catch (error) {\n    console.error('Error fetching leaderboard:', error)\n    return NextResponse.json(\n      { error: 'Internal server error' },\n      { status: 500 }\n    )\n  }\n}\n"
+export async function GET(request: Request) {
+  try {
+    const supabase = createClient()
+
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session?.user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    const { searchParams } = new URL(request.url)
+    const grade = searchParams.get('grade') || 'Leader'
+    const limit = parseInt(searchParams.get('limit') || '100')
+
+    // Get leaderboard for grade
+    const { data, error } = await supabase.rpc('get_grade_leaderboard', {
+      grade_name: grade,
+      limit_count: limit,
+    })
+
+    if (error) throw error
+
+    return NextResponse.json(data || [])
+  } catch (error) {
+    console.error('Error fetching leaderboard:', error)
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    )
+  }
+}"
