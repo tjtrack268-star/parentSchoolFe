@@ -1,1 +1,101 @@
-'use client'\n\nimport Link from 'next/link'\nimport { Button } from '@/components/ui/button'\nimport { GRADES, GRADE_COLORS } from '@/lib/constants'\n\nexport default function GradesPage() {\n  return (\n    <main className=\"min-h-screen bg-gradient-to-b from-slate-50 to-white\">\n      <nav className=\"fixed w-full top-0 bg-white bg-opacity-95 backdrop-blur shadow-sm z-50\">\n        <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16\">\n          <Link href=\"/\" className=\"text-2xl font-bold text-blue-600\">\n            Parents School\n          </Link>\n          <div className=\"flex gap-4\">\n            <Link href=\"/auth/login\">\n              <Button variant=\"ghost\">Se connecter</Button>\n            </Link>\n            <Link href=\"/auth/signup\">\n              <Button>S'inscrire</Button>\n            </Link>\n          </div>\n        </div>\n      </nav>\n\n      <div className=\"pt-24 pb-20\">\n        <section className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-20\">\n          <h1 className=\"text-5xl md:text-6xl font-bold text-slate-900 mb-6\">Les Niveaux de Grade</h1>\n          <p className=\"text-xl text-slate-600 max-w-3xl mx-auto\">\n            Progressez à travers nos 5 niveaux de grade et débloquez des avantages exclusifs\n          </p>\n        </section>\n\n        <section className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12\">\n          {Object.entries(GRADES).map(([gradeName, config], index) => {\n            const color =\n              GRADE_COLORS[gradeName as keyof typeof GRADE_COLORS] || GRADE_COLORS.Leader\n            const bgColor = `hsl(${color.h}, ${color.s}%, ${color.l}%)`\n\n            return (\n              <div key={gradeName} className=\"grid md:grid-cols-2 gap-8 items-center\">\n                <div\n                  className=\"rounded-xl p-8 text-white h-full flex flex-col justify-between\"\n                  style={{ background: bgColor }}\n                >\n                  <div>\n                    <div className=\"text-5xl font-bold mb-2\">#{index + 1}</div>\n                    <h3 className=\"text-4xl font-bold mb-6\">{gradeName}</h3>\n                    <div className=\"space-y-3 text-white/90\">\n                      <p>\n                        <span className=\"font-semibold\">Parrainages requis:</span> {config.requiredReferrals}\n                      </p>\n                      <p>\n                        <span className=\"font-semibold\">Points requis:</span> {config.requiredPoints}\n                      </p>\n                      <p>\n                        <span className=\"font-semibold\">Bonus FCFA:</span> {config.benefitsFcfa.toLocaleString('fr-FR')}\n                      </p>\n                    </div>\n                  </div>\n                </div>\n\n                <div className=\"space-y-4\">\n                  <h4 className=\"text-2xl font-bold text-slate-900\">Avantages</h4>\n                  <ul className=\"space-y-3\">\n                    <li className=\"flex items-start gap-3\">\n                      <span className=\"text-2xl\">✓</span>\n                      <span className=\"text-slate-700\">\n                        Bonus initial de {config.benefitsFcfa.toLocaleString('fr-FR')} FCFA\n                      </span>\n                    </li>\n                    {config.commissions.directCommission && (\n                      <li className=\"flex items-start gap-3\">\n                        <span className=\"text-2xl\">✓</span>\n                        <span className=\"text-slate-700\">\n                          Commission directe: {(config.commissions.directCommission * 100).toFixed(0)}%\n                        </span>\n                      </li>\n                    )}\n                    {config.commissions.teamCommission && (\n                      <li className=\"flex items-start gap-3\">\n                        <span className=\"text-2xl\">✓</span>\n                        <span className=\"text-slate-700\">\n                          Commission réseau: {(config.commissions.teamCommission * 100).toFixed(0)}%\n                        </span>\n                      </li>\n                    )}\n                    <li className=\"flex items-start gap-3\">\n                      <span className=\"text-2xl\">✓</span>\n                      <span className=\"text-slate-700\">Accès à tous les webinaires exclusifs</span>\n                    </li>\n                    <li className=\"flex items-start gap-3\">\n                      <span className=\"text-2xl\">✓</span>\n                      <span className=\"text-slate-700\">Support prioritaire</span>\n                    </li>\n                  </ul>\n                </div>\n              </div>\n            )\n          })}\n        </section>\n\n        <section className=\"bg-gradient-to-r from-blue-600 to-blue-700 text-white py-16 mt-20\">\n          <div className=\"max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center\">\n            <h2 className=\"text-3xl font-bold mb-4\">Commencez votre progression</h2>\n            <p className=\"text-lg text-blue-100 mb-8\">Rejoignez des milliers de membres qui progressent dans les grades</p>\n            <Link href=\"/auth/signup\">\n              <Button size=\"lg\" className=\"bg-white text-blue-600 hover:bg-blue-50\">\n                Débuter Maintenant\n              </Button>\n            </Link>\n          </div>\n        </section>\n      </div>\n    </main>\n  )\n}\n"
+'use client'
+
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { GRADES, GRADE_COLORS } from '@/lib/constants'
+
+export default function GradesPage() {
+  return (
+    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <nav className="fixed w-full top-0 bg-white bg-opacity-95 backdrop-blur shadow-sm z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+          <Link href="/" className="text-2xl font-bold text-blue-600">
+            Parents School
+          </Link>
+          <div className="flex gap-4">
+            <Link href="/auth/login">
+              <Button variant="ghost">Se connecter</Button>
+            </Link>
+            <Link href="/auth/signup">
+              <Button>S'inscrire</Button>
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      <div className="pt-24 pb-20">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-20">
+          <h1 className="text-5xl md:text-6xl font-bold text-slate-900 mb-6">Les Niveaux de Grade</h1>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+            Progressez a travers nos 5 niveaux de grade et debloquez des avantages exclusifs
+          </p>
+        </section>
+
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          {Object.entries(GRADES).map(([gradeName, config], index) => {
+            const color =
+              GRADE_COLORS[gradeName as keyof typeof GRADE_COLORS] || GRADE_COLORS.Leader
+            const bgColor = color
+
+            return (
+              <div key={gradeName} className="grid md:grid-cols-2 gap-8 items-center">
+                <div
+                  className="rounded-xl p-8 text-white h-full flex flex-col justify-between"
+                  style={{ background: bgColor }}
+                >
+                  <div>
+                    <div className="text-5xl font-bold mb-2">#{index + 1}</div>
+                    <h3 className="text-4xl font-bold mb-6">{gradeName}</h3>
+                    <div className="space-y-3 text-white/90">
+                      <p>
+                        <span className="font-semibold">Parrainages requis:</span> {config.requiredReferrals}
+                      </p>
+                      <p>
+                        <span className="font-semibold">Points requis:</span> {config.requiredPoints}
+                      </p>
+                      <p>
+                        <span className="font-semibold">Bonus FCFA:</span> {config.benefitsFcfa.toLocaleString('fr-FR')}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h4 className="text-2xl font-bold text-slate-900">Avantages</h4>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <span className="text-2xl">✓</span>
+                      <span className="text-slate-700">
+                        Bonus initial de {config.benefitsFcfa.toLocaleString('fr-FR')} FCFA
+                      </span>
+                    </li>
+                    {config.commissions.directCommission > 0 && (
+                      <li className="flex items-start gap-3">
+                        <span className="text-2xl">✓</span>
+                        <span className="text-slate-700">
+                          Commission directe: {(config.commissions.directCommission * 100).toFixed(1)}%
+                        </span>
+                      </li>
+                    )}
+                    {config.commissions.teamCommission > 0 && (
+                      <li className="flex items-start gap-3">
+                        <span className="text-2xl">✓</span>
+                        <span className="text-slate-700">
+                          Commission equipe: {(config.commissions.teamCommission * 100).toFixed(1)}%
+                        </span>
+                      </li>
+                    )}
+                    <li className="flex items-start gap-3">
+                      <span className="text-2xl">✓</span>
+                      <span className="text-slate-700">Acces a tous les webinaires exclusifs</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            )
+          })}
+        </section>
+      </div>
+    </main>
+  )
+}

@@ -1,12 +1,10 @@
 "use client"
 
 import type React from "react"
-import { supabase } from "@/lib/supabase-client" // Declare the supabase variable
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect, useState, useRef } from "react"
+import { useRouter, usePathname } from "next/navigation"
 import Link from "next/link"
-import { apiClient } from "@/lib/api-client"
-import { Button } from "@/components/ui/button"
+import { apiClient, ApiError } from "@/lib/api-client"
 import DashboardHeader from "@/components/DashboardHeader"
 import DashboardFooter from "@/components/DashboardFooter"
 
@@ -16,55 +14,37 @@ interface Profile {
   lastName: string
   email: string
   currentGrade: string
+  userRole?: string
 }
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter()
+  const pathname = usePathname()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
   const [menuOpen, setMenuOpen] = useState(false)
+  const started = useRef(false)
 
   useEffect(() => {
-    const loadProfile = async () => {
-      try {
-        const userData = await apiClient.get<Profile>('/fetch-user')
-        
-        if (!userData) {
-          router.push("/auth/login")
-          return
-        }
-
-        setProfile(userData)
-      } catch (error) {
-        console.error("Error loading profile:", error)
-        router.push("/auth/login")
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    loadProfile()
+    if (started.current) return
+    started.current = true
+    apiClient.get<Profile>('/fetch-user')
+      .then(data => { if (!data) router.push("/auth/login"); else setProfile(data) })
+      .catch(err => { if (!(err instanceof ApiError) || (err.status !== 401 && err.status !== 403)) console.error(err); router.push("/auth/login") })
+      .finally(() => setLoading(false))
   }, [router])
 
   const handleLogout = async () => {
-    try {
-      await fetch('/api/logout', { method: 'POST' })
-      router.push("/")
-    } catch (error) {
-      console.error("Error logging out:", error)
-    }
+    await fetch('/api/logout', { method: 'POST' }).catch(() => {})
+    router.push("/")
   }
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-[#f8f4ef]">
         <div className="text-center">
-          <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-4 border-blue-200 border-t-blue-600 animate-spin mx-auto mb-4"></div>
-          <p className="text-slate-600 text-sm sm:text-base">Chargement...</p>
+          <div className="w-10 h-10 rounded-full border-4 border-[#a3ade8] border-t-[#3f2f85] animate-spin mx-auto mb-4" />
+          <p className="text-[#3f2f85] font-medium">Chargement...</p>
         </div>
       </div>
     )
@@ -80,45 +60,51 @@ export default function DashboardLayout({
   ]
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      {/* Header personnalisé du dashboard */}
-      <DashboardHeader 
-        user={profile ? {
-          firstName: profile.firstName,
-          lastName: profile.lastName,
-          currentGrade: profile.currentGrade
-        } : undefined}
+    <div className="min-h-screen bg-[#f8f4ef] flex flex-col">
+      <DashboardHeader
+        user={profile ? { firstName: profile.firstName, lastName: profile.lastName, currentGrade: profile.currentGrade, userRole: profile.userRole } : undefined}
         onLogout={handleLogout}
         onMenuToggle={() => setMenuOpen(!menuOpen)}
       />
 
       <div className="flex flex-col md:flex-row pt-16 flex-1">
         {/* Sidebar */}
-        <aside
-          className={`${
-            menuOpen ? "block" : "hidden"
-          } md:block w-full md:w-64 bg-white border-r border-slate-200 md:border-b-0 border-b p-4 md:p-6 order-2 md:order-1`}
-        >
-          <nav className="space-y-1 md:space-y-2">
-            {menuItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center gap-3 px-3 md:px-4 py-2 rounded-lg text-slate-700 hover:bg-slate-100 transition text-sm md:text-base"
-                onClick={() => setMenuOpen(false)}
-              >
-                <span className="text-base md:text-lg">{item.icon}</span>
-                <span className="truncate">{item.label}</span>
-              </Link>
-            ))}
+        <aside className={`${menuOpen ? "block" : "hidden"} md:block w-full md:w-60 bg-white border-r border-[#a3ade8]/30 p-4 order-2 md:order-1 shrink-0`}>
+          <nav className="space-y-1">
+            {menuItems.map((item) => {
+              const active = pathname === item.href
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition ${
+                    active
+                      ? "bg-[#3f2f85] text-white"
+                      : "text-slate-700 hover:bg-[#a3ade8]/20 hover:text-[#3f2f85]"
+                  }`}
+                >
+                  <span>{item.icon}</span>
+                  <span>{item.label}</span>
+                  {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#e8b41f]" />}
+                </Link>
+              )
+            })}
           </nav>
+
+          {/* Grade badge */}
+          {profile?.currentGrade && profile.currentGrade !== "Aucun" && (
+            <div className="mt-6 rounded-lg bg-[#3f2f85] p-4 text-center">
+              <p className="text-xs text-[#a3ade8] mb-1">Grade actuel</p>
+              <p className="text-sm font-bold text-[#e8b41f]">{profile.currentGrade}</p>
+            </div>
+          )}
         </aside>
 
-        {/* Main content */}
-        <main className="flex-1 p-4 md:p-6 order-1 md:order-2 max-w-none md:max-w-5xl">{children}</main>
+        {/* Main */}
+        <main className="flex-1 p-4 md:p-6 order-1 md:order-2">{children}</main>
       </div>
-      
-      {/* Footer personnalisé du dashboard */}
+
       <DashboardFooter />
     </div>
   )

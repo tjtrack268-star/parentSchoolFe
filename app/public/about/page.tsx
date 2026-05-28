@@ -1,1 +1,228 @@
-'use client'\n\nimport Link from 'next/link'\nimport { Button } from '@/components/ui/button'\n\nexport default function AboutPage() {\n  return (\n    <main className=\"min-h-screen bg-white\">\n      <nav className=\"fixed w-full top-0 bg-white bg-opacity-95 backdrop-blur shadow-sm z-50\">\n        <div className=\"max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16\">\n          <Link href=\"/\" className=\"text-2xl font-bold text-blue-600\">\n            Parents School\n          </Link>\n          <div className=\"flex gap-4\">\n            <Link href=\"/auth/login\">\n              <Button variant=\"ghost\">Se connecter</Button>\n            </Link>\n            <Link href=\"/auth/signup\">\n              <Button>S'inscrire</Button>\n            </Link>\n          </div>\n        </div>\n      </nav>\n\n      <div className=\"pt-24 pb-20\">\n        <section className=\"max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20\">\n          <h1 className=\"text-5xl font-bold text-slate-900 mb-8\">À Propos de Parents School</h1>\n\n          <div className=\"space-y-8 text-lg text-slate-700 leading-relaxed\">\n            <p>\n              Parents School est une plateforme novatrice d'éducation chrétienne dédiée à soutenir les\n              familles et les éducateurs dans leur mission d'élever des générations fortes dans la foi et\n              les valeurs chrétiennes.\n            </p>\n\n            <div>\n              <h2 className=\"text-3xl font-bold text-slate-900 mb-4\">Notre Mission</h2>\n              <p>\n                Fournir des ressources pédagogiques de qualité, une communauté de soutien et des\n                opportunités économiques durables à travers un système de parrainage transparent et\n                éthique.\n              </p>\n            </div>\n\n            <div>\n              <h2 className=\"text-3xl font-bold text-slate-900 mb-4\">Notre Vision</h2>\n              <p>\n                Devenir la plus grande plateforme d'éducation chrétienne familiale, présente dans 50+\n                pays, impactant les vies de millions de familles.\n              </p>\n            </div>\n\n            <div>\n              <h2 className=\"text-3xl font-bold text-slate-900 mb-4\">Nos Valeurs</h2>\n              <ul className=\"space-y-3\">\n                <li className=\"flex gap-4\">\n                  <span className=\"text-2xl\">⛪</span>\n                  <div>\n                    <h3 className=\"font-bold text-slate-900\">Fondation Chrétienne</h3>\n                    <p>Tous nos contenus s'ancrent dans les valeurs et principes chrétiens.</p>\n                  </div>\n                </li>\n                <li className=\"flex gap-4\">\n                  <span className=\"text-2xl\">🤝</span>\n                  <div>\n                    <h3 className=\"font-bold text-slate-900\">Intégrité</h3>\n                    <p>Transparence et honnêteté dans toutes nos relations.</p>\n                  </div>\n                </li>\n                <li className=\"flex gap-4\">\n                  <span className=\"text-2xl\">🌱</span>\n                  <div>\n                    <h3 className=\"font-bold text-slate-900\">Croissance</h3>\n                    <p>Accompagnement continu pour le développement personnel et professionnel.</p>\n                  </div>\n                </li>\n                <li className=\"flex gap-4\">\n                  <span className=\"text-2xl\">🌍</span>\n                  <div>\n                    <h3 className=\"font-bold text-slate-900\">Impact Global</h3>\n                    <p>Changement positif à l'échelle mondiale.</p>\n                  </div>\n                </li>\n              </ul>\n            </div>\n\n            <div className=\"bg-blue-50 rounded-xl p-8 border border-blue-200\">\n              <h2 className=\"text-3xl font-bold text-slate-900 mb-4\">Rejoignez-nous</h2>\n              <p className=\"mb-6\">\n                Soyez parte d'une communauté mondiale de parents, éducateurs et leaders engagés à faire\n                une différence dans la vie des familles.\n              </p>\n              <Link href=\"/auth/signup\">\n                <Button size=\"lg\" className=\"bg-blue-600 hover:bg-blue-700\">\n                  Commencer le Voyage\n                </Button>\n              </Link>\n            </div>\n          </div>\n        </section>\n      </div>\n    </main>\n  )\n}\n"
+"use client"
+
+import Link from "next/link"
+import { Eye, Heart, Lightbulb, Sprout, Users, Zap, ArrowRight } from "lucide-react"
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
+
+const objectives = [
+  {
+    icon: Lightbulb,
+    title: "Conscientiser les parents",
+    description:
+      "Susciter une prise de conscience du rôle des parents comme premiers éducateurs.",
+  },
+  {
+    icon: Zap,
+    title: "Renforcer les capacités",
+    description:
+      "Outiller les parents avec des méthodes concrètes et adaptées aux réalités actuelles.",
+  },
+  {
+    icon: Sprout,
+    title: "Promouvoir l'esprit familial",
+    description:
+      "Encourager le partage d'expériences, la solidarité et la transmission intergénérationnelle.",
+  },
+  {
+    icon: Users,
+    title: "Bâtir une communauté",
+    description:
+      "Créer un réseau de parents équipés, engagés et accompagnés spirituellement.",
+  },
+]
+
+const values = [
+  {
+    icon: Users,
+    title: "Responsabilité parentale",
+    description: "Placer les parents au coeur de l'éducation de leurs enfants.",
+  },
+  {
+    icon: Heart,
+    title: "Amour et respect de l'enfant",
+    description: "Développer un environnement de bienveillance, d'écoute et de confiance.",
+  },
+  {
+    icon: Lightbulb,
+    title: "Transmission des valeurs",
+    description: "Préserver et partager des principes solides pour des familles stables.",
+  },
+]
+
+export default function AboutPage() {
+  return (
+    <main className="min-h-screen bg-[#f8f4ef] text-slate-900">
+      <Header />
+      <div className="pt-16">
+      <section className="bg-[#3f2f85] text-white">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-20 lg:grid-cols-2 lg:items-center">
+          <div className="order-2 lg:order-1">
+            <div className="mb-4 inline-flex items-center gap-3">
+              <Eye className="h-6 w-6 text-[#e8b41f]" />
+              <h1 className="text-4xl font-bold tracking-wide text-[#e8b41f] sm:text-5xl">Notre Vision</h1>
+            </div>
+            <p className="mb-6 text-lg leading-relaxed text-slate-100">
+              Voir émerger des parents restaurés et instruits, qui bâtissent des familles stables,
+              harmonieuses et épanouies, selon le plan divin.
+            </p>
+            <p className="text-slate-300">
+              Nous aspirons à une communauté mondiale où chaque parent dispose des ressources,
+              du soutien et de l'accompagnement nécessaires pour transformer durablement sa famille.
+            </p>
+          </div>
+          <div className="order-1 lg:order-2 overflow-hidden rounded-xl border border-white/10">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%27%C3%A9cran%202026-05-18%20145938-BCIbZeLIEFBSpnzbXmb8PnFdYrJMPI.png"
+              alt="Vision Parents School"
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#a3ade8]/30">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-20 lg:grid-cols-2 lg:items-center">
+          <div className="overflow-hidden rounded-xl shadow-lg">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%27%C3%A9cran%202026-05-18%20145956-5TczkRp40jyi47rpadIgDFjrIhXKit.png"
+              alt="Mission Parents School"
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div>
+            <div className="mb-4 inline-flex items-center gap-3">
+              <Zap className="h-6 w-6 text-[#3f2f85]" />
+              <h2 className="text-4xl font-bold text-[#3f2f85] sm:text-5xl">Notre Mission</h2>
+            </div>
+            <p className="mb-6 text-xl font-semibold leading-relaxed">
+              Former et équiper les parents pour l'éducation de leurs enfants, tout en recherchant
+              l'intervention de Dieu par la prière.
+            </p>
+            <p className="mb-3 text-slate-700">
+              Nous donnons aux parents des outils pratiques, des méthodes applicables et un soutien
+              communautaire concret.
+            </p>
+            <p className="text-slate-700">
+              « Allez donc, et enseignez toutes les nations... »{" "}
+              <span className="font-semibold text-[#3f2f85]">Matthieu 28:19</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white">
+        <div className="mx-auto max-w-6xl px-4 py-20">
+          <h2 className="mb-12 text-center text-4xl font-bold text-[#3f2f85] sm:text-5xl">Nos Valeurs</h2>
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <div className="overflow-hidden rounded-xl shadow-lg">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%27%C3%A9cran%202026-05-18%20150007-QexxD5k2G7CVFwzBaoMakeiv99X5e5.png"
+                alt="Valeurs Parents School"
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <div className="space-y-6">
+              {values.map((value) => {
+                const Icon = value.icon
+                return (
+                  <div key={value.title} className="flex gap-4 rounded-lg border border-slate-200 p-5">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md bg-[#3f2f85] text-white">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold">{value.title}</h3>
+                      <p className="text-slate-600">{value.description}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#a3ade8]/20">
+        <div className="mx-auto max-w-6xl px-4 py-20">
+          <h2 className="mb-4 text-center text-4xl font-bold text-[#3f2f85] sm:text-5xl">Nos Objectifs</h2>
+          <p className="mx-auto mb-12 max-w-3xl text-center text-slate-600">
+            Parents School poursuit des objectifs structurants pour transformer la parentalité de
+            façon durable.
+          </p>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {objectives.map((objective) => {
+              const Icon = objective.icon
+              return (
+                <div key={objective.title} className="rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm">
+                  <div className="mb-3 flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#3f2f85] text-white">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-lg font-semibold">{objective.title}</h3>
+                  </div>
+                  <p className="text-slate-600">{objective.description}</p>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="mt-14 overflow-hidden rounded-xl bg-white shadow-lg">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%27%C3%A9cran%202026-05-18%20150030-YldrLxV50fpsDPaksNmdpPO0zlRSKH.png"
+              alt="Objectif de croissance mondiale"
+              className="h-full w-full object-cover"
+            />
+            <div className="p-6 text-center">
+              <p className="text-lg font-semibold text-slate-700">
+                Notre ambition: <span className="text-3xl font-bold text-[#3f2f85]">1 000 000 membres</span>
+              </p>
+              <p className="mt-2 text-xl font-bold text-[#e8b41f]">Objectif 2026: 400 membres</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-gradient-to-r from-[#3f2f85] to-[#a3ade8] py-20 text-white">
+        <div className="mx-auto max-w-4xl px-4 text-center">
+          <Heart className="mx-auto mb-6 h-14 w-14 fill-white" />
+          <h2 className="mb-5 text-4xl font-bold sm:text-5xl">Rejoignez Notre Communauté</h2>
+          <p className="mb-8 text-lg text-red-100">
+            Rejoignez Parents School et développez votre leadership parental avec une communauté
+            engagée.
+          </p>
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
+            <Link
+              href="/auth/signup"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#e8b41f] px-8 py-4 font-semibold text-[#3f2f85] transition hover:opacity-90"
+            >
+              Commencer maintenant
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+            <Link
+              href="/#contact"
+              className="inline-flex items-center justify-center rounded-lg border-2 border-[#e8b41f] px-8 py-4 font-semibold text-[#e8b41f] transition hover:bg-[#e8b41f] hover:text-[#3f2f85]"
+            >
+              Nous contacter
+            </Link>
+          </div>
+          <div className="mt-10 grid grid-cols-3 gap-6">
+            <div>
+              <p className="text-3xl font-bold">50+</p>
+              <p className="text-sm text-red-100">Modules</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold">10K+</p>
+              <p className="text-sm text-red-100">Membres actifs</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold">20+</p>
+              <p className="text-sm text-red-100">Pays</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      </div>
+      <Footer />
+    </main>
+  )
+}

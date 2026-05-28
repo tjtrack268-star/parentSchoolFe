@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react"
 import { apiClient } from "@/lib/api-client"
 import { OrganizationChart } from "@/components/dashboard/organization-chart"
-import { GRADE_COLORS } from "@/lib/constants"
 
 interface TreeNode {
   id: string
@@ -73,14 +72,14 @@ export default function NetworkPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       <div>
         <h1 className="text-3xl font-bold">Mon Réseau de Parrainage</h1>
         <p className="text-gray-600 mt-2">Visualisez la structure de votre réseau avec codes couleur par grade</p>
       </div>
 
       {tree ? (
-        <div className="rounded-lg border border-gray-200 bg-white p-6 overflow-auto">
+        <div className="p-0">
           <OrganizationChart 
             root={tree}
             expandedNodes={expandedNodes}
@@ -92,19 +91,6 @@ export default function NetworkPage() {
           <p className="text-gray-600">Aucune donnée de réseau disponible</p>
         </div>
       )}
-
-      {/* Legend */}
-      <div className="rounded-lg border border-gray-200 bg-white p-4">
-        <h3 className="font-semibold mb-3">Légende des grades</h3>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
-          {Object.entries(GRADE_COLORS).map(([name, color]) => (
-            <div key={name} className="flex items-center gap-2">
-              <div className="h-3 w-3 rounded-full" style={{ backgroundColor: color }} />
-              <span className="text-sm">{name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   )
 }

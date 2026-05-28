@@ -14,11 +14,6 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/auth/login?redirected=true", request.url))
   }
 
-  // If accessing auth pages with a valid token, redirect to dashboard
-  if ((pathname === "/auth/login" || pathname === "/auth/signup") && token) {
-    return NextResponse.redirect(new URL("/dashboard", request.url))
-  }
-
   return NextResponse.next()
 }
 

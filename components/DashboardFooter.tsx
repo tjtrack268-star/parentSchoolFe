@@ -4,34 +4,23 @@ import Link from "next/link"
 
 export default function DashboardFooter() {
   return (
-    <footer className="bg-slate-800 text-slate-300 py-6 mt-auto">
+    <footer className="bg-[#3f2f85] text-[#a3ade8] py-6 mt-auto">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          {/* Logo et nom */}
           <div className="flex items-center gap-3">
-            <div className="w-6 h-6 rounded bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center justify-center">
-              <span className="text-white font-bold text-xs">PS</span>
+            <div className="w-7 h-7 rounded-lg bg-[#e8b41f] flex items-center justify-center">
+              <span className="text-[#3f2f85] font-bold text-xs">PS</span>
             </div>
-            <span className="font-semibold">Parents School Dashboard</span>
+            <span className="font-semibold text-white">Parents School</span>
           </div>
 
-          {/* Liens rapides */}
           <div className="flex items-center gap-6 text-sm">
-            <Link href="/dashboard" className="hover:text-white transition">
-              Tableau de bord
-            </Link>
-            <Link href="/dashboard/profile" className="hover:text-white transition">
-              Mon profil
-            </Link>
-            <Link href="/" className="hover:text-white transition">
-              Retour à l'accueil
-            </Link>
+            <Link href="/dashboard" className="hover:text-[#e8b41f] transition">Tableau de bord</Link>
+            <Link href="/dashboard/profile" className="hover:text-[#e8b41f] transition">Mon profil</Link>
+            <Link href="/" className="hover:text-[#e8b41f] transition">Retour à l'accueil</Link>
           </div>
 
-          {/* Copyright */}
-          <div className="text-sm text-slate-400">
-            © 2025 Parents School
-          </div>
+          <div className="text-sm text-[#a3ade8]">© 2025 Parents School</div>
         </div>
       </div>
     </footer>

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+import HomeCarousel from "@/components/HomeCarousel"
 
 export default function Home() {
   return (
@@ -9,8 +10,10 @@ export default function Home() {
       <Header />
 
       <main className="pt-16">
+         {/* Carrousel photos */}
+        <HomeCarousel />
         {/* Hero Section */}
-        <section className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white flex items-center">
+        {/* <section className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
@@ -49,23 +52,24 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
+
+       
 
         {/* Vision & Mission Section */}
-        <section className="py-20 bg-white" id="vision">
+        <section className="py-20 bg-[#f8eabf]/20" id="vision">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold text-slate-900 mb-4">Notre Mission</h2>
               <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                Fournir une formation de qualité ancrée dans les valeurs bibliques pour renforcer les familles
-              </p>
+                Offrir des formations de qualité ancrée dans les valeurs chrétiennes pour équiper les parents et renforcer les familles              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
               {[
                 {
                   title: "Fondement Biblique",
-                  description: "Basée sur les enseignements de la Bible pour une parentalité chrétienne authentique",
+                  description: "Nos enseignements tirent leur fondements de la bible pour une parentalité bienveillante",
                   icon: "📖",
                 },
                 {
@@ -74,12 +78,12 @@ export default function Home() {
                   icon: "🤝",
                 },
                 {
-                  title: "Développement Personnel",
+                  title: "Croissance Personnel",
                   description: "Progressez à travers un système de grades reconnaissant votre engagement",
                   icon: "📈",
                 },
               ].map((item, idx) => (
-                <div key={idx} className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-8 text-center">
+                <div key={idx} className="bg-[#a3ade8]/30  rounded-xl p-8 text-center">
                   <div className="text-5xl mb-4">{item.icon}</div>
                   <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
                   <p className="text-slate-600">{item.description}</p>
@@ -90,7 +94,7 @@ export default function Home() {
         </section>
 
         {/* Activities Section */}
-        <section className="py-20 bg-slate-50" id="activites">
+        <section className="py-20 bg-[#a3ade8]/30" id="activites">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold text-slate-900 mb-4">Nos Activités Principales</h2>
@@ -134,7 +138,7 @@ export default function Home() {
         </section>
 
         {/* Membership Section */}
-        <section className="py-20 bg-white" id="adhesion">
+        <section className="py-20 bg-[#f8eabf]/20" id="adhesion">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold text-slate-900 mb-4">Types d'Adhésion</h2>
@@ -147,17 +151,17 @@ export default function Home() {
               {[
                 {
                   name: "Ordinaire",
-                  price: "Standard",
+                  price: "",
                   features: ["Accès au contenu", "Sessions en direct", "Parrainage", "Communauté"],
                 },
                 {
                   name: "Honneur",
-                  price: "Premium",
+                  price: "",
                   features: ["Tout de Ordinaire", "Badge Honneur", "Support prioritaire", "Événements VIP"],
                 },
                 {
                   name: "Bienfaiteur",
-                  price: "Elite",
+                  price: "",
                   features: [
                     "Tout de Honneur",
                     "Reconnaissance spéciale",
@@ -192,7 +196,7 @@ export default function Home() {
         </section>
 
         {/* Grades Timeline Section */}
-        <section className="py-20 bg-slate-50" id="grades">
+        {/* <section className="py-20 bg-[#a3ade8]/30" id="grades">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold text-slate-900 mb-4">Plan de Carrière</h2>
@@ -207,7 +211,7 @@ export default function Home() {
                 { grade: "Leader Senior", color: "bg-blue-500", desc: "8 parrains, 1200 pts" },
                 { grade: "Coordinateur", color: "bg-indigo-500", desc: "18 parrains, 3000 pts" },
                 { grade: "Mentor", color: "bg-purple-500", desc: "30 parrains, 10000 pts" },
-                { grade: "Directeur", color: "bg-amber-500", desc: "40 parrains, 30000 pts" },
+                { grade: "Directeur", color: "bg-amber-500", desc: "50 parrains, 30000 pts" },
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-4">
                   <div
@@ -223,10 +227,10 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Testimonials Section */}
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-[#a3ade8]/30">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold text-slate-900 mb-4">Témoignages</h2>

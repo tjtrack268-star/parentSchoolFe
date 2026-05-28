@@ -1,57 +1,46 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { authClient } from "@/lib/auth-client"
-
-interface User {
-  id: number
-  firstName: string
-  lastName: string
+interface ReferralRow {
+  id: string
+  name: string
   email: string
-  phone: string
-  city: string
-  userType: string
-  totalPoints: number
-  directSponsorshipsCount: number
-  sponsorshipCode: string
-  createdAt: string
-  currentGrade?: {
-    name: string
-  }
+  grade: string
+  points: number
+}
+
+interface TreeNode {
+  id: string
+  name: string
+  email: string
+  grade: string
+  points: number
+  children: TreeNode[]
 }
 
 export default function ReferralsPage() {
-  const [referrals, setReferrals] = useState<User[]>([])
+  const [referrals, setReferrals] = useState<ReferralRow[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const loadReferrals = async () => {
       try {
-        // Get current user first to get their ID
-        const userResponse = await fetch('/api/fetch-user', {
-          headers: {
-            'Authorization': `Bearer ${authClient.getToken()}`,
-            'Content-Type': 'application/json',
-          },
+        const response = await fetch("/api/dashboard/tree", {
+          headers: { "Content-Type": "application/json" },
         })
+        if (!response.ok) throw new Error("Failed to fetch network tree")
 
-        if (!userResponse.ok) throw new Error('Failed to fetch user')
-        
-        const user = await userResponse.json()
-        
-        // Then get their team (referrals)
-        const teamResponse = await fetch(`/api/users/${user.id}/team`, {
-          headers: {
-            'Authorization': `Bearer ${authClient.getToken()}`,
-            'Content-Type': 'application/json',
-          },
-        })
+        const root = (await response.json()) as TreeNode
 
-        if (!teamResponse.ok) throw new Error('Failed to fetch team')
-        
-        const teamData = await teamResponse.json()
-        setReferrals(teamData || [])
+        const rows: ReferralRow[] = (root?.children || []).map((child) => ({
+          id: child.id,
+          name: child.name,
+          email: child.email || "",
+          grade: child.grade || "Aucun",
+          points: child.points || 0,
+        }))
+        setReferrals(rows)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error loading referrals')
         console.error("Error loading referrals:", err)
@@ -123,23 +112,15 @@ export default function ReferralsPage() {
                 <th className="px-6 py-3 text-left text-sm font-semibold text-slate-900">Email</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-slate-900">Grade</th>
                 <th className="px-6 py-3 text-left text-sm font-semibold text-slate-900">Points</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-slate-900">Date</th>
               </tr>
             </thead>
             <tbody>
               {referrals.map((referral) => (
                 <tr key={referral.id} className="border-b border-slate-200 hover:bg-slate-50">
-                  <td className="px-6 py-4 text-sm text-slate-900">
-                    {referral.firstName} {referral.lastName}
-                  </td>
+                  <td className="px-6 py-4 text-sm text-slate-900">{referral.name}</td>
                   <td className="px-6 py-4 text-sm text-slate-600">{referral.email}</td>
-                  <td className="px-6 py-4 text-sm text-slate-600">
-                    {referral.currentGrade?.name || 'Aucun'}
-                  </td>
-                  <td className="px-6 py-4 text-sm text-slate-600">{referral.totalPoints}</td>
-                  <td className="px-6 py-4 text-sm text-slate-600">
-                    {new Date(referral.createdAt).toLocaleDateString("fr-FR")}
-                  </td>
+                  <td className="px-6 py-4 text-sm text-slate-600">{referral.grade}</td>
+                  <td className="px-6 py-4 text-sm text-slate-600">{referral.points}</td>
                 </tr>
               ))}
             </tbody>
