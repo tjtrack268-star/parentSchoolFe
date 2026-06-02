@@ -1,46 +1,100 @@
+"use client"
+
+import { useState } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { usePathname } from "next/navigation"
+import { Menu, X } from "lucide-react"
+
+const LINKS = [
+  { href: "/", label: "Accueil" },
+  { href: "/public/about", label: "À propos" },
+  { href: "/public/formations", label: "Formations" },
+  { href: "/public/ouvrages", label: "Ouvrages" },
+  { href: "/public/temoignages", label: "Témoignages" },
+]
 
 export default function Header() {
+  const [open, setOpen] = useState(false)
+  const pathname = usePathname()
+
   return (
     <nav className="fixed w-full top-0 bg-white/95 backdrop-blur shadow-sm z-50 border-b border-[#a3ade8]/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#3f2f85] to-[#a3ade8] flex items-center justify-center">
-            <span className="text-[#e8b41f] font-bold text-lg">PS</span>
+
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 shrink-0">
+          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#3f2f85] to-[#a3ade8] flex items-center justify-center">
+            <span className="text-[#e8b41f] font-bold text-sm">PS</span>
           </div>
-          <Link href="/">
-            <h1 className="text-2xl font-bold text-[#3f2f85] cursor-pointer">Parents School</h1>
-          </Link>
+          <span className="text-xl font-bold text-[#3f2f85]">Parents School</span>
+        </Link>
+
+        {/* Menu desktop */}
+        <div className="hidden md:flex items-center gap-6">
+          {LINKS.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`text-sm font-medium transition ${
+                pathname === href ? "text-[#e8b41f]" : "text-[#3f2f85] hover:text-[#e8b41f]"
+              }`}
+            >
+              {label}
+            </Link>
+          ))}
         </div>
-        <div className="hidden md:flex items-center gap-8">
-          <Link href="/" className="text-[#3f2f85] hover:text-[#e8b41f] text-sm font-medium">
-            Accueil
+
+        {/* Actions desktop + burger mobile */}
+        <div className="flex items-center gap-2">
+          <Link href="/auth/login" className="hidden sm:inline-flex items-center rounded-lg border-2 border-[#3f2f85] px-4 py-1.5 text-sm font-semibold text-[#3f2f85] hover:bg-[#3f2f85] hover:text-white transition">
+            Se connecter
           </Link>
-          <Link href="/public/about" className="text-[#3f2f85] hover:text-[#e8b41f] text-sm font-medium">
-            À propos
+          <Link href="/auth/signup" className="hidden sm:inline-flex items-center rounded-lg bg-[#3f2f85] px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90 transition">
+            S'inscrire
           </Link>
-          <Link href="/public/formations" className="text-[#3f2f85] hover:text-[#e8b41f] text-sm font-medium">
-            Formations
-          </Link>
-          <Link href="/public/ouvrages" className="text-[#3f2f85] hover:text-[#e8b41f] text-sm font-medium">
-            Ouvrages
-          </Link>
-          <Link href="/public/temoignages" className="text-[#3f2f85] hover:text-[#e8b41f] text-sm font-medium">
-            Témoignages
-          </Link>
-        </div>
-        <div className="flex gap-3">
-          <Link href="/auth/login">
-            <Button variant="ghost" size="sm">
-              Se connecter
-            </Button>
-          </Link>
-          <Link href="/auth/signup">
-            <Button size="sm">S'inscrire</Button>
-          </Link>
+
+          {/* Burger */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden p-2 rounded-lg text-[#3f2f85] hover:bg-[#a3ade8]/20 transition"
+            aria-label="Menu"
+          >
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
       </div>
+
+      {/* Menu mobile */}
+      {open && (
+        <div className="md:hidden bg-white border-t border-[#a3ade8]/30 px-4 py-4 space-y-1 shadow-lg">
+          {LINKS.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setOpen(false)}
+              className={`flex items-center px-4 py-3 rounded-lg text-sm font-medium transition ${
+                pathname === href
+                  ? "bg-[#3f2f85] text-white"
+                  : "text-[#3f2f85] hover:bg-[#a3ade8]/20"
+              }`}
+            >
+              {label}
+            </Link>
+          ))}
+
+          {/* Boutons auth en mobile */}
+          <div className="flex gap-2 pt-3 border-t border-[#a3ade8]/30 mt-2">
+            <Link href="/auth/login" onClick={() => setOpen(false)}
+              className="flex-1 text-center rounded-lg border-2 border-[#3f2f85] py-2.5 text-sm font-semibold text-[#3f2f85] hover:bg-[#3f2f85] hover:text-white transition">
+              Se connecter
+            </Link>
+            <Link href="/auth/signup" onClick={() => setOpen(false)}
+              className="flex-1 text-center rounded-lg bg-[#3f2f85] py-2.5 text-sm font-semibold text-white hover:opacity-90 transition">
+              S'inscrire
+            </Link>
+          </div>
+        </div>
+      )}
     </nav>
   )
 }
