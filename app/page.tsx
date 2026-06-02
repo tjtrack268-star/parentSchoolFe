@@ -1,193 +1,174 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import HomeCarousel from "@/components/HomeCarousel"
+import { ArrowRight, BookOpen, GraduationCap, Users, Heart, Lightbulb, Sprout } from "lucide-react"
+import { GRADE_COLORS } from "@/lib/constants"
 
 export default function Home() {
   return (
     <>
       <Header />
+      <main className="pt-16 bg-[#f8f4ef]">
 
-      <main className="pt-16">
-         {/* Carrousel photos */}
+        {/* Carrousel hero */}
         <HomeCarousel />
-        {/* Hero Section */}
-        {/* <section className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white flex items-center">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-balance">
-                  Former des Parents Selon les Valeurs Chrétiennes
-                </h1>
-                <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-                  Rejoignez une communauté internationale de formation à la parentalité ancrée dans les principes
-                  bibliques et le développement personnel.
-                </p>
-                <div className="flex gap-4 flex-wrap">
-                  <Link href="/auth/signup">
-                    <Button size="lg" className="bg-white text-blue-900 hover:bg-blue-50">
-                      S'inscrire maintenant
-                    </Button>
-                  </Link>
-                  <a href="#activites">
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="border-white text-white hover:bg-white hover:bg-opacity-10 bg-transparent"
-                    >
-                      Découvrir plus
-                    </Button>
-                  </a>
-                </div>
-              </div>
-              <div className="hidden lg:block">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-indigo-600 rounded-2xl blur-3xl opacity-20"></div>
-                  <div className="relative bg-gradient-to-br from-blue-400 to-indigo-600 rounded-2xl p-8 text-center">
-                    <div className="text-6xl mb-4">👨‍👩‍👧‍👦</div>
-                    <p className="text-white font-semibold">Familles du monde entier</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> */}
 
-       
-
-        {/* Vision & Mission Section */}
-        <section className="py-20 bg-[#f8eabf]/20" id="vision">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-4">Notre Mission</h2>
-              <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                Offrir des formations de qualité ancrée dans les valeurs chrétiennes pour équiper les parents et renforcer les familles              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
-              {[
-                {
-                  title: "Fondement Biblique",
-                  description: "Nos enseignements tirent leur fondements de la bible pour une parentalité bienveillante",
-                  icon: "📖",
-                },
-                {
-                  title: "Communauté Bienveillante",
-                  description: "Rejoignez des milliers de parents partageant les mêmes valeurs à travers le monde",
-                  icon: "🤝",
-                },
-                {
-                  title: "Croissance Personnel",
-                  description: "Progressez à travers un système de grades reconnaissant votre engagement",
-                  icon: "📈",
-                },
-              ].map((item, idx) => (
-                <div key={idx} className="bg-[#a3ade8]/30  rounded-xl p-8 text-center">
-                  <div className="text-5xl mb-4">{item.icon}</div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
-                  <p className="text-slate-600">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Activities Section */}
-        <section className="py-20 bg-[#a3ade8]/30" id="activites">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-4">Nos Activités Principales</h2>
-              <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                Découvrez les différentes formes de formation disponibles
+        {/* Mission */}
+        <section className="bg-white py-20" id="vision">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="text-center mb-14">
+              <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Qui sommes-nous</p>
+              <h2 className="text-4xl font-bold text-[#3f2f85] sm:text-5xl mb-4">Notre Mission</h2>
+              <p className="mx-auto max-w-2xl text-lg text-slate-600">
+                Former et équiper les parents pour l'éducation de leurs enfants, tout en recherchant l'intervention de Dieu par la prière.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                {
-                  title: "Enseignements Dominicaux",
-                  description: "Sessions hebdomadaires sur des thèmes variés de parentalité et développement personnel",
-                  icon: "🎓",
-                },
-                {
-                  title: "Séminaires & Ateliers",
-                  description: "Formations intensives mensuelles sur des sujets spécifiques et pratiques",
-                  icon: "🎯",
-                },
-                {
-                  title: "Formations Certifiantes",
-                  description: "Certifications reconnues pour approfondir votre expertise en leadership familial",
-                  icon: "🏆",
-                },
-              ].map((item, idx) => (
-                <div
-                  key={idx}
-                  className="bg-white rounded-xl p-8 border border-slate-200 hover:shadow-lg transition-shadow"
-                >
-                  <div className="text-5xl mb-4">{item.icon}</div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
-                  <p className="text-slate-600 mb-6">{item.description}</p>
-                  <Link href="/auth/signup" className="text-blue-600 hover:text-blue-700 font-semibold text-sm">
-                    Découvrir →
-                  </Link>
-                </div>
-              ))}
+                { icon: Lightbulb, title: "Fondement Biblique", desc: "Nos enseignements tirent leurs fondements de la Bible pour une parentalité bienveillante et éclairée." },
+                { icon: Users, title: "Communauté Bienveillante", desc: "Rejoignez des milliers de parents partageant les mêmes valeurs chrétiennes à travers le monde." },
+                { icon: Sprout, title: "Croissance Personnelle", desc: "Progressez à travers un système de grades reconnaissant votre engagement et votre impact." },
+              ].map((item, idx) => {
+                const Icon = item.icon
+                return (
+                  <div key={idx} className="rounded-lg border-l-4 border-[#e8b41f] bg-[#f8f4ef] p-6 shadow-sm">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-md bg-[#3f2f85] text-white mb-4">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-lg font-bold text-[#3f2f85] mb-2">{item.title}</h3>
+                    <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </section>
 
-        {/* Membership Section */}
-        <section className="py-20 bg-[#f8eabf]/20" id="adhesion">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-4">Types d'Adhésion</h2>
-              <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+        {/* Activités principales */}
+        <section className="bg-[#a3ade8]/20 py-20" id="activites">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="text-center mb-14">
+              <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Ce que nous faisons</p>
+              <h2 className="text-4xl font-bold text-[#3f2f85] sm:text-5xl mb-4">Nos Activités Principales</h2>
+              <p className="mx-auto max-w-2xl text-lg text-slate-600">
+                Découvrez les différentes formes de formation et d'accompagnement disponibles
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: GraduationCap,
+                  title: "Enseignements Dominicaux",
+                  desc: "Sessions hebdomadaires en ligne chaque dimanche — 4 enseignements par session sur la parentalité et la relation inter-parentale.",
+                  link: "/public/formations",
+                  stat: "500+ enseignements dispensés",
+                },
+                {
+                  icon: Users,
+                  title: "Formation des Conseillers",
+                  desc: "Formation certifiante de 3 mois pour devenir conseiller parental, avec soutenance et certificat officiel.",
+                  link: "/public/formations",
+                  stat: "79 récipiendaires formés",
+                },
+                {
+                  icon: BookOpen,
+                  title: "Ouvrages & Ressources",
+                  desc: "Des livres pratiques rédigés par nos fondateurs pour accompagner les parents dans leur mission éducative.",
+                  link: "/public/ouvrages",
+                  stat: "4 ouvrages publiés",
+                },
+              ].map((item, idx) => {
+                const Icon = item.icon
+                return (
+                  <div key={idx} className="bg-white rounded-lg border border-[#a3ade8]/30 p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-md bg-[#3f2f85] text-white mb-4">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-lg font-bold text-[#3f2f85] mb-2">{item.title}</h3>
+                    <p className="text-slate-600 text-sm leading-relaxed mb-3 flex-1">{item.desc}</p>
+                    <p className="text-xs font-semibold text-[#e8b41f] mb-4">{item.stat}</p>
+                    <Link href={item.link} className="inline-flex items-center gap-1 text-sm font-semibold text-[#3f2f85] hover:text-[#e8b41f] transition">
+                      En savoir plus <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
+                )
+              })}
+            </div>
+
+            <div className="text-center mt-10">
+              <Link href="/public/formations" className="inline-flex items-center gap-2 rounded-lg bg-[#3f2f85] px-8 py-4 font-semibold text-white transition hover:opacity-90">
+                Voir toutes nos formations <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Adhésion */}
+        <section className="bg-white py-20" id="adhesion">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="text-center mb-14">
+              <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Nous rejoindre</p>
+              <h2 className="text-4xl font-bold text-[#3f2f85] sm:text-5xl mb-4">Types d'Adhésion</h2>
+              <p className="mx-auto max-w-2xl text-lg text-slate-600">
                 Choisissez le type d'adhésion qui correspond à vos besoins
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 {
-                  name: "Ordinaire",
-                  price: "",
-                  features: ["Accès au contenu", "Sessions en direct", "Parrainage", "Communauté"],
+                  name: "Membre Ordinaire",
+                  highlight: false,
+                  tarif: "25 000 FCFA/an ou 3 000 FCFA/mois",
+                  features: ["Accès aux enseignements dominicaux", "Sessions en direct chaque dimanche", "Système de parrainage", "Communauté internationale", "Tarifs préférentiels formations"],
                 },
                 {
-                  name: "Honneur",
-                  price: "",
-                  features: ["Tout de Ordinaire", "Badge Honneur", "Support prioritaire", "Événements VIP"],
+                  name: "Membre d'Honneur",
+                  highlight: true,
+                  tarif: "Gratuit, sans condition",
+                  features: ["Tout du membre ordinaire", "Accès gratuit aux enseignements", "Badge Honneur", "Support prioritaire", "Événements VIP"],
                 },
                 {
-                  name: "Bienfaiteur",
-                  price: "",
-                  features: [
-                    "Tout de Honneur",
-                    "Reconnaissance spéciale",
-                    "Conseil consultatif",
-                    "Avantages exclusifs",
-                  ],
+                  name: "Membre Bienfaiteur",
+                  highlight: false,
+                  tarif: "Sur invitation",
+                  features: ["Tout du membre d'Honneur", "Reconnaissance spéciale", "Conseil consultatif", "Avantages exclusifs", "Impact communautaire"],
                 },
               ].map((tier, idx) => (
                 <div
                   key={idx}
-                  className={`rounded-xl p-8 border-2 transition-all ${idx === 1 ? "border-blue-600 bg-blue-50 scale-105" : "border-slate-200 bg-white"}`}
+                  className={`rounded-lg p-8 border-2 flex flex-col transition-all ${
+                    tier.highlight
+                      ? "border-[#e8b41f] bg-[#3f2f85] text-white scale-105 shadow-lg"
+                      : "border-[#a3ade8]/40 bg-[#f8f4ef]"
+                  }`}
                 >
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">{tier.name}</h3>
-                  <p className="text-slate-600 mb-6">{tier.price}</p>
-                  <ul className="space-y-3 mb-8">
-                    {tier.features.map((feature, fidx) => (
-                      <li key={fidx} className="flex items-center gap-2 text-slate-600">
-                        <span className="text-green-600">✓</span>
-                        {feature}
+                  {tier.highlight && (
+                    <div className="text-center mb-3">
+                      <span className="rounded-full bg-[#e8b41f] px-3 py-1 text-xs font-bold text-[#3f2f85]">Recommandé</span>
+                    </div>
+                  )}
+                  <h3 className={`text-xl font-bold mb-1 ${tier.highlight ? "text-[#e8b41f]" : "text-[#3f2f85]"}`}>{tier.name}</h3>
+                  <p className={`text-sm font-semibold mb-6 ${tier.highlight ? "text-white/80" : "text-slate-500"}`}>{tier.tarif}</p>
+                  <ul className="space-y-2 mb-8 flex-1">
+                    {tier.features.map((f, i) => (
+                      <li key={i} className={`flex items-center gap-2 text-sm ${tier.highlight ? "text-white/90" : "text-slate-600"}`}>
+                        <span className="font-bold text-[#e8b41f]">✓</span>{f}
                       </li>
                     ))}
                   </ul>
-                  <Link href="/auth/signup">
-                    <Button className="w-full" variant={idx === 1 ? "default" : "outline"}>
-                      Choisir
-                    </Button>
+                  <Link
+                    href="/auth/signup"
+                    className={`inline-flex w-full items-center justify-center rounded-lg px-6 py-3 font-semibold transition ${
+                      tier.highlight
+                        ? "bg-[#e8b41f] text-[#3f2f85] hover:opacity-90"
+                        : "border-2 border-[#3f2f85] text-[#3f2f85] hover:bg-[#3f2f85] hover:text-white"
+                    }`}
+                  >
+                    Choisir ce plan
                   </Link>
                 </div>
               ))}
@@ -195,114 +176,88 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Grades Timeline Section */}
-        {/* <section className="py-20 bg-[#a3ade8]/30" id="grades">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-4">Plan de Carrière</h2>
-              <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                Progressez à travers 5 grades avec avantages croissants
+        {/* Grades */}
+        <section className="bg-[#a3ade8]/20 py-20" id="grades">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="text-center mb-14">
+              <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Évolution</p>
+              <h2 className="text-4xl font-bold text-[#3f2f85] sm:text-5xl mb-4">Plan de Carrière</h2>
+              <p className="mx-auto max-w-2xl text-lg text-slate-600">
+                Progressez à travers 5 grades avec des avantages croissants
               </p>
             </div>
-
-            <div className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
               {[
-                { grade: "Leader", color: "bg-green-500", desc: "4 parrains, 240 pts" },
-                { grade: "Leader Senior", color: "bg-blue-500", desc: "8 parrains, 1200 pts" },
-                { grade: "Coordinateur", color: "bg-indigo-500", desc: "18 parrains, 3000 pts" },
-                { grade: "Mentor", color: "bg-purple-500", desc: "30 parrains, 10000 pts" },
-                { grade: "Directeur", color: "bg-amber-500", desc: "50 parrains, 30000 pts" },
-              ].map((item, idx) => (
-                <div key={idx} className="flex items-center gap-4">
-                  <div
-                    className={`${item.color} text-white w-12 h-12 rounded-full flex items-center justify-center font-bold`}
-                  >
-                    {idx + 1}
+                { grade: "Leader", desc: "4 parrains · 240 pts", benefit: "5 000 FCFA" },
+                { grade: "Leader Senior", desc: "8 parrains · 1 200 pts", benefit: "10 000 FCFA" },
+                { grade: "Coordinateur", desc: "18 parrains · 3 000 pts", benefit: "15 000 FCFA" },
+                { grade: "Mentor", desc: "30 parrains · 10 000 pts", benefit: "25 000 FCFA" },
+                { grade: "Directeur", desc: "50 parrains · 30 000 pts", benefit: "50 000 FCFA" },
+              ].map((item, idx) => {
+                const color = GRADE_COLORS[item.grade as keyof typeof GRADE_COLORS]
+                return (
+                  <div key={idx} className="rounded-lg bg-white border border-[#a3ade8]/30 p-5 text-center shadow-sm">
+                    <div className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-bold text-lg" style={{ backgroundColor: color }}>
+                      {idx + 1}
+                    </div>
+                    <p className="font-bold text-[#3f2f85] text-sm">{item.grade}</p>
+                    <p className="text-xs text-slate-500 mt-1">{item.desc}</p>
+                    <p className="text-xs font-semibold text-[#e8b41f] mt-2">{item.benefit}/mois</p>
                   </div>
-                  <div className="flex-1 bg-white rounded-lg p-4 border border-slate-200">
-                    <p className="font-bold text-slate-900">{item.grade}</p>
-                    <p className="text-sm text-slate-600">{item.desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section> */}
-
-        {/* Testimonials Section */}
-        <section className="py-20 bg-[#a3ade8]/30">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-4">Témoignages</h2>
-              <p className="text-xl text-slate-600 max-w-2xl mx-auto">Ce que nos membres disent de Parents School</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  name: "Marie Dupont",
-                  title: "Mentor",
-                  quote:
-                    "Cette plateforme a transformé ma façon de voir la parentalité. Les valeurs chrétiennes sont au cœur.",
-                  country: "France",
-                },
-                {
-                  name: "Jean Ndjateh",
-                  title: "Coordinateur",
-                  quote:
-                    "L'accès à une communauté mondiale est extraordinaire. On se sent soutenu dans notre parcours.",
-                  country: "Cameroun",
-                },
-                {
-                  name: "Sarah Okonkwo",
-                  title: "Leader Senior",
-                  quote:
-                    "Les formations sont de très bonne qualité. Les enseignements impactent réellement ma famille.",
-                  country: "Nigeria",
-                },
-              ].map((item, idx) => (
-                <div key={idx} className="bg-slate-50 rounded-xl p-8 border border-slate-200">
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className="text-amber-400">
-                        ★
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-slate-600 mb-6 italic">"{item.quote}"</p>
-                  <div>
-                    <p className="font-bold text-slate-900">{item.name}</p>
-                    <p className="text-sm text-slate-600">
-                      {item.title} • {item.country}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-20 bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-          <div className="max-w-4xl mx-auto text-center px-4">
-            <h2 className="text-4xl font-bold mb-4">Prêt à Commencer Votre Parcours?</h2>
-            <p className="text-xl mb-8 text-blue-100">
+        {/* Témoignages */}
+        <section className="bg-white py-20">
+          <div className="mx-auto max-w-6xl px-4">
+            <div className="text-center mb-14">
+              <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Ils témoignent</p>
+              <h2 className="text-4xl font-bold text-[#3f2f85] sm:text-5xl mb-4">Témoignages</h2>
+              <p className="mx-auto max-w-2xl text-lg text-slate-600">Ce que nos membres disent de Parents School</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { name: "Mireille K.", role: "Maman de 3 enfants", pays: "Douala", quote: "Parents School m'a aidée à mieux comprendre mes enfants. Notre communication est devenue plus apaisée et constructive." },
+                { name: "Paul N.", role: "Père de famille", pays: "Yaoundé", quote: "Les modules sont pratiques, concrets et adaptés à notre réalité africaine. J'applique chaque semaine ce que j'apprends." },
+                { name: "Sarah M.", role: "Parent relais", pays: "Abidjan", quote: "La communauté est bienveillante. On se sent accompagné, pas jugé. C'est un vrai soutien pour les parents." },
+              ].map((item, idx) => (
+                <div key={idx} className="rounded-lg border-l-4 border-[#e8b41f] bg-[#f8f4ef] p-6 shadow-sm">
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(5)].map((_, i) => <span key={i} className="text-[#e8b41f]">★</span>)}
+                  </div>
+                  <p className="text-slate-600 mb-5 italic text-sm leading-relaxed">"{item.quote}"</p>
+                  <div className="border-t border-[#a3ade8]/30 pt-4">
+                    <p className="font-bold text-[#3f2f85]">{item.name}</p>
+                    <p className="text-xs text-slate-500">{item.role} · {item.pays}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="text-center mt-10">
+              <Link href="/public/temoignages" className="inline-flex items-center gap-2 text-[#3f2f85] font-semibold hover:text-[#e8b41f] transition">
+                Voir tous les témoignages <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA final */}
+        <section className="bg-gradient-to-r from-[#3f2f85] to-[#a3ade8] py-20 text-white">
+          <div className="mx-auto max-w-4xl px-4 text-center">
+            <Heart className="mx-auto mb-6 h-14 w-14 fill-white text-white" />
+            <h2 className="text-4xl font-bold mb-4 sm:text-5xl">Prêt à Commencer Votre Parcours ?</h2>
+            <p className="text-xl mb-8 text-white/90">
               Rejoignez des parents du monde entier en quête de formation et d'épanouissement familial
             </p>
-            <div className="flex gap-4 justify-center flex-wrap">
-              <Link href="/auth/signup">
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50">
-                  S'inscrire gratuitement
-                </Button>
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
+              <Link href="/auth/signup" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#e8b41f] px-8 py-4 font-semibold text-[#3f2f85] transition hover:opacity-90">
+                S'inscrire gratuitement <ArrowRight className="h-5 w-5" />
               </Link>
-              <Link href="/auth/login">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-white text-white hover:bg-white hover:bg-opacity-10 bg-transparent"
-                >
-                  Se connecter
-                </Button>
+              <Link href="/auth/login" className="inline-flex items-center justify-center rounded-lg border-2 border-[#e8b41f] px-8 py-4 font-semibold text-[#e8b41f] transition hover:bg-[#e8b41f] hover:text-[#3f2f85]">
+                Se connecter
               </Link>
             </div>
           </div>
