@@ -1,49 +1,18 @@
-import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    const supabase = await createClient()
+    const cookieStore = await cookies()
+    const token = cookieStore.get('auth_token')?.value
+    if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
-    const { data: { session } } = await supabase.auth.getSession()
-    if (!session?.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
-
-    const { searchParams } = new URL(request.url)
-    const limit = parseInt(searchParams.get('limit') || '50')
-    const offset = parseInt(searchParams.get('offset') || '0')
-
-    // Fetch referrals with pagination
-    const { data: referrals, error } = await supabase
-      .from('referrals')
-      .select(`
-        *,
-        referrer:profiles!referrer_id(first_name, last_name, email, current_grade, points)
-      `)
-      .eq('sponsor_id', session.user.id)
-      .order('created_at', { ascending: false })
-      .range(offset, offset + limit - 1)
-
-    if (error) throw error
-
-    // Get total count
-    const { count } = await supabase
-      .from('referrals')
-      .select('*', { count: 'exact', head: true })
-      .eq('sponsor_id', session.user.id)
-
-    return NextResponse.json({
-      referrals: referrals || [],
-      total: count || 0,
-      limit,
-      offset,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/referrals-data`, {
+      headers: { Authorization: `Bearer ${token}` },
     })
-  } catch (error) {
-    console.error('Error fetching referrals:', error)
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    const data = await res.json()
+    return NextResponse.json(data, { status: res.status })
+  } catch {
+    return NextResponse.json([], { status: 200 })
   }
 }
