@@ -1,21 +1,28 @@
-export default function AuthLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
+
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4">
-      <div className="w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-2xl p-8">
-          <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">
-              Parents School
-            </h1>
-            <p className="text-slate-600">École des parents par les parents et pour les parents</p>
+    <div className="min-h-screen bg-[#f8f4ef] flex flex-col">
+      <Header />
+      <main className="flex-1 flex items-center justify-center px-4 pt-24 pb-12">
+        <div className="w-full max-w-md">
+          {/* Logo centré */}
+          <div className="text-center mb-8">
+            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#3f2f85] to-[#a3ade8] flex items-center justify-center mx-auto mb-3">
+              <span className="text-[#e8b41f] font-bold text-xl">PS</span>
+            </div>
+            <h1 className="text-2xl font-bold text-[#3f2f85]">Parents School</h1>
+            <p className="text-sm text-slate-500 mt-1">École des parents par les parents et pour les parents</p>
           </div>
-          {children}
+
+          {/* Formulaire */}
+          <div className="bg-white rounded-xl shadow-sm border border-[#a3ade8]/30 p-8">
+            {children}
+          </div>
         </div>
-      </div>
+      </main>
+      <Footer />
     </div>
   )
 }

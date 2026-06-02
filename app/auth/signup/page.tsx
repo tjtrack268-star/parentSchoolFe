@@ -1,263 +1,145 @@
 "use client"
 
-import type React from "react"
-
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+import { authClient } from "@/lib/auth-client"
 import { signUpSchema, type SignUpInput } from "@/lib/validations/auth"
 import { COUNTRIES } from "@/lib/constants"
-import { authClient } from "@/lib/auth-client"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select } from "@/components/ui/select"
 
 export default function SignUpPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [sponsorSuggestions, setSponsorSuggestions] = useState<Array<{ fullName: string; code?: string; country?: string; source: string }>>([])
+  const [suggestions, setSuggestions] = useState<Array<{ fullName: string; code?: string; country?: string }>>([])
   const [formData, setFormData] = useState<SignUpInput>({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    phone: "",
-    country: "CM",
-    referralCode: "",
-    sponsorName: "",
+    email: "", password: "", firstName: "", lastName: "",
+    phone: "", country: "CM", referralCode: "", sponsorName: "",
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const fieldName = e.target.name
-    const fieldValue = e.target.value
-    setFormData((prev) => ({ ...prev, [fieldName]: fieldValue }))
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
     setError(null)
   }
 
   const searchSponsors = async (query: string) => {
-    if (!query || query.trim().length < 2) {
-      setSponsorSuggestions([])
-      return
-    }
+    if (!query || query.trim().length < 2) { setSuggestions([]); return }
     try {
-      const response = await fetch(`/api/sponsors/search?q=${encodeURIComponent(query.trim())}`)
-      const data = await response.json()
-      setSponsorSuggestions(Array.isArray(data) ? data : [])
-    } catch {
-      setSponsorSuggestions([])
-    }
+      const res = await fetch(`/api/sponsors/search?q=${encodeURIComponent(query.trim())}`)
+      const data = await res.json()
+      setSuggestions(Array.isArray(data) ? data : [])
+    } catch { setSuggestions([]) }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
-
     try {
-      // Validate form data
-      const validatedData = signUpSchema.parse(formData)
-
-      // Register with external API
+      const validated = signUpSchema.parse(formData)
       await authClient.register({
-        firstName: validatedData.firstName,
-        lastName: validatedData.lastName,
-        email: validatedData.email,
-        password: validatedData.password,
-        phone: validatedData.phone,
-        city: validatedData.country, // Utiliser country comme city temporairement
-        country: validatedData.country,
-        userType: 'ORDINARY',
-        sponsorCode: validatedData.referralCode || undefined,
-        sponsorName: validatedData.sponsorName || undefined,
+        firstName: validated.firstName,
+        lastName: validated.lastName,
+        email: validated.email,
+        password: validated.password,
+        phone: validated.phone,
+        city: validated.country,
+        country: validated.country,
+        userType: "ORDINARY",
+        sponsorCode: validated.referralCode || undefined,
+        sponsorName: validated.sponsorName || undefined,
       })
-
-      // Redirect to dashboard after successful registration
       router.push("/dashboard")
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred")
+      setError(err instanceof Error ? err.message : "Une erreur est survenue")
     } finally {
       setLoading(false)
     }
   }
 
+  const field = (label: string, name: keyof SignUpInput, type = "text", placeholder = "") => (
+    <div>
+      <label className="mb-1 block text-sm font-semibold text-[#3f2f85]">{label}</label>
+      <input
+        type={type} name={name} required={["email","password","firstName","lastName","phone"].includes(name)}
+        value={formData[name] || ""} onChange={handleChange}
+        placeholder={placeholder} disabled={loading}
+        className="w-full rounded-lg border border-[#a3ade8]/40 bg-[#f8f4ef] px-4 py-2.5 text-sm focus:border-[#3f2f85] focus:outline-none"
+      />
+    </div>
+  )
+
   return (
-    <div className="space-y-6">
-      <div className="space-y-2 text-center">
-        <h2 className="text-2xl font-bold text-slate-900">Create Account</h2>
-        <p className="text-sm text-slate-600">Join our community today</p>
+    <div className="space-y-5">
+      <div>
+        <h2 className="text-2xl font-bold text-[#3f2f85]">Créer un compte</h2>
+        <p className="text-sm text-slate-500 mt-1">Rejoignez la communauté Parents School</p>
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">{error}</div>
+        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="firstName">First Name</Label>
-            <Input
-              id="firstName"
-              name="firstName"
-              type="text"
-              value={formData.firstName}
-              onChange={handleChange}
-              placeholder="John"
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="lastName">Last Name</Label>
-            <Input
-              id="lastName"
-              name="lastName"
-              type="text"
-              value={formData.lastName}
-              onChange={handleChange}
-              placeholder="Doe"
-              required
-            />
-          </div>
+        <div className="grid grid-cols-2 gap-3">
+          {field("Prénom", "firstName", "text", "Jean")}
+          {field("Nom", "lastName", "text", "Dupont")}
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="you@example.com"
-            required
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="userType">type de membre</Label>
-          {/* <Select
-            id="userType"
-            name="userType"
-            value={formData.userType}
-            onChange={handleChange}
-            required
-          >
-            <option value="ORDINARY">Membre ordinaire</option>
-            <option value="PREMIUM">Membre premium</option>
-            <option value="ASSOCIATE">Membre associé</option>
-          </Select> */}
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="you@example.com"
-            required
-          />
-        </div>
+        {field("Email", "email", "email", "votre@email.com")}
+        {field("Mot de passe", "password", "password", "••••••••")}
+        {field("Téléphone", "phone", "tel", "+237...")}
 
-        <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="••••••••"
-            required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="phone">Phone</Label>
-          <Input
-            id="phone"
-            name="phone"
-            type="tel"
-            value={formData.phone}
-            onChange={handleChange}
-            placeholder="+237..."
-            required
-          />
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="country">Country</Label>
-          <select
-            id="country"
-            name="country"
-            value={formData.country}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required
-          >
-            {COUNTRIES.map((country) => (
-              <option key={country.code} value={country.code}>
-                {country.name}
-              </option>
-            ))}
+        {/* Pays */}
+        <div>
+          <label className="mb-1 block text-sm font-semibold text-[#3f2f85]">Pays</label>
+          <select name="country" value={formData.country} onChange={handleChange}
+            className="w-full rounded-lg border border-[#a3ade8]/40 bg-[#f8f4ef] px-4 py-2.5 text-sm focus:border-[#3f2f85] focus:outline-none">
+            {COUNTRIES.map(c => <option key={c.code} value={c.code}>{c.name}</option>)}
           </select>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="referralCode">Referral Code (Optional)</Label>
-          <Input
-            id="referralCode"
-            name="referralCode"
-            type="text"
-            value={formData.referralCode}
-            onChange={handleChange}
-            placeholder="ABC12345"
+        {/* Code parrain */}
+        <div>
+          <label className="mb-1 block text-sm font-semibold text-[#3f2f85]">Code de parrainage <span className="text-slate-400 font-normal">(optionnel)</span></label>
+          <input type="text" name="referralCode" value={formData.referralCode || ""} onChange={handleChange}
+            placeholder="PS237_001" disabled={loading}
+            className="w-full rounded-lg border border-[#a3ade8]/40 bg-[#f8f4ef] px-4 py-2.5 text-sm focus:border-[#3f2f85] focus:outline-none"
           />
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="sponsorName">Sponsor Name (Optional)</Label>
-          <Input
-            id="sponsorName"
-            name="sponsorName"
-            type="text"
-            value={formData.sponsorName || ""}
-            onChange={(e) => {
-              handleChange(e)
-              searchSponsors(e.target.value)
-            }}
-            placeholder="Nom du parrain"
+        {/* Nom parrain avec autocomplétion */}
+        <div>
+          <label className="mb-1 block text-sm font-semibold text-[#3f2f85]">Nom du parrain <span className="text-slate-400 font-normal">(optionnel)</span></label>
+          <input type="text" name="sponsorName" value={formData.sponsorName || ""}
+            onChange={e => { handleChange(e); searchSponsors(e.target.value) }}
+            placeholder="Nom du parrain" disabled={loading}
+            className="w-full rounded-lg border border-[#a3ade8]/40 bg-[#f8f4ef] px-4 py-2.5 text-sm focus:border-[#3f2f85] focus:outline-none"
           />
-          {sponsorSuggestions.length > 0 && (
-            <div className="max-h-44 overflow-auto rounded-md border border-slate-200 bg-white">
-              {sponsorSuggestions.slice(0, 8).map((s, idx) => (
-                <button
-                  key={`${s.code || s.fullName}-${idx}`}
-                  type="button"
-                  className="w-full text-left px-3 py-2 text-sm hover:bg-slate-50 border-b last:border-b-0"
-                  onClick={() =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      sponsorName: s.fullName,
-                      referralCode: s.code || prev.referralCode,
-                    }))
-                  }
-                >
-                  <div className="font-medium text-slate-900">{s.fullName}</div>
-                  <div className="text-xs text-slate-500">{s.code || "Sans code"} {s.country ? `• ${s.country}` : ""}</div>
+          {suggestions.length > 0 && (
+            <div className="mt-1 max-h-44 overflow-auto rounded-lg border border-[#a3ade8]/40 bg-white shadow-md">
+              {suggestions.slice(0, 8).map((s, i) => (
+                <button key={i} type="button"
+                  className="w-full text-left px-4 py-2.5 text-sm hover:bg-[#f8f4ef] border-b border-[#a3ade8]/20 last:border-0"
+                  onClick={() => { setFormData(p => ({ ...p, sponsorName: s.fullName, referralCode: s.code || p.referralCode })); setSuggestions([]) }}>
+                  <div className="font-semibold text-[#3f2f85]">{s.fullName}</div>
+                  <div className="text-xs text-slate-400">{s.code || "Sans code"}{s.country ? ` · ${s.country}` : ""}</div>
                 </button>
               ))}
             </div>
           )}
         </div>
 
-        <Button type="submit" disabled={loading} className="w-full">
-          {loading ? "Creating account..." : "Sign Up"}
-        </Button>
+        <button type="submit" disabled={loading}
+          className="w-full rounded-lg bg-[#3f2f85] py-3 text-sm font-semibold text-white hover:opacity-90 disabled:opacity-60 transition">
+          {loading ? "Création en cours..." : "Créer mon compte"}
+        </button>
       </form>
 
-      <p className="text-center text-sm text-slate-600">
-        Already have an account?{" "}
-        <Link href="/auth/login" className="text-blue-600 hover:underline font-medium">
-          Log in
+      <p className="text-center text-sm text-slate-500">
+        Déjà un compte ?{" "}
+        <Link href="/auth/login" className="font-semibold text-[#3f2f85] hover:text-[#e8b41f] transition">
+          Se connecter
         </Link>
       </p>
     </div>
