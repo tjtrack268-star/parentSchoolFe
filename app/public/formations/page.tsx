@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowRight, Users, Clock, Award, Globe } from "lucide-react"
+import { ArrowRight, Award } from "lucide-react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 
@@ -54,6 +54,15 @@ export default function FormationsPage() {
         <section className="bg-white">
           <div className="mx-auto max-w-6xl px-4 py-20">
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-start">
+              <div className="overflow-hidden rounded-xl shadow-lg">
+                <Image
+                  src="/formation_img/enseignement.jpeg"
+                  alt="Enseignements Dominicaux"
+                  width={600}
+                  height={400}
+                  className="h-full w-full object-cover"
+                />
+              </div>
               <div>
                 <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Formation 01</p>
                 <h2 className="mb-4 text-4xl font-bold text-[#3f2f85]">Sessions d'Enseignement Dominical</h2>
@@ -62,7 +71,6 @@ export default function FormationsPage() {
                   Les sessions ont lieu <strong>tous les dimanches</strong> et durent <strong>1h30</strong>.
                 </p>
 
-                {/* Objectifs */}
                 <div className="mb-6 space-y-3">
                   <h3 className="font-semibold text-[#3f2f85]">Objectifs</h3>
                   {[
@@ -76,7 +84,6 @@ export default function FormationsPage() {
                   ))}
                 </div>
 
-                {/* Thématiques */}
                 <div className="mb-6">
                   <h3 className="mb-3 font-semibold text-[#3f2f85]">Thématiques abordées</h3>
                   <div className="flex flex-wrap gap-2">
@@ -86,7 +93,31 @@ export default function FormationsPage() {
                   </div>
                 </div>
 
-                {/* Stats */}
+                <div className="mb-6">
+                  <h3 className="mb-3 text-xl font-bold text-[#3f2f85]">Comment participer en 2025 ?</h3>
+                  {[
+                    { type: "Membre Ordinaire", color: "border-[#3f2f85]", badge: "bg-[#3f2f85] text-white", tarifs: ["25 000 FCFA/an (en 1 ou 2 tranches)", "3 000 FCFA/mois"] },
+                    { type: "Membre d'Honneur", color: "border-[#e8b41f]", badge: "bg-[#e8b41f] text-[#3f2f85]", tarifs: ["Gratuit, sans condition"] },
+                    { type: "Non-membre", color: "border-slate-300", badge: "bg-slate-200 text-slate-700", tarifs: ["5 500 FCFA/mois"] },
+                  ].map((t, i) => (
+                    <div key={i} className={`rounded-lg border-l-4 ${t.color} bg-[#f8f4ef] p-5 mb-3`}>
+                      <div className="mb-3 flex items-center gap-3">
+                        <span className={`rounded-full px-3 py-1 text-xs font-bold ${t.badge}`}>{t.type}</span>
+                      </div>
+                      <ul className="space-y-1">
+                        {t.tarifs.map((tarif, j) => (
+                          <li key={j} className="flex items-center gap-2 text-sm text-slate-700">
+                            <span className="font-bold text-[#e8b41f]">•</span>{tarif}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                  <Link href="/auth/signup" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#3f2f85] px-6 py-3 font-semibold text-white transition hover:opacity-90">
+                    S'inscrire aux sessions <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+
                 <div className="grid grid-cols-3 gap-3">
                   {[
                     { value: "500+", label: "Enseignements" },
@@ -100,32 +131,6 @@ export default function FormationsPage() {
                   ))}
                 </div>
               </div>
-
-              {/* Tarifs */}
-              <div className="space-y-4">
-                <h3 className="text-xl font-bold text-[#3f2f85]">Comment participer en 2025 ?</h3>
-                {[
-                  { type: "Membre Ordinaire", color: "border-[#3f2f85]", badge: "bg-[#3f2f85] text-white", tarifs: ["25 000 FCFA/an (en 1 ou 2 tranches)", "3 000 FCFA/mois"] },
-                  { type: "Membre d'Honneur", color: "border-[#e8b41f]", badge: "bg-[#e8b41f] text-[#3f2f85]", tarifs: ["Gratuit, sans condition"] },
-                  { type: "Non-membre", color: "border-slate-300", badge: "bg-slate-200 text-slate-700", tarifs: ["5 500 FCFA/mois"] },
-                ].map((t, i) => (
-                  <div key={i} className={`rounded-lg border-l-4 ${t.color} bg-[#f8f4ef] p-5`}>
-                    <div className="mb-3 flex items-center gap-3">
-                      <span className={`rounded-full px-3 py-1 text-xs font-bold ${t.badge}`}>{t.type}</span>
-                    </div>
-                    <ul className="space-y-1">
-                      {t.tarifs.map((tarif, j) => (
-                        <li key={j} className="flex items-center gap-2 text-sm text-slate-700">
-                          <span className="font-bold text-[#e8b41f]">•</span>{tarif}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-                <Link href="/auth/signup" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#3f2f85] px-6 py-3 font-semibold text-white transition hover:opacity-90">
-                  S'inscrire aux sessions <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
             </div>
           </div>
         </section>
@@ -134,7 +139,6 @@ export default function FormationsPage() {
         <section className="bg-[#a3ade8]/20">
           <div className="mx-auto max-w-6xl px-4 py-20">
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-start">
-              {/* Image */}
               <div className="overflow-hidden rounded-xl shadow-lg">
                 <Image
                   src="/formation_img/Conseiller parental.jpeg"
@@ -144,7 +148,6 @@ export default function FormationsPage() {
                   className="h-full w-full object-cover"
                 />
               </div>
-
               <div>
                 <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Formation 02</p>
                 <h2 className="mb-4 text-4xl font-bold text-[#3f2f85]">Formation des Conseillers Parentaux</h2>
@@ -153,7 +156,6 @@ export default function FormationsPage() {
                 </p>
                 <p className="mb-6 text-sm font-semibold text-[#3f2f85]">Durée : 3 mois — 3 séances/semaine — 36 leçons — Certificat officiel</p>
 
-                {/* Modules */}
                 <div className="mb-6 space-y-2">
                   <h3 className="font-semibold text-[#3f2f85]">Modules de formation</h3>
                   {[
@@ -168,7 +170,6 @@ export default function FormationsPage() {
                   ))}
                 </div>
 
-                {/* Tarifs */}
                 <div className="mb-6 grid grid-cols-2 gap-3">
                   <div className="rounded-lg bg-[#3f2f85] p-4 text-white text-center">
                     <div className="text-xs font-semibold uppercase text-[#e8b41f] mb-1">Membre Parents School</div>
@@ -180,7 +181,6 @@ export default function FormationsPage() {
                   </div>
                 </div>
 
-                {/* Stats */}
                 <div className="grid grid-cols-2 gap-3">
                   {[
                     { value: "5", label: "Promotions formées" },
@@ -211,7 +211,6 @@ export default function FormationsPage() {
                 </p>
                 <p className="mb-6 text-sm font-semibold text-[#3f2f85]">Durée : 21 jours — Formation pratique en ligne — Certificat de formation</p>
 
-                {/* Tarifs */}
                 <div className="mb-6 space-y-3">
                   <h3 className="font-semibold text-[#3f2f85]">Coût de la formation</h3>
                   <div className="grid grid-cols-2 gap-3">
@@ -232,7 +231,6 @@ export default function FormationsPage() {
                   </div>
                 </div>
 
-                {/* Stats */}
                 <div className="grid grid-cols-3 gap-3">
                   {[
                     { value: "5", label: "Sessions en ligne" },
@@ -264,100 +262,158 @@ export default function FormationsPage() {
         {/* ── 4. Empower Youth ── */}
         <section className="bg-[#a3ade8]/20">
           <div className="mx-auto max-w-6xl px-4 py-20">
-            <div className="text-center mb-12">
-              <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Formation 04 — Cleen Leaders Academy</p>
-              <h2 className="mb-4 text-4xl font-bold text-[#3f2f85] sm:text-5xl">Programme Empower Youth</h2>
-              <p className="mx-auto max-w-2xl text-slate-600">
-                Doter les jeunes des outils nécessaires pour construire leur avenir avec confiance, valeurs et leadership.
-              </p>
-            </div>
 
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 mb-10">
-              {/* Objectifs */}
-              <div className="rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm">
-                <h3 className="mb-4 font-bold text-[#3f2f85]">Objectifs</h3>
-                <ul className="space-y-2">
+            {/* En-tête avec image */}
+            <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-start mb-16">
+              <div>
+                <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Formation 04 — Cleen Leaders Academy</p>
+                <h2 className="mb-4 text-4xl font-bold text-[#3f2f85] sm:text-5xl">Programme Empower Youth</h2>
+                <p className="mb-4 text-slate-600 leading-relaxed">
+                  Un programme de développement personnel intensif conçu pour équiper les jeunes (11–20 ans) des compétences émotionnelles, relationnelles et de leadership dont ils ont besoin pour construire leur avenir avec confiance, intégrité et vision.
+                </p>
+                <p className="mb-6 text-sm font-semibold text-[#3f2f85]">Durée : 9 mois — 3 niveaux progressifs — Séances hebdomadaires (samedi, 1h) — Certificat de réussite</p>
+
+                <div className="mb-6 space-y-2">
+                  <h3 className="font-semibold text-[#3f2f85]">Objectifs du programme</h3>
                   {[
-                    "Renforcer l'estime et la confiance en soi",
+                    "Renforcer l'estime et la confiance en soi des jeunes",
                     "Développer les compétences émotionnelles et relationnelles",
-                    "Fournir des outils de gestion du stress",
-                    "Soutenir les parents dans leur rôle d'éducateur",
+                    "Fournir des outils concrets de gestion du stress et des émotions",
+                    "Cultiver un leadership éthique fondé sur des valeurs solides",
+                    "Soutenir les parents dans leur rôle d'éducateur au quotidien",
                   ].map((o, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
-                      <span className="mt-0.5 font-bold text-[#e8b41f]">✓</span>{o}
-                    </li>
+                    <div key={i} className="flex items-start gap-2 rounded-lg border-l-4 border-[#e8b41f] bg-white p-3 text-sm font-medium text-slate-700">
+                      <span className="font-bold text-[#e8b41f]">✓</span>{o}
+                    </div>
                   ))}
-                </ul>
-              </div>
+                </div>
 
-              {/* Structure */}
-              <div className="rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm">
-                <h3 className="mb-4 font-bold text-[#3f2f85]">Structure</h3>
-                <ul className="space-y-2 text-sm text-slate-600">
+                <div className="grid grid-cols-3 gap-3">
                   {[
-                    "3 niveaux progressifs sur 9 mois",
-                    "3 mois par niveau",
-                    "Tranches d'âge : 11–15 ans et 16–20 ans",
-                    "Séances hebdomadaires de 1h (samedi)",
-                    "Activités interactives et accompagnement personnalisé",
+                    { value: "36", label: "Leçons au total" },
+                    { value: "2", label: "Tranches d'âge" },
+                    { value: "9", label: "Mois de formation" },
                   ].map((s, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="mt-0.5 font-bold text-[#e8b41f]">•</span>{s}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Niveaux */}
-              <div className="rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm">
-                <h3 className="mb-4 font-bold text-[#3f2f85]">Contenu du programme</h3>
-                <div className="space-y-3">
-                  {[
-                    { niveau: "Niveau 1", titre: "Fondamentaux de la Croissance Personnelle", lecons: "12 Leçons" },
-                    { niveau: "Niveau 2", titre: "Construire une Mentalité de Croissance", lecons: "12 Leçons" },
-                    { niveau: "Niveau 3", titre: "Autonomie et Responsabilité", lecons: "12 Leçons" },
-                  ].map((n, i) => (
-                    <div key={i} className="rounded bg-[#f8f4ef] p-3">
-                      <div className="text-xs font-bold text-[#e8b41f]">{n.niveau} — {n.lecons}</div>
-                      <div className="text-sm font-medium text-[#3f2f85]">{n.titre}</div>
+                    <div key={i} className="rounded-lg border-l-4 border-[#e8b41f] bg-white p-3 text-center">
+                      <div className="text-xl font-bold text-[#3f2f85]">{s.value}</div>
+                      <div className="text-xs text-slate-500">{s.label}</div>
                     </div>
                   ))}
                 </div>
               </div>
+
+              <div className="overflow-hidden rounded-xl shadow-lg">
+                <Image
+                  src="/vision/Empower-youth.jpeg"
+                  alt="Empower Youth"
+                  width={600}
+                  height={400}
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </div>
 
-            {/* Tarifs Empower Youth */}
+            {/* Modules par niveau */}
+            <div className="mb-14">
+              <h3 className="mb-6 text-2xl font-bold text-[#3f2f85] text-center">Contenu des 3 niveaux</h3>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                {[
+                  {
+                    niveau: "Niveau 1",
+                    titre: "Fondamentaux de la Croissance Personnelle",
+                    lecons: "12 Leçons — 3 mois",
+                    themes: [
+                      "Connaissance de soi et identité",
+                      "Gestion des émotions",
+                      "Estime de soi et confiance",
+                      "Valeurs et principes de vie",
+                    ],
+                  },
+                  {
+                    niveau: "Niveau 2",
+                    titre: "Construire une Mentalité de Croissance",
+                    lecons: "12 Leçons — 3 mois",
+                    themes: [
+                      "Communication positive",
+                      "Gestion des conflits",
+                      "Résilience et dépassement de soi",
+                      "Vision et fixation d'objectifs",
+                    ],
+                  },
+                  {
+                    niveau: "Niveau 3",
+                    titre: "Autonomie et Responsabilité",
+                    lecons: "12 Leçons — 3 mois",
+                    themes: [
+                      "Leadership éthique et service",
+                      "Prise de décision et responsabilité",
+                      "Gestion du temps et des priorités",
+                      "Projet de vie et engagement communautaire",
+                    ],
+                  },
+                ].map((n, i) => (
+                  <div key={i} className="rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm">
+                    <div className="mb-1 text-xs font-bold uppercase text-[#e8b41f]">{n.niveau}</div>
+                    <div className="mb-1 text-sm font-semibold text-slate-400">{n.lecons}</div>
+                    <h4 className="mb-4 font-bold text-[#3f2f85]">{n.titre}</h4>
+                    <ul className="space-y-2">
+                      {n.themes.map((t, j) => (
+                        <li key={j} className="flex items-start gap-2 text-sm text-slate-600">
+                          <span className="mt-0.5 font-bold text-[#e8b41f]">→</span>{t}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Accompagnements inclus */}
+            <div className="mb-14 rounded-lg border-l-4 border-[#e8b41f] bg-white p-8 shadow-sm">
+              <h3 className="mb-5 text-xl font-bold text-[#3f2f85]">Accompagnements inclus dans le programme</h3>
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {[
+                  "Ateliers thématiques mensuels",
+                  "Tables de croissance (mastermind entre jeunes)",
+                  "Programmes de lecture encadrés",
+                  "Coaching et counselling personnalisé",
+                  "Sessions de partage parent-jeune",
+                  "Certification de réussite par niveau",
+                ].map((a, i) => (
+                  <div key={i} className="flex items-center gap-2 text-sm text-slate-600">
+                    <span className="font-bold text-[#e8b41f]">✓</span>{a}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Tarifs */}
             <div className="mx-auto max-w-2xl">
-              <h3 className="mb-4 text-center text-xl font-bold text-[#3f2f85]">Modalités de participation</h3>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="rounded-lg bg-[#3f2f85] p-5 text-white">
+              <h3 className="mb-6 text-center text-xl font-bold text-[#3f2f85]">Modalités de participation</h3>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 mb-4">
+                <div className="rounded-lg bg-[#3f2f85] p-6 text-white">
                   <div className="text-xs font-semibold uppercase text-[#e8b41f] mb-3">Jeune de parent membre</div>
                   <div className="space-y-2 text-sm">
                     <div>Inscription : <span className="font-bold text-lg">15 000 FCFA</span></div>
                     <div>Par niveau : <span className="font-bold text-lg">35 000 FCFA</span></div>
+                    <div className="pt-2 text-xs text-[#e8b41f]">Programme complet (3 niveaux) : <span className="font-bold">105 000 FCFA</span></div>
                   </div>
                 </div>
-                <div className="rounded-lg border-2 border-[#3f2f85] p-5">
+                <div className="rounded-lg border-2 border-[#3f2f85] p-6">
                   <div className="text-xs font-semibold uppercase text-slate-500 mb-3">Tarif standard</div>
                   <div className="space-y-2 text-sm text-slate-700">
                     <div>Inscription : <span className="font-bold text-lg text-[#3f2f85]">25 000 FCFA</span></div>
                     <div>Par niveau : <span className="font-bold text-lg text-[#3f2f85]">60 000 FCFA</span></div>
+                    <div className="pt-2 text-xs text-[#3f2f85]">Programme complet (3 niveaux) : <span className="font-bold">180 000 FCFA</span></div>
                   </div>
                 </div>
               </div>
-
-              {/* Accompagnements */}
-              <div className="mt-6 rounded-lg border-l-4 border-[#e8b41f] bg-white p-5 shadow-sm">
-                <h4 className="mb-3 font-bold text-[#3f2f85]">Accompagnements inclus</h4>
-                <div className="grid grid-cols-2 gap-2">
-                  {["Ateliers thématiques", "Tables de croissance (mastermind)", "Programmes de lecture encadrés", "Coaching et counselling personnalisé"].map((a, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm text-slate-600">
-                      <span className="font-bold text-[#e8b41f]">✓</span>{a}
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <p className="text-center text-xs text-slate-500">Tranches d'âge : 11–15 ans et 16–20 ans • Séances chaque samedi</p>
+              <Link href="/auth/signup" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#3f2f85] px-6 py-3 font-semibold text-white transition hover:opacity-90">
+                Inscrire mon jeune <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
+
           </div>
         </section>
 

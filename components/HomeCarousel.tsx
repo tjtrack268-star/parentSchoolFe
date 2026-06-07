@@ -58,10 +58,10 @@ export default function HomeCarousel() {
               {/* Notre Communauté en Images */}
             </p>
             <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-balance text-white">
-              Former des Parents Selon les Valeurs Chrétiennes
+              Nous formons au metier de parent
             </h2>
             <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-Rejoignez une communauté internationale de formation à la parentalité ancrée dans les principes bibliques et le développement personnel.            </p>
+Rejoignez une communauté internationale de formation à la parentalité ancrée dans les principes bibliques.            </p>
             <div className="flex gap-4 flex-wrap">
               <Link href="/auth/signup">
                 <Button size="lg" className="bg-white text-blue-900 hover:bg-blue-50">

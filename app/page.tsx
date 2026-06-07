@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import HomeCarousel from "@/components/HomeCarousel"
@@ -17,12 +18,23 @@ export default function Home() {
         {/* Mission */}
         <section className="bg-white py-20" id="vision">
           <div className="mx-auto max-w-6xl px-4">
-            <div className="text-center mb-14">
-              <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Qui sommes-nous</p>
-              <h2 className="text-4xl font-bold text-[#3f2f85] sm:text-5xl mb-4">Notre Mission</h2>
-              <p className="mx-auto max-w-2xl text-lg text-slate-600">
-                Former et équiper les parents pour l'éducation de leurs enfants, tout en recherchant l'intervention de Dieu par la prière.
-              </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-14">
+              <div className="overflow-hidden rounded-xl shadow-lg">
+                <Image
+                  src="/vision/vision.jpeg"
+                  alt="Notre Vision"
+                  width={600}
+                  height={400}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="text-center lg:text-left">
+                <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Qui sommes-nous</p>
+                <h2 className="text-4xl font-bold text-[#3f2f85] sm:text-5xl mb-4">Notre Mission</h2>
+                <p className="mx-auto max-w-2xl text-lg text-slate-600">
+                  Former et équiper les parents pour l'éducation de leurs enfants, tout en recherchant l'intervention de Dieu par la prière.
+                </p>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -122,20 +134,20 @@ export default function Home() {
                 {
                   name: "Membre Ordinaire",
                   highlight: false,
-                  tarif: "25 000 FCFA/an ou 3 000 FCFA/mois",
+                  tarif: "20 000 FCFA payable une fois et à vie ",
                   features: ["Accès aux enseignements dominicaux", "Sessions en direct chaque dimanche", "Système de parrainage", "Communauté internationale", "Tarifs préférentiels formations"],
                 },
                 {
                   name: "Membre d'Honneur",
                   highlight: true,
-                  tarif: "Gratuit, sans condition",
+                  tarif: "200 000 FCFA payable une fois et à vie ",
                   features: ["Tout du membre ordinaire", "Accès gratuit aux enseignements", "Badge Honneur", "Support prioritaire", "Événements VIP"],
                 },
                 {
                   name: "Membre Bienfaiteur",
                   highlight: false,
-                  tarif: "Sur invitation",
-                  features: ["Tout du membre d'Honneur", "Reconnaissance spéciale", "Conseil consultatif", "Avantages exclusifs", "Impact communautaire"],
+                  tarif: "Sur demande",
+                  features: ["Reconnaissance spéciale", "Conseil consultatif", "Avantages exclusifs", "Impact communautaire"],
                 },
               ].map((tier, idx) => (
                 <div
@@ -188,11 +200,11 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
               {[
-                { grade: "Leader", desc: "4 parrains · 240 pts", benefit: "5 000 FCFA" },
-                { grade: "Leader Senior", desc: "8 parrains · 1 200 pts", benefit: "10 000 FCFA" },
-                { grade: "Coordinateur", desc: "18 parrains · 3 000 pts", benefit: "15 000 FCFA" },
-                { grade: "Mentor", desc: "30 parrains · 10 000 pts", benefit: "25 000 FCFA" },
-                { grade: "Directeur", desc: "50 parrains · 30 000 pts", benefit: "50 000 FCFA" },
+                { grade: "Leader", desc: "4 parrains · 240 pts", benefit: "" },
+                { grade: "Leader Senior", desc: "8 parrains · 1 200 pts", benefit: "" },
+                { grade: "Coordinateur", desc: "18 parrains · 3 000 pts", benefit: "" },
+                { grade: "Mentor", desc: "30 parrains · 10 000 pts", benefit: "" },
+                { grade: "Directeur", desc: "50 parrains · 30 000 pts", benefit: "" },
               ].map((item, idx) => {
                 const color = GRADE_COLORS[item.grade as keyof typeof GRADE_COLORS]
                 return (

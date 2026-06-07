@@ -73,7 +73,7 @@ export default function AboutPage() {
           </div>
           <div className="order-1 lg:order-2 overflow-hidden rounded-xl border border-white/10">
             <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%27%C3%A9cran%202026-05-18%20145938-BCIbZeLIEFBSpnzbXmb8PnFdYrJMPI.png"
+              src="/vision/vision.jpeg"
               alt="Vision Parents School"
               className="h-full w-full object-cover"
             />
@@ -85,7 +85,7 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-20 lg:grid-cols-2 lg:items-center">
           <div className="overflow-hidden rounded-xl shadow-lg">
             <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%27%C3%A9cran%202026-05-18%20145956-5TczkRp40jyi47rpadIgDFjrIhXKit.png"
+              src="/vision/Mission.jpeg"
               alt="Mission Parents School"
               className="h-full w-full object-cover"
             />
@@ -117,7 +117,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
             <div className="overflow-hidden rounded-xl shadow-lg">
               <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%27%C3%A9cran%202026-05-18%20150007-QexxD5k2G7CVFwzBaoMakeiv99X5e5.png"
+                src="/vision/valeur.jpeg"
                 alt="Valeurs Parents School"
                 className="h-full w-full object-cover"
               />
@@ -168,7 +168,7 @@ export default function AboutPage() {
 
           <div className="mt-14 overflow-hidden rounded-xl bg-white shadow-lg">
             <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Capture%20d%27%C3%A9cran%202026-05-18%20150030-YldrLxV50fpsDPaksNmdpPO0zlRSKH.png"
+              src="/vision/objectif.jpeg"
               alt="Objectif de croissance mondiale"
               className="h-full w-full object-cover"
             />
