@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import Link from "next/link"
 import { apiClient, ApiError } from "@/lib/api-client"
+import { logout } from "@/lib/auth"
 import DashboardHeader from "@/components/DashboardHeader"
 import DashboardFooter from "@/components/DashboardFooter"
 
@@ -36,7 +37,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const handleLogout = async () => {
     await fetch('/api/logout', { method: 'POST' }).catch(() => {})
-    router.push("/")
+    logout()
   }
 
   if (loading) {
@@ -62,8 +63,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="min-h-screen bg-[#f8f4ef] flex flex-col">
       <DashboardHeader
-        user={profile ? { firstName: profile.firstName, lastName: profile.lastName, currentGrade: profile.currentGrade, userRole: profile.userRole } : undefined}
-        onLogout={handleLogout}
         onMenuToggle={() => setMenuOpen(!menuOpen)}
       />
 
