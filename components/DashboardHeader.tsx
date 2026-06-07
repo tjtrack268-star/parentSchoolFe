@@ -10,9 +10,9 @@ interface DashboardHeaderProps {
 }
 
 const ADMIN_MENU = [
-  { label: "Import membres",   href: "/import"       },
-  { label: "Organigramme",     href: "/organigramme" },
-  { label: "Leaderboard",      href: "/admin/leaderboard" },
+  { label: "Import membres",   href: "/import"           },
+  { label: "Organigramme",     href: "/org-chart"        },
+  { label: "Leaderboard",      href: "/admin/leaderboard"},
 ]
 
 export default function DashboardHeader({ onMenuToggle }: DashboardHeaderProps) {
