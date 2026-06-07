@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, Suspense } from "react"
+import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -46,8 +47,22 @@ const MEMBER_TYPES = [
 type SponsorStatus = "idle" | "checking" | "valid" | "invalid"
 type SuccessData   = { memberCode: string; firstName: string; memberType: string }
 
-// ── Page ──────────────────────────────────────────────────────────────────────
-export default function RegisterPage() {
+// ── Wrapper Suspense requis pour useSearchParams avec App Router ─────────────
+export default function RegisterPageWrapper() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen items-center justify-center bg-[#f8f4ef]">
+        <div className="w-10 h-10 rounded-full border-4 border-[#a3ade8] border-t-[#3f2f85] animate-spin" />
+      </div>
+    }>
+      <RegisterPage />
+    </Suspense>
+  )
+}
+
+function RegisterPage() {
+  const searchParams = useSearchParams()
+  const refCode      = searchParams.get("ref") ?? ""
   const [sponsorStatus, setSponsorStatus] = useState<SponsorStatus>("idle")
   const [sponsorName,   setSponsorName]   = useState("")
   const [apiError,      setApiError]      = useState<string | null>(null)
@@ -56,7 +71,7 @@ export default function RegisterPage() {
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
-      sponsorCode: "", firstName: "", lastName: "",
+      sponsorCode: refCode, firstName: "", lastName: "",
       email: "", password: "", phone: "",
       country: "CM", profession: "", memberType: "ORDINARY",
     },
