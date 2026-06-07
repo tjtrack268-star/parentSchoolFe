@@ -56,12 +56,13 @@ export const GRADE_COLORS = {
 }
 
 export const COUNTRIES = [
-  { code: 'CM', name: 'Cameroun' },
-  { code: 'FR', name: 'France' },
-  { code: 'CA', name: 'Canada' },
-  { code: 'CD', name: 'République Démocratique du Congo' },
-  { code: 'BE', name: 'Belgique' },
-  { code: 'CH', name: 'Suisse' },
-  { code: 'SN', name: 'Sénégal' },
-  { code: 'CG', name: 'Congo' }
+  { code: 'CI', name: "Côte d'Ivoire",                  dial: '+225' },
+  { code: 'CM', name: 'Cameroun',                        dial: '+237' },
+  { code: 'SN', name: 'Sénégal',                         dial: '+221' },
+  { code: 'FR', name: 'France',                          dial: '+33'  },
+  { code: 'CD', name: 'République Démocratique du Congo', dial: '+243' },
+  { code: 'CG', name: 'Congo',                           dial: '+242' },
+  { code: 'CA', name: 'Canada',                          dial: '+1'   },
+  { code: 'BE', name: 'Belgique',                        dial: '+32'  },
+  { code: 'CH', name: 'Suisse',                          dial: '+41'  },
 ]
