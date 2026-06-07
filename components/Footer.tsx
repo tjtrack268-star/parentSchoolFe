@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 
 export default function Footer() {
   return (
@@ -6,7 +7,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="text-[#e8b41f] font-bold mb-4">Parents School</h3>
+            <Image
+              src="/footer/logo-footer.jpeg"
+              alt="Parents School"
+              width={160}
+              height={60}
+              className="h-16 w-auto object-contain mb-4"
+            />
             <p className="text-sm">Formation à la parentalité chrétienne pour le monde entier</p>
           </div>
           <div>

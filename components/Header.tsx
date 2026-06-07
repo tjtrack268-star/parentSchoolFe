@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { Menu, X } from "lucide-react"
 
@@ -22,11 +23,15 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 shrink-0">
-          <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#3f2f85] to-[#a3ade8] flex items-center justify-center">
-            <span className="text-[#e8b41f] font-bold text-sm">PS</span>
-          </div>
-          <span className="text-xl font-bold text-[#3f2f85]">Parents School</span>
+        <Link href="/" className="flex items-center shrink-0">
+          <Image
+            src="/header/logo-header.png"
+            alt="Parents School"
+            width={140}
+            height={48}
+            className="h-12 w-auto object-contain"
+            priority
+          />
         </Link>
 
         {/* Menu desktop */}
