@@ -219,6 +219,11 @@ export default function Home() {
                 )
               })}
             </div>
+            <div className="text-center mt-10">
+              <Link href="/simulator" className="inline-flex items-center gap-2 rounded-lg bg-[#3f2f85] px-8 py-4 font-semibold text-white transition hover:opacity-90">
+                Simuler ma progression <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
           </div>
         </section>
 

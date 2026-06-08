@@ -89,7 +89,7 @@ export default function SignUpPage() {
   const onSubmit = async (data: FormValues) => {
     setApiError(null)
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"}/api/auth/register`, {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -100,9 +100,9 @@ export default function SignUpPage() {
           password:    data.password,
           phone:       data.phone,
           country:     data.country,
-          city:        data.country,   // corrigé : ne pas confondre avec le pays
+          countryCode: data.country,
           profession:  data.profession || undefined,
-          userType:    data.memberType,
+          memberType:  data.memberType,
         }),
       })
       const result = await res.json()

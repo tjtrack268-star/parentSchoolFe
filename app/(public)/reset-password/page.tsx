@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Eye, EyeOff, Loader2, CheckCircle2, XCircle } from "lucide-react"
-import { authClient } from "@/lib/auth-client"
+import { saveToken } from "@/lib/auth"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 
@@ -74,21 +74,22 @@ export default function ResetPasswordPage() {
   const strength   = getStrength(watchedPwd)
 
   const onSubmit = async (data: FormValues) => {
-    if (!tempToken) return
+    const token = sessionStorage.getItem("tempToken")
+    if (!token) { router.replace("/auth/login"); return }
     setApiError(null)
     try {
       const res = await fetch("/api/auth/reset-password", {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tempToken, newPassword: data.password }),
+        body: JSON.stringify({ tempToken: token, newPassword: data.password }),
       })
       const result = await res.json()
-      if (!res.ok) { setApiError(result.message || "Une erreur est survenue"); return }
+      if (!res.ok) { setApiError(result.message || result.error || "Une erreur est survenue"); return }
 
       // Stocker le JWT normal et nettoyer le tempToken
       sessionStorage.removeItem("tempToken")
-      authClient.setToken(result.token)
-      router.replace("/dashboard")
+      saveToken(result.token, result.role ?? "MEMBER", result.firstName ?? "")
+      router.replace(result.role === "ADMIN" ? "/admin-dashboard" : "/dashboard")
     } catch {
       setApiError("Impossible de joindre le serveur. Veuillez réessayer.")
     }

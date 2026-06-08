@@ -1,18 +1,20 @@
-"use client"
-
 import Link from "next/link"
+import Image from "next/image"
 
 export default function DashboardFooter() {
   return (
     <footer className="bg-[#3f2f85] text-[#a3ade8] py-6 mt-auto">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-lg bg-[#e8b41f] flex items-center justify-center">
-              <span className="text-[#3f2f85] font-bold text-xs">PS</span>
-            </div>
-            <span className="font-semibold text-white">Parents School</span>
-          </div>
+          <Link href="/">
+            <Image
+              src="/footer/logo-footer.jpeg"
+              alt="Parents School"
+              width={120}
+              height={44}
+              className="h-11 w-auto object-contain"
+            />
+          </Link>
 
           <div className="flex items-center gap-6 text-sm">
             <Link href="/dashboard" className="hover:text-[#e8b41f] transition">Tableau de bord</Link>

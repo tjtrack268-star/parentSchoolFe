@@ -8,11 +8,11 @@ import DashboardHeader from "@/components/DashboardHeader"
 import DashboardFooter from "@/components/DashboardFooter"
 
 const ADMIN_NAV = [
-  { label: "Vue d'ensemble",  href: "/admin-dashboard", icon: "📊" },
-  { label: "Membres",         href: "/members",         icon: "👥" },
-  { label: "Grades",          href: "/grades",          icon: "🏅" },
-  { label: "Import membres",  href: "/import",          icon: "📥" },
-  { label: "Organigramme",    href: "/org-chart",       icon: "🌳" },
+  { label: "Vue d'ensemble",  href: "/admin/admin-dashboard", icon: "📊" },
+  { label: "Membres",         href: "/admin/members",         icon: "👥" },
+  { label: "Grades",          href: "/admin/grades",          icon: "🏅" },
+  { label: "Import membres",  href: "/admin/import",          icon: "📥" },
+  { label: "Organigramme",    href: "/admin/org-chart",       icon: "🌳" },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

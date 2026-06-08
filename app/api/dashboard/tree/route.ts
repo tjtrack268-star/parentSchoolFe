@@ -13,7 +13,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const response = await fetch(getApiUrl("/api/network/me"), {
+    const response = await fetch(getApiUrl("/api/members/me/network"), {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

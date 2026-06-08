@@ -1,36 +1,28 @@
+import { getApiUrl } from '@/lib/api-config'
 import { NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
-
-const BACKEND = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:8080'
 
 export async function GET() {
   try {
-    const res = await fetch(`${BACKEND}/api/testimonials`)
+    const res = await fetch(getApiUrl('/api/testimonials'))
+    if (!res.ok) return NextResponse.json([], { status: 200 })
     const data = await res.json()
-    return NextResponse.json(data, { status: res.status })
+    return NextResponse.json(Array.isArray(data) ? data : [])
   } catch {
-    return NextResponse.json({ error: 'Backend unavailable' }, { status: 503 })
+    return NextResponse.json([])
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const cookieStore = await cookies()
-    const token = cookieStore.get('auth_token')?.value
     const body = await request.json()
-
-    const res = await fetch(`${BACKEND}/api/testimonials`, {
+    const res = await fetch(getApiUrl('/api/testimonials'), {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
-
     const data = await res.json()
     return NextResponse.json(data, { status: res.status })
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
 }

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ChevronDown, Menu } from "lucide-react"
 import { getFirstName, getRole, logout } from "@/lib/auth"
 
@@ -50,14 +51,15 @@ export default function DashboardHeader({ onMenuToggle }: DashboardHeaderProps) 
             className="md:hidden p-1.5 rounded-lg hover:bg-white/10 text-white shrink-0">
             <Menu className="h-5 w-5" />
           </button>
-          <Link href="/dashboard" className="flex items-center gap-2 min-w-0">
-            <div className="h-8 w-8 rounded-lg bg-[#e8b41f] flex items-center justify-center shrink-0">
-              <span className="text-[#3f2f85] font-bold text-sm">PS</span>
-            </div>
-            <div className="min-w-0 hidden sm:block">
-              <p className="text-base font-bold text-white truncate leading-tight">Parents School</p>
-              <p className="text-xs text-[#a3ade8] truncate">Tableau de bord</p>
-            </div>
+          <Link href={isAdmin ? "/admin-dashboard" : "/dashboard"} className="flex items-center shrink-0">
+            <Image
+              src="/header/logo-header.png"
+              alt="Parents School"
+              width={120}
+              height={40}
+              className="h-10 w-auto object-contain brightness-0 invert"
+              priority
+            />
           </Link>
         </div>
 
@@ -93,11 +95,13 @@ export default function DashboardHeader({ onMenuToggle }: DashboardHeaderProps) 
             </div>
           )}
 
-          {/* Mon profil */}
-          <Link href="/dashboard/profile"
-            className="hidden sm:inline-flex items-center rounded-lg border border-[#a3ade8]/40 px-3 py-1.5 text-xs font-medium text-white hover:bg-white/10 transition">
-            Mon profil
-          </Link>
+          {/* Mon profil — masqué pour l'admin */}
+          {!isAdmin && (
+            <Link href="/dashboard/profile"
+              className="hidden sm:inline-flex items-center rounded-lg border border-[#a3ade8]/40 px-3 py-1.5 text-xs font-medium text-white hover:bg-white/10 transition">
+              Mon profil
+            </Link>
+          )}
 
           {/* Déconnexion */}
           <button onClick={logout}
