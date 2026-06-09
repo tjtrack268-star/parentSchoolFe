@@ -1,6 +1,6 @@
 // External API Configuration
 export const API_CONFIG = {
-  baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080',
+  baseUrl: process.env.NEXT_PUBLIC_API_URL || "http://13.140.155.201:8080" || 'http://localhost:8080',
   endpoints: {
     auth: {
       register: '/api/auth/register',

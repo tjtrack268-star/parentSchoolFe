@@ -8,8 +8,8 @@ export async function GET() {
     if (!token) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
-
-    const response = await fetch('http://localhost:8080/api/vouchers/my-vouchers', {
+    
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://13.140.155.201:8080" || "http://localhost:8080"}/api/vouchers/my-vouchers`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import Link from "next/link"
 import { apiClient, ApiError } from "@/lib/api-client"
+import { logout } from "@/lib/auth"
 import DashboardHeader from "@/components/DashboardHeader"
 import DashboardFooter from "@/components/DashboardFooter"
 
@@ -22,6 +23,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pathname = usePathname()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [redirecting, setRedirecting] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const started = useRef(false)
 
@@ -29,23 +31,24 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     if (started.current) return
     started.current = true
     apiClient.get<Profile>('/fetch-user')
-      .then(data => { if (!data) router.push("/auth/login"); else setProfile(data) })
-      .catch(err => { if (!(err instanceof ApiError) || (err.status !== 401 && err.status !== 403)) console.error(err); router.push("/auth/login") })
+      .then(data => {
+        if (!data) { setRedirecting(true); router.push("/auth/login"); return }
+        if ((data as any).role === "ADMIN" || data.userRole === "ADMIN") { setRedirecting(true); router.replace("/admin-dashboard"); return }
+        setProfile(data)
+      })
+      .catch(err => { setRedirecting(true); if (!(err instanceof ApiError) || err.status === 401 || err.status === 403) router.push("/auth/login"); else console.error(err) })
       .finally(() => setLoading(false))
   }, [router])
 
   const handleLogout = async () => {
     await fetch('/api/logout', { method: 'POST' }).catch(() => {})
-    router.push("/")
+    logout()
   }
 
-  if (loading) {
+  if (loading || redirecting) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#f8f4ef]">
-        <div className="text-center">
-          <div className="w-10 h-10 rounded-full border-4 border-[#a3ade8] border-t-[#3f2f85] animate-spin mx-auto mb-4" />
-          <p className="text-[#3f2f85] font-medium">Chargement...</p>
-        </div>
+        <div className="w-10 h-10 rounded-full border-4 border-[#a3ade8] border-t-[#3f2f85] animate-spin" />
       </div>
     )
   }
@@ -62,8 +65,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="min-h-screen bg-[#f8f4ef] flex flex-col">
       <DashboardHeader
-        user={profile ? { firstName: profile.firstName, lastName: profile.lastName, currentGrade: profile.currentGrade, userRole: profile.userRole } : undefined}
-        onLogout={handleLogout}
         onMenuToggle={() => setMenuOpen(!menuOpen)}
       />
 

@@ -141,6 +141,10 @@ class AuthClient {
   }
 
   getToken(): string | null {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('auth_token')
+      if (stored) return this.normalizeToken(stored)
+    }
     return this.token;
   }
 

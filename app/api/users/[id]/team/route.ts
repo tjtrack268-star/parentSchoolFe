@@ -10,7 +10,7 @@ export async function GET(
     const cookieStore = await cookies()
     const token = cookieStore.get('auth_token')?.value
 
-    const response = await fetch(`http://localhost:8080/api/users/${id}/team`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://13.140.155.201:8080" || "http://localhost:8080"}/api/users/${id}/team`, {
       headers: {
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         'Content-Type': 'application/json',

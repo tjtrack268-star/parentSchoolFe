@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Parents School",
+  title: "Parents-School",
   description: "Plateforme d'education chretienne familiale avec systeme MLM de parrainage multinational",
   generator: 'v0.app'
 }

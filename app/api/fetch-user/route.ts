@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    const response = await fetch(getApiUrl('/api/fetch-user'), {
+    const response = await fetch(getApiUrl('/api/members/me'), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

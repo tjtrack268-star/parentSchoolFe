@@ -1,6 +1,19 @@
 import { z } from "zod"
 
-const countryEnum = z.enum(["CM", "CD", "SN", "CG", "FR", "CA", "BE", "CH"] as const)
+const countryEnum = z.enum(["CM", "CD", "SN", "CG", "FR", "CA", "BE", "CH", "CI"] as const)
+
+export const registerSchema = z.object({
+  sponsorCode: z.string().max(32).optional().or(z.literal("")),
+  firstName: z.string().min(2, "Prénom requis (min. 2 caractères)"),
+  lastName: z.string().min(2, "Nom requis (min. 2 caractères)"),
+  email: z.string().email("Email invalide"),
+  phone: z.string().min(8, "Numéro de téléphone invalide"),
+  country: z.enum(["CM", "CI", "SN", "FR", "CD", "CG", "CA", "BE", "CH"], { required_error: "Pays requis" }),
+  profession: z.string().max(100).optional().or(z.literal("")),
+  memberType: z.enum(["ORDINARY", "HONORARY", "BENEFACTOR"], { required_error: "Type de membre requis" }),
+})
+
+export type RegisterInput = z.infer<typeof registerSchema>
 
 export const signUpSchema = z.object({
   email: z.string().email("Email invalide").min(1, "Email requis"),
