@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 
-const BACKEND = 'http://localhost:8080'
+const BACKEND = `${process.env.NEXT_PUBLIC_API_URL || "http://13.140.155.201:8080" || "http://localhost:8080"}`
 
 export async function GET(_: Request, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
