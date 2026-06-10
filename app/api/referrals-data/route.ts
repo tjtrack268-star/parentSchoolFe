@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 export async function GET() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://13.140.155.201:8080" || "http://localhost:8080"}/api/referrals-data`)
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "https://13.140.155.201:8080" || "http://13.140.155.201:8080" || 'API_URL' || "http://localhost:8080"}/api/referrals-data`)
     
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`)
