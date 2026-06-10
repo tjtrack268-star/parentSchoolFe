@@ -1,6 +1,7 @@
 // External API Configuration
+// API_URL (server-side, non-public) a priorité sur NEXT_PUBLIC_API_URL (browser)
 export const API_CONFIG = {
-  baseUrl: process.env.NEXT_PUBLIC_API_URL || "http://13.140.155.201:8080" || 'http://localhost:8080',
+  baseUrl: process.env.API_URL || process.env.NEXT_PUBLIC_API_URL || 'https://13.140.155.201:8080' || 'API_URL'  ||  'http://13.140.155.201:8080' || 'http://localhost:8080',
   endpoints: {
     auth: {
       register: '/api/auth/register',
