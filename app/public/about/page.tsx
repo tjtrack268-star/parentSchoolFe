@@ -85,7 +85,7 @@ export default function AboutPage() {
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-20 lg:grid-cols-2 lg:items-center">
           <div className="overflow-hidden rounded-xl shadow-lg">
             <img
-              src="/vision/Mission.jpeg"
+              src="/mission/missionz.jpeg"
               alt="Mission Parents School"
               className="h-full w-full object-cover"
             />

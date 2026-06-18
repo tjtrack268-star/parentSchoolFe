@@ -58,7 +58,7 @@ export default function HomeCarousel() {
               {/* Notre Communauté en Images */}
             </p>
             <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-balance text-white">
-              Nous formons au metier de parent
+              nous formons au METIER DE PARENT
             </h2>
             <p className="text-xl text-blue-100 mb-8 leading-relaxed">
 Rejoignez une communauté internationale de formation à la parentalité ancrée dans les principes bibliques.            </p>

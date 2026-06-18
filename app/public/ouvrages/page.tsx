@@ -46,10 +46,10 @@ const OUVRAGES = [
     auteur: "Clément Emadouan",
     categorie: "Reconstruction & Espoir",
     format: "Broché + PDF",
-    prix: "Sur commande",
+    prix: "10000 XAF",
     image: "/Ouvrage_img/Se Réinventer après une séparation auteur Clement Emadouan.jpeg",
     description: "Un accompagnement bienveillant pour se reconstruire après une séparation et retrouver sa place de parent épanoui.",
-    themes: ["Reconstruction personnelle", "Co-parentalité chrétienne", "Pardon et guérison", "Nouveau départ"],
+    themes: ["Reconstruction personnelle", "Co-parentalité", "Pardon et guérison", "Nouveau départ"],
     disponible: true,
   },
 ]

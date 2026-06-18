@@ -21,7 +21,7 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-14">
               <div className="overflow-hidden rounded-xl shadow-lg">
                 <Image
-                  src="/vision/vision.jpeg"
+                  src="/mission/mission.jpeg"
                   alt="Notre Vision"
                   width={600}
                   height={400}
@@ -125,7 +125,7 @@ export default function Home() {
               <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Nous rejoindre</p>
               <h2 className="text-4xl font-bold text-[#3f2f85] sm:text-5xl mb-4">Types d'Adhésion</h2>
               <p className="mx-auto max-w-2xl text-lg text-slate-600">
-                Choisissez le type d'adhésion qui correspond à vos besoins
+                Choisissez le type d'adhésion qui correspond à vos aspirations
               </p>
             </div>
 
@@ -135,7 +135,7 @@ export default function Home() {
                   name: "Membre Ordinaire",
                   highlight: false,
                   tarif: "20 000 FCFA payable une fois et à vie ",
-                  features: ["Accès aux enseignements dominicaux", "Sessions en direct chaque dimanche", "Système de parrainage", "Communauté internationale", "Tarifs préférentiels formations"],
+                  features: ["Accès aux enseignements dominicaux", "Sessions en direct chaque dimanche", "Système de parrainage", "Communauté internationale", "Tarifs préférentiels formations", "Reçois un livre réussir le metier de parents"],
                 },
                 {
                   name: "Membre d'Honneur",
@@ -200,11 +200,11 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-5 gap-4">
               {[
-                { grade: "Leader", desc: "4 parrains · 240 pts", benefit: "" },
-                { grade: "Leader Senior", desc: "8 parrains · 1 200 pts", benefit: "" },
-                { grade: "Coordinateur", desc: "18 parrains · 3 000 pts", benefit: "" },
-                { grade: "Mentor", desc: "30 parrains · 10 000 pts", benefit: "" },
-                { grade: "Directeur", desc: "50 parrains · 30 000 pts", benefit: "" },
+                { grade: "Leader", desc: "4 filleuls · 240 pts", benefit: "" },
+                { grade: "Leader Senior", desc: "8 filleulss · 1 200 pts", benefit: "" },
+                { grade: "Coordinateur", desc: "18 filleulss · 3 000 pts", benefit: "" },
+                { grade: "Mentor", desc: "30 filleulss · 10 000 pts", benefit: "" },
+                { grade: "Directeur", desc: "50 filleulss · 30 000 pts", benefit: "" },
               ].map((item, idx) => {
                 const color = GRADE_COLORS[item.grade as keyof typeof GRADE_COLORS]
                 return (
@@ -214,7 +214,7 @@ export default function Home() {
                     </div>
                     <p className="font-bold text-[#3f2f85] text-sm">{item.grade}</p>
                     <p className="text-xs text-slate-500 mt-1">{item.desc}</p>
-                    <p className="text-xs font-semibold text-[#e8b41f] mt-2">{item.benefit}/mois</p>
+                    <p className="text-xs font-semibold text-[#e8b41f] mt-2">{item.benefit}</p>
                   </div>
                 )
               })}
