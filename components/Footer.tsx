@@ -14,7 +14,7 @@ export default function Footer() {
               height={60}
               className="h-16 w-auto object-contain mb-4"
             />
-            <p className="text-sm">Formation à la parentalité chrétienne pour le monde entier</p>
+            <p className="text-sm"><strong>RD N°061/RDA/JO5/SAAJP</strong></p>
           </div>
           <div>
             <h4 className="text-[#e8b41f] font-semibold mb-4">Naviguer</h4>

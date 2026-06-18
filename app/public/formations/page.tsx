@@ -65,7 +65,7 @@ export default function FormationsPage() {
               </div>
               <div>
                 <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Formation 01</p>
-                <h2 className="mb-4 text-4xl font-bold text-[#3f2f85]">Sessions d'Enseignement Dominical</h2>
+                <h2 className="mb-4 text-4xl font-bold text-[#3f2f85]">Session d'Enseignement Dominical</h2>
                 <p className="mb-6 text-slate-600 leading-relaxed">
                   Chaque session comprend <strong>4 enseignements en ligne</strong> : 3 sur la parentalité positive et 1 sur la relation inter-parentale (sexualité dans le couple, gestion des finances…).
                   Les sessions ont lieu <strong>tous les dimanches</strong> et durent <strong>1h30</strong>.
@@ -94,9 +94,9 @@ export default function FormationsPage() {
                 </div>
 
                 <div className="mb-6">
-                  <h3 className="mb-3 text-xl font-bold text-[#3f2f85]">Comment participer en 2025 ?</h3>
+                  <h3 className="mb-3 text-xl font-bold text-[#3f2f85]">Comment participer ?</h3>
                   {[
-                    { type: "Membre Ordinaire", color: "border-[#3f2f85]", badge: "bg-[#3f2f85] text-white", tarifs: ["25 000 FCFA/an (en 1 ou 2 tranches)", "3 000 FCFA/mois"] },
+                    { type: "Membre Ordinaire", color: "border-[#3f2f85]", badge: "bg-[#3f2f85] text-white", tarifs: ["25 000 FCFA/an", "3 000 FCFA/mois"] },
                     { type: "Membre d'Honneur", color: "border-[#e8b41f]", badge: "bg-[#e8b41f] text-[#3f2f85]", tarifs: ["Gratuit, sans condition"] },
                     { type: "Non-membre", color: "border-slate-300", badge: "bg-slate-200 text-slate-700", tarifs: ["5 500 FCFA/mois"] },
                   ].map((t, i) => (
@@ -183,9 +183,9 @@ export default function FormationsPage() {
 
                 <div className="grid grid-cols-2 gap-3">
                   {[
-                    { value: "5", label: "Promotions formées" },
-                    { value: "79", label: "Récipiendaires" },
-                    { value: "10", label: "Pasteurs certifiés" },
+                    { value: "6", label: "Promotions formées" },
+                    { value: "110", label: "Récipiendaires" },
+                    { value: "", label: "Cibles : parents, Pasteurs, Moniteurs d'enfants, Professionnels, Leaders de communautés..." },
                     { value: "7", label: "Pays représentés" },
                   ].map((s, i) => (
                     <div key={i} className="rounded-lg border-l-4 border-[#e8b41f] bg-white p-3">
@@ -234,7 +234,7 @@ export default function FormationsPage() {
                 <div className="grid grid-cols-3 gap-3">
                   {[
                     { value: "5", label: "Sessions en ligne" },
-                    { value: "34", label: "Participants" },
+                    { value: "34", label: "récipiendaires" },
                     { value: "5", label: "Pays représentés" },
                   ].map((s, i) => (
                     <div key={i} className="rounded-lg border-l-4 border-[#e8b41f] bg-[#f8f4ef] p-3 text-center">
