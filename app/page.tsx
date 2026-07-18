@@ -270,8 +270,8 @@ export default function Home() {
               Rejoignez des parents du monde entier en quête de formation et d'épanouissement familial
             </p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <Link href="/auth/signup" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#e8b41f] px-8 py-4 font-semibold text-[#3f2f85] transition hover:opacity-90">
-                S'inscrire gratuitement <ArrowRight className="h-5 w-5" />
+              <Link href="/inscription" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#e8b41f] px-8 py-4 font-semibold text-[#3f2f85] transition hover:opacity-90">
+                S'inscrire maintenant <ArrowRight className="h-5 w-5" />
               </Link>
               <Link href="/auth/login" className="inline-flex items-center justify-center rounded-lg border-2 border-[#e8b41f] px-8 py-4 font-semibold text-[#e8b41f] transition hover:bg-[#e8b41f] hover:text-[#3f2f85]">
                 Se connecter

@@ -54,7 +54,7 @@ export default function ActivitiesPage() {
             <Link href="/auth/login">
               <Button variant="ghost">Se connecter</Button>
             </Link>
-            <Link href="/auth/signup">
+            <Link href="/inscription">
               <Button>S'inscrire</Button>
             </Link>
           </div>
@@ -96,7 +96,7 @@ export default function ActivitiesPage() {
             <p className="text-lg text-blue-100 mb-8">
               Commencez votre parcours d'éducation chrétienne avec Parents School
             </p>
-            <Link href="/auth/signup">
+            <Link href="/inscription">
               <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50">
                 S'inscrire Maintenant
               </Button>

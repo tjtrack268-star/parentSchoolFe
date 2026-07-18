@@ -54,7 +54,7 @@ export default function Header() {
           className={`${mobile ? "flex-1 text-center" : "hidden sm:inline-flex"} items-center justify-center rounded-lg border-2 border-[#3f2f85] px-4 py-1.5 text-sm font-semibold text-[#3f2f85] hover:bg-[#3f2f85] hover:text-white transition`}>
           Se connecter
         </Link>
-        <Link href="/auth/signup" onClick={() => setOpen(false)}
+        <Link href="/inscription" onClick={() => setOpen(false)}
           className={`${mobile ? "flex-1 text-center" : "hidden sm:inline-flex"} items-center justify-center rounded-lg bg-[#3f2f85] px-4 py-1.5 text-sm font-semibold text-white hover:opacity-90 transition`}>
           S'inscrire
         </Link>
