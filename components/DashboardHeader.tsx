@@ -15,6 +15,7 @@ const ADMIN_MENU = [
   { label: "Membres",          href: "/admin/members"    },
   { label: "Grades",           href: "/admin/grades"     },
   { label: "Inscriptions formation", href: "/admin/formation-registrations" },
+  { label: "Témoignages",      href: "/admin/testimonials" },
   { label: "Import membres",   href: "/import"           },
   { label: "Organigramme",     href: "/org-chart"        },
   { label: "Leaderboard",      href: "/admin/leaderboard"},
