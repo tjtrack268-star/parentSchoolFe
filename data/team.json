@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Clément Emadouan",
+    "role": "Fondateur & Directeur",
+    "pays": "Cameroun",
+    "code": "PS000_001",
+    "email": "founder@parentschool.com",
+    "telephone": "",
+    "image": "/Ouvrage_img/Réussir le metier de parent auteur clement Emadouan.jpeg",
+    "description": "Auteur, conférencier et expert en parentalité, il accompagne les familles depuis plus de 15 ans."
+  },
+  {
+    "name": "Laurène Kadjeu",
+    "role": "Co-fondatrice & Formatrice",
+    "pays": "Cameroun",
+    "code": "PS001_001",
+    "email": "laurene.kadjeu@parentschool.com",
+    "telephone": "",
+    "image": "/Ouvrage_img/Brise la chaine des blessures Emotionnelles dans ta famille auteur Laurène Kadjeu.jpeg",
+    "description": "Spécialiste en développement de l'enfant et en accompagnement parental bienveillant."
+  },
+  {
+    "name": "Équipe Pédagogique",
+    "role": "Formateurs & Coachs",
+    "pays": "International",
+    "code": "PS001_002",
+    "email": "formation@parentschool.com",
+    "telephone": "",
+    "image": "/vision/Empower-youth.jpeg",
+    "description": "Une équipe pluridisciplinaire dédiée à la conception et à l'animation des formations Parents School."
+  },
+  {
+    "name": "Conseiller Parental",
+    "role": "Coach & Formateur",
+    "pays": "Cameroun",
+    "code": "PS001_003",
+    "email": "conseil@parentschool.com",
+    "telephone": "",
+    "image": "/formation_img/Conseiller parental.jpeg",
+    "description": "Accompagne les parents dans leur parcours de transformation personnelle et familiale."
+  },
+  {
+    "name": "Expert Communication",
+    "role": "Formateur Art Oratoire",
+    "pays": "France",
+    "code": "PS001_004",
+    "email": "communication@parentschool.com",
+    "telephone": "",
+    "image": "/formation_img/Art oratoire.jpeg",
+    "description": "Aide les parents à mieux communiquer avec leurs enfants et à s'exprimer avec assurance."
+  },
+  {
+    "name": "Responsable Formation",
+    "role": "Coordinatrice Pédagogique",
+    "pays": "Cameroun",
+    "code": "PS001_005",
+    "email": "coordination@parentschool.com",
+    "telephone": "",
+    "image": "/formation_img/enseignement.jpeg",
+    "description": "Coordonne les programmes de formation et veille à la qualité des enseignements dispensés."
+  }
+]
