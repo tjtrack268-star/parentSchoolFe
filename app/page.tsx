@@ -3,6 +3,7 @@ import Image from "next/image"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import HomeCarousel from "@/components/HomeCarousel"
+import HomeTestimonials from "@/components/HomeTestimonials"
 import { ArrowRight, BookOpen, GraduationCap, Users, Heart, Lightbulb, Sprout } from "lucide-react"
 import { GRADE_COLORS } from "@/lib/constants"
 
@@ -228,38 +229,7 @@ export default function Home() {
         </section>
 
         {/* Témoignages */}
-        <section className="bg-white py-20">
-          <div className="mx-auto max-w-6xl px-4">
-            <div className="text-center mb-14">
-              <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Ils témoignent</p>
-              <h2 className="text-4xl font-bold text-[#3f2f85] sm:text-5xl mb-4">Témoignages</h2>
-              <p className="mx-auto max-w-2xl text-lg text-slate-600">Ce que nos membres disent de Parents School</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { name: "Mireille K.", role: "Maman de 3 enfants", pays: "Douala", quote: "Parents School m'a aidée à mieux comprendre mes enfants. Notre communication est devenue plus apaisée et constructive." },
-                { name: "Paul N.", role: "Père de famille", pays: "Yaoundé", quote: "Les modules sont pratiques, concrets et adaptés à notre réalité africaine. J'applique chaque semaine ce que j'apprends." },
-                { name: "Sarah M.", role: "Parent relais", pays: "Abidjan", quote: "La communauté est bienveillante. On se sent accompagné, pas jugé. C'est un vrai soutien pour les parents." },
-              ].map((item, idx) => (
-                <div key={idx} className="rounded-lg border-l-4 border-[#e8b41f] bg-[#f8f4ef] p-6 shadow-sm">
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => <span key={i} className="text-[#e8b41f]">★</span>)}
-                  </div>
-                  <p className="text-slate-600 mb-5 italic text-sm leading-relaxed">"{item.quote}"</p>
-                  <div className="border-t border-[#a3ade8]/30 pt-4">
-                    <p className="font-bold text-[#3f2f85]">{item.name}</p>
-                    <p className="text-xs text-slate-500">{item.role} · {item.pays}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="text-center mt-10">
-              <Link href="/public/temoignages" className="inline-flex items-center gap-2 text-[#3f2f85] font-semibold hover:text-[#e8b41f] transition">
-                Voir tous les témoignages <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
+        <HomeTestimonials />
 
         {/* CTA final */}
         <section className="bg-gradient-to-r from-[#3f2f85] to-[#a3ade8] py-20 text-white">

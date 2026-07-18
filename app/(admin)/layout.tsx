@@ -12,6 +12,7 @@ const ADMIN_NAV = [
   { label: "Membres",         href: "/members",         icon: "👥" },
   { label: "Grades",          href: "/grades",          icon: "🏅" },
   { label: "Inscriptions",    href: "/admin/formation-registrations", icon: "🎓" },
+  { label: "Témoignages",     href: "/admin/testimonials",    icon: "💬" },
   { label: "Import membres",  href: "/import",          icon: "📥" },
   { label: "Organigramme",    href: "/org-chart",       icon: "🌳" },
 ]
