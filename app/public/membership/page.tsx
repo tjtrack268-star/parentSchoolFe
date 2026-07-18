@@ -61,7 +61,7 @@ export default function MembershipPage() {
             <Link href="/auth/login">
               <Button variant="ghost">Se connecter</Button>
             </Link>
-            <Link href="/auth/signup">
+            <Link href="/inscription">
               <Button>S'inscrire</Button>
             </Link>
           </div>

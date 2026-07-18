@@ -1,9 +1,11 @@
 "use client"
 
 import Link from "next/link"
-import { Eye, Heart, Lightbulb, Sprout, Users, Zap, ArrowRight } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Eye, Heart, Lightbulb, Sprout, Users, Zap, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+import teamData from "@/data/team.json"
 
 const objectives = [
   {
@@ -32,6 +34,8 @@ const objectives = [
   },
 ]
 
+const team = teamData
+
 const values = [
   {
     icon: Users,
@@ -49,6 +53,84 @@ const values = [
     description: "Préserver et partager des principes solides pour des familles stables.",
   },
 ]
+
+function TeamCarousel() {
+  const [current, setCurrent] = useState(0)
+  const visible = 3
+  const total = team.length
+  const prev = () => setCurrent((i) => (i === 0 ? total - 1 : i - 1))
+  const next = () => setCurrent((i) => (i === total - 1 ? 0 : i + 1))
+
+  useEffect(() => {
+    const timer = setInterval(next, 3000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const visibleMembers = Array.from({ length: visible }, (_, i) => team[(current + i) % total])
+
+  return (
+    <section className="bg-[#3f2f85]/5">
+      <div className="mx-auto max-w-6xl px-4 py-20">
+        <h2 className="mb-4 text-center text-4xl font-bold text-[#3f2f85] sm:text-5xl">Notre Équipe</h2>
+        <p className="mx-auto mb-12 max-w-3xl text-center text-slate-600">
+          Des passionnés engagés pour transformer la parentalité et accompagner les familles vers l'épanouissement.
+        </p>
+
+        <div className="relative flex items-center gap-4">
+          <button
+            onClick={prev}
+            className="flex-shrink-0 flex h-11 w-11 items-center justify-center rounded-full bg-[#3f2f85] text-white shadow-lg hover:bg-[#e8b41f] hover:text-[#3f2f85] transition"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+
+          <div className="grid grid-cols-3 gap-6 flex-1">
+            {visibleMembers.map((member, i) => (
+              <div
+                key={(current + i) % total}
+                className={`flex flex-col rounded-xl bg-white shadow-md overflow-hidden border-t-4 transition-all duration-300 ${
+                  i === 1 ? "border-[#e8b41f] scale-105 shadow-xl" : "border-[#3f2f85] opacity-80"
+                }`}
+              >
+                <div className="h-56 w-full overflow-hidden">
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="h-full w-full object-cover object-top"
+                  />
+                </div>
+                <div className="flex flex-col items-center p-5 text-center">
+                  <h3 className="text-lg font-bold text-[#3f2f85]">{member.name}</h3>
+                  <p className="mb-2 text-xs font-semibold text-[#e8b41f] uppercase tracking-wide">{member.role}</p>
+                  <p className="text-slate-600 text-sm leading-relaxed">{member.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <button
+            onClick={next}
+            className="flex-shrink-0 flex h-11 w-11 items-center justify-center rounded-full bg-[#3f2f85] text-white shadow-lg hover:bg-[#e8b41f] hover:text-[#3f2f85] transition"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+        </div>
+
+        <div className="mt-8 flex justify-center gap-2">
+          {team.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`h-2.5 rounded-full transition-all ${
+                i === current ? "bg-[#3f2f85] w-6" : "bg-slate-300 w-2.5"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 
 export default function AboutPage() {
   return (
@@ -141,6 +223,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <TeamCarousel />
 
       <section className="bg-[#a3ade8]/20">
         <div className="mx-auto max-w-6xl px-4 py-20">

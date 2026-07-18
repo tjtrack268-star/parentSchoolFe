@@ -20,7 +20,7 @@ export default function FormationsPage() {
                 Des formations complètes animées par des professionnels expérimentés pour vous accompagner dans votre parcours de parentalité chrétienne.
               </p>
               <div className="flex flex-wrap gap-4">
-                <Link href="/auth/signup" className="inline-flex items-center gap-2 rounded-lg bg-[#e8b41f] px-8 py-4 font-semibold text-[#3f2f85] transition hover:opacity-90">
+                <Link href="/inscription" className="inline-flex items-center gap-2 rounded-lg bg-[#e8b41f] px-8 py-4 font-semibold text-[#3f2f85] transition hover:opacity-90">
                   S'inscrire maintenant <ArrowRight className="h-5 w-5" />
                 </Link>
                 <Link href="/auth/login" className="inline-flex items-center rounded-lg border-2 border-[#e8b41f] px-8 py-4 font-semibold text-[#e8b41f] transition hover:bg-[#e8b41f] hover:text-[#3f2f85]">
@@ -113,7 +113,7 @@ export default function FormationsPage() {
                       </ul>
                     </div>
                   ))}
-                  <Link href="/auth/signup" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#3f2f85] px-6 py-3 font-semibold text-white transition hover:opacity-90">
+                  <Link href="/inscription" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#3f2f85] px-6 py-3 font-semibold text-white transition hover:opacity-90">
                     S'inscrire aux sessions <ArrowRight className="h-4 w-4" />
                   </Link>
                 </div>
@@ -409,7 +409,7 @@ export default function FormationsPage() {
                 </div>
               </div>
               <p className="text-center text-xs text-slate-500">Tranches d'âge : 11–15 ans et 16–20 ans • Séances chaque samedi</p>
-              <Link href="/auth/signup" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#3f2f85] px-6 py-3 font-semibold text-white transition hover:opacity-90">
+              <Link href="/inscription" className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#3f2f85] px-6 py-3 font-semibold text-white transition hover:opacity-90">
                 Inscrire mon jeune <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -424,7 +424,7 @@ export default function FormationsPage() {
             <h2 className="mb-5 text-4xl font-bold sm:text-5xl">Rejoignez nos formations</h2>
             <p className="mb-8 text-lg text-slate-200">Les membres bénéficient de tarifs préférentiels sur toutes nos formations</p>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <Link href="/auth/signup" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#e8b41f] px-8 py-4 font-semibold text-[#3f2f85] transition hover:opacity-90">
+              <Link href="/inscription" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#e8b41f] px-8 py-4 font-semibold text-[#3f2f85] transition hover:opacity-90">
                 S'inscrire maintenant <ArrowRight className="h-5 w-5" />
               </Link>
               <Link href="/public/ouvrages" className="inline-flex items-center justify-center rounded-lg border-2 border-[#e8b41f] px-8 py-4 font-semibold text-[#e8b41f] transition hover:bg-[#e8b41f] hover:text-[#3f2f85]">
