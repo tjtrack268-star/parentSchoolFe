@@ -76,14 +76,16 @@ let _filterCountry = ""
 let _matchIds: string[] = []
 let _currentMatchIdx = 0
 
-function CustomNode({ nodeDatum, toggleNode }: CustomNodeElementProps) {
+function CustomNode({ nodeDatum, toggleNode, hierarchyPointNode }: CustomNodeElementProps) {
   const id      = (nodeDatum as EnrichedDatum).__id ?? ""
   const grade   = String(nodeDatum.attributes?.grade   ?? "Aucun")
   const country = String(nodeDatum.attributes?.country ?? "")
   const colors  = GRADE_COLORS[grade] ?? GRADE_COLORS["Aucun"]
   const initials= String(nodeDatum.attributes?.initials ?? "??")
   const code    = String(nodeDatum.attributes?.code    ?? "")
-  const hasChildren = (nodeDatum.children?.length ?? 0) > 0
+  const childCount  = nodeDatum.children?.length ?? 0
+  const hasChildren = childCount > 0
+  const isRoot  = hierarchyPointNode.depth === 0
 
   // Surbrillance recherche (bordure dorée)
   const isHighlighted = _highlightIds.has(id)
@@ -94,42 +96,54 @@ function CustomNode({ nodeDatum, toggleNode }: CustomNodeElementProps) {
   const countryMatch = !_filterCountry || country === _filterCountry
   const dimmed = !gradeMatch || !countryMatch
 
-  const W = 130, H = 80
-  const borderColor = isCurrentMatch ? "#e8b41f" : isHighlighted ? "#f59e0b" : colors.bg
+  const W = 190, H = 92
+  const cardFill    = isRoot ? "#3f2f85" : "white"
+  const borderColor = isCurrentMatch ? "#e8b41f" : isHighlighted ? "#f59e0b" : isRoot ? "#e8b41f" : colors.bg
   const borderWidth = isHighlighted || isCurrentMatch ? 3 : 2
   const opacity     = dimmed ? 0.25 : 1
+  const nameColor   = isRoot ? "#ffffff" : "#3f2f85"
+  const codeColor   = isRoot ? "#a3ade8" : "#64748b"
+  const avatarFill  = isRoot ? "#e8b41f" : colors.bg
+  const avatarText  = isRoot ? "#3f2f85" : colors.text
 
   return (
     <g onClick={toggleNode} style={{ cursor: hasChildren ? "pointer" : "default", opacity }}>
-      <rect x={-W/2} y={-H/2} width={W} height={H} rx={10} ry={10}
-        fill="white" stroke={borderColor} strokeWidth={borderWidth}
+      <rect x={-W/2} y={-H/2} width={W} height={H} rx={12} ry={12}
+        fill={cardFill} stroke={borderColor} strokeWidth={borderWidth}
         filter="drop-shadow(0 2px 4px rgba(0,0,0,0.12))" />
 
       {/* Halo doré pour le match courant */}
       {isCurrentMatch && (
-        <rect x={-W/2-4} y={-H/2-4} width={W+8} height={H+8} rx={13} ry={13}
+        <rect x={-W/2-4} y={-H/2-4} width={W+8} height={H+8} rx={15} ry={15}
           fill="none" stroke="#e8b41f" strokeWidth={2} strokeDasharray="4 2" opacity={0.7} />
       )}
 
-      <circle cx={-W/2+24} cy={0} r={18} fill={colors.bg} />
-      <text x={-W/2+24} y={5} textAnchor="middle" fill={colors.text} fontSize={11} fontWeight="bold">
+      <circle cx={-W/2+30} cy={0} r={20} fill={avatarFill} />
+      <text x={-W/2+30} y={5} textAnchor="middle" fill={avatarText} fontSize={13} fontWeight="bold">
         {initials}
       </text>
 
-      <text x={-W/2+48} y={-14} fill="#3f2f85" fontSize={10} fontWeight="bold">
-        {nodeDatum.name.length > 14 ? nodeDatum.name.slice(0,13)+"…" : nodeDatum.name}
+      <text x={-W/2+58} y={-16} fill={nameColor} fontSize={13} fontWeight="bold">
+        {nodeDatum.name.length > 17 ? nodeDatum.name.slice(0,16)+"…" : nodeDatum.name}
       </text>
-      <text x={-W/2+48} y={0} fill="#64748b" fontSize={8} fontFamily="monospace">{code}</text>
+      <text x={-W/2+58} y={2} fill={codeColor} fontSize={10} fontFamily="monospace">{code}</text>
 
-      <rect x={-W/2+46} y={8} width={62} height={14} rx={7} fill={colors.bg} />
-      <text x={-W/2+77} y={19} textAnchor="middle" fill={colors.text} fontSize={7} fontWeight="600">
-        {grade.length > 12 ? grade.slice(0,11)+"…" : grade}
+      <rect x={-W/2+56} y={12} width={96} height={20} rx={10}
+        fill={isRoot ? "rgba(255,255,255,0.15)" : colors.bg} />
+      <text x={-W/2+104} y={26} textAnchor="middle"
+        fill={isRoot ? "#e8b41f" : colors.text} fontSize={10} fontWeight="600">
+        {grade.length > 14 ? grade.slice(0,13)+"…" : grade}
       </text>
 
+      {/* Badge nombre de filleuls directs */}
       {hasChildren && (
         <>
-          <circle cx={W/2-8} cy={-H/2+8} r={6} fill={colors.bg} />
-          <text x={W/2-8} y={-H/2+12} textAnchor="middle" fill={colors.text} fontSize={8} fontWeight="bold">+</text>
+          <circle cx={W/2-2} cy={-H/2+2} r={11} fill={isRoot ? "#e8b41f" : colors.bg}
+            stroke="white" strokeWidth={2} />
+          <text x={W/2-2} y={-H/2+6} textAnchor="middle"
+            fill={isRoot ? "#3f2f85" : colors.text} fontSize={10} fontWeight="bold">
+            {childCount}
+          </text>
         </>
       )}
     </g>
@@ -414,6 +428,22 @@ export default function OrgChartPage() {
             </button>
           )}
         </div>
+
+        {/* Ligne 3 : légende des grades (cliquable = filtre) */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="mr-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Grades</span>
+          {LEGEND_GRADES.map(g => (
+            <button key={g} onClick={() => setFilterGrade(filterGrade === g ? "Tous" : g)}
+              className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs transition ${
+                filterGrade === g
+                  ? "border-[#3f2f85] bg-[#3f2f85]/5 font-semibold text-[#3f2f85]"
+                  : "border-[#a3ade8]/40 bg-white text-slate-600 hover:border-[#3f2f85]/40"
+              }`}>
+              <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: (GRADE_COLORS[g] ?? GRADE_COLORS["Aucun"]).bg }} />
+              {g}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* ── Canvas ── */}
@@ -424,32 +454,18 @@ export default function OrgChartPage() {
           data={treeData}
           orientation="vertical"
           translate={translate}
-          nodeSize={{ x: 180, y: 130 }}
-          separation={{ siblings: 1.2, nonSiblings: 1.5 }}
+          nodeSize={{ x: 210, y: 150 }}
+          separation={{ siblings: 1.02, nonSiblings: 1.2 }}
           renderCustomNodeElement={CustomNode}
-          pathFunc="step"
+          pathFunc="diagonal"
           pathClassFunc={() => "stroke-[#a3ade8] stroke-[1.5px] fill-none"}
+          initialDepth={2}
           zoom={0.8}
           scaleExtent={{ min: 0.2, max: 2 }}
           enableLegacyTransitions
           transitionDuration={300}
           collapsible
         />
-
-        {/* Légende */}
-        <div className="absolute bottom-4 left-4 rounded-xl bg-white/95 border border-[#a3ade8]/30 px-4 py-3 shadow-md backdrop-blur-sm">
-          <p className="mb-2 text-xs font-bold uppercase tracking-wider text-[#3f2f85]">Grades</p>
-          <div className="space-y-1.5">
-            {LEGEND_GRADES.map(g => (
-              <button key={g} onClick={() => setFilterGrade(filterGrade === g ? "Tous" : g)}
-                className={`flex w-full items-center gap-2 rounded px-1 py-0.5 transition hover:bg-[#f8f4ef] ${filterGrade === g ? "ring-1 ring-[#3f2f85]" : ""}`}>
-                <div className="h-3 w-3 rounded-full shrink-0"
-                  style={{ backgroundColor: (GRADE_COLORS[g] ?? GRADE_COLORS["Aucun"]).bg }} />
-                <span className="text-xs text-slate-600">{g}</span>
-              </button>
-            ))}
-          </div>
-        </div>
 
         <div className="absolute bottom-4 right-4 rounded-lg bg-white/80 border border-[#a3ade8]/20 px-3 py-2 text-xs text-slate-400 backdrop-blur-sm">
           🖱 Molette pour zoomer · Drag pour déplacer · Clic nœud pour déplier
