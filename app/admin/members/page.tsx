@@ -292,7 +292,7 @@ export default function MembersPage() {
                       {new Date(m.createdAt).toLocaleDateString("fr-FR", { day: "2-digit", month: "short", year: "numeric" })}
                     </td>
                     <td className="px-4 py-3">
-                      <Link href={`/admin/members/${m.id}`}
+                      <Link href={`/members/${m.id}`}
                         className="flex items-center gap-1.5 rounded-lg border border-[#3f2f85] px-3 py-1.5 text-xs font-semibold text-[#3f2f85] hover:bg-[#3f2f85] hover:text-white transition">
                         <Eye className="h-3.5 w-3.5" /> Voir
                       </Link>
