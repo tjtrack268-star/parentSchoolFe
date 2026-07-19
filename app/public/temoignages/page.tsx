@@ -133,6 +133,28 @@ export default function TemoignagesPage() {
         )}
       </section>
 
+      {/* Témoignages en vidéo */}
+      <section className="bg-[#3f2f85]">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <p className="mb-2 text-center text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">En vidéo</p>
+          <h2 className="mb-10 text-center text-3xl font-bold text-white">Témoignages en vidéo</h2>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {["bJZNNSkbmks", "FYl5FSGuPKI", "2cenM0rspzI", "EHN0ahmjfW4"].map(id => (
+              <div key={id} className="relative aspect-video overflow-hidden rounded-xl shadow-lg ring-1 ring-white/10">
+                <iframe
+                  src={`https://www.youtube.com/embed/${id}`}
+                  title="Témoignage vidéo Parents School"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="absolute inset-0 h-full w-full"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Formulaire témoignage */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-2xl px-4">
