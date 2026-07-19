@@ -448,6 +448,7 @@ export default function OrgChartPage() {
 
       {/* ── Canvas ── */}
       <div ref={containerRef} className="relative flex-1 bg-[#f8f4ef]">
+        <style>{`.rd3t-link{stroke:#b9c0ea !important;stroke-width:1.5px !important;fill:none !important;opacity:.8}`}</style>
         <div ref={chartRef} className="h-full w-full">
         <Tree
           key={renderKey}
