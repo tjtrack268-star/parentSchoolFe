@@ -73,7 +73,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-[#a3ade8]/30 pt-8 text-center text-sm">
-          <p>© 2025 Parents School. Tous droits réservés.</p>
+          <p>© 2025 Parents School. Tous droits réservés. conçue et dévélopper By richardmogou99@gmail.com contact +237698132563 </p>
         </div>
       </div>
     </footer>

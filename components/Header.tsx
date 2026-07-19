@@ -13,6 +13,7 @@ const LINKS = [
   { href: "/public/formations",label: "Formations" },
   { href: "/simulator",       label: "Simulateur" },
   { href: "/public/ouvrages", label: "Ouvrages"   },
+  { href: "/organisation",    label: "Organisation"},
   { href: "/public/temoignages",label: "Témoignages"},
 ]
 
