@@ -1,75 +1,9 @@
 import Link from "next/link"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+import { ORG_RANKS, type OrgMember } from "@/data/organisation"
 
-interface Member { name: string; role: string; file: string }
-interface Rank { title: string; accent: string; members: Member[] }
-
-const ORG: Rank[] = [
-  {
-    title: "Fondateur",
-    accent: "#e8b41f",
-    members: [
-      { name: "Clément Emadouan", role: "Fondateur", file: "clement-emadouan.jpeg" },
-    ],
-  },
-  {
-    title: "Coordination",
-    accent: "#f97316",
-    members: [
-      { name: "Pasteur Bogni Abé Clotaire", role: "Coordinateur & Membre d'honneur", file: "bogni-clotaire.jpeg" },
-      { name: "Sylviane Kamenan", role: "Coordinatrice", file: "sylviane-kamenan.jpeg" },
-    ],
-  },
-  {
-    title: "Membre d'honneur",
-    accent: "#3f2f85",
-    members: [
-      { name: "Pasteur Fred Adinda", role: "Membre d'honneur", file: "fred-adinda.jpeg" },
-    ],
-  },
-  {
-    title: "Leaders Senior",
-    accent: "#3b82f6",
-    members: [
-      { name: "Esther Yokoi", role: "Leader Senior", file: "esther-yokoi.jpeg" },
-      { name: "Hilaire Lelou", role: "Leader Senior", file: "hilaire-lelou.jpeg" },
-      { name: "Kobenan Felix", role: "Leader Senior", file: "kobenan-felix.jpeg" },
-      { name: "Pasteur Vonopou Daniel", role: "Leader Senior", file: "vonopou-daniel.jpeg" },
-      { name: "Véronique Akoko", role: "Leader Senior", file: "veronique-akoko.jpeg" },
-    ],
-  },
-  {
-    title: "Leaders",
-    accent: "#22c55e",
-    members: [
-      { name: "Assiettou Kouakou", role: "Leader", file: "assiettou-kouakou.jpeg" },
-      { name: "Florence Guèhe", role: "Leader", file: "florence-guehe.jpeg" },
-      { name: "Mireille Obrou", role: "Leader", file: "mireille-obrou.jpeg" },
-      { name: "Nadège Bagui", role: "Leader", file: "nadege-bagui.jpeg" },
-      { name: "Pasteur Bai Zoko Marc Achille", role: "Leader", file: "bai-zoko-marc-achille.jpeg" },
-      { name: "Pasteur N'Guessan Yao Israël", role: "Leader", file: "nguessan-yao-israel.jpeg" },
-      { name: "Pasteur Viglo Yawori Oga Mawuena", role: "Leader", file: "viglo-yawori-oga-mawuena.jpeg" },
-    ],
-  },
-  {
-    title: "Membres",
-    accent: "#a3ade8",
-    members: [
-      { name: "Assiata Kabore", role: "Membre", file: "assiata-kabore.jpeg" },
-      { name: "Ayob Afonong Françoise", role: "Membre", file: "ayob-afonong-francoise.jpeg" },
-      { name: "Boula Romuald", role: "Membre", file: "boula-romuald.jpeg" },
-      { name: "Christelle Fouomene", role: "Membre", file: "christelle-fouomene.jpeg" },
-      { name: "Colette Emadouan", role: "Membre", file: "colette-emadouan.jpeg" },
-      { name: "Laurène Kadjeu", role: "Membre", file: "laurene-kadjeu.jpeg" },
-      { name: "Pasteur Tandy Tandy Jacques", role: "Membre", file: "tandy-tandy-jacques.jpeg" },
-    ],
-  },
-]
-
-const src = (file: string) => `/organisation/${encodeURIComponent(file)}`
-
-function MemberCard({ member, accent, big = false }: { member: Member; accent: string; big?: boolean }) {
+function MemberCard({ member, accent, big = false }: { member: OrgMember; accent: string; big?: boolean }) {
   return (
     <div className="flex flex-col items-center rounded-xl bg-white p-4 text-center shadow-sm ring-1 ring-[#a3ade8]/20 transition hover:-translate-y-1 hover:shadow-md">
       <div
@@ -77,7 +11,7 @@ function MemberCard({ member, accent, big = false }: { member: Member; accent: s
         style={{ boxShadow: `0 0 0 3px ${accent}` }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src(member.file)} alt={member.name} className="h-full w-full object-cover" loading="lazy" />
+        <img src={member.image} alt={member.name} className="h-full w-full object-cover" loading="lazy" />
       </div>
       <p className={`mt-3 font-bold text-[#3f2f85] ${big ? "text-lg" : "text-sm"}`}>{member.name}</p>
       <span
@@ -111,7 +45,7 @@ export default function OrganigramPage() {
 
         {/* Organigramme */}
         <section className="mx-auto max-w-6xl px-4 py-14">
-          {ORG.map((rank, i) => {
+          {ORG_RANKS.map((rank, i) => {
             const centered = rank.members.length <= 2
             return (
               <div key={rank.title} className={i > 0 ? "mt-12" : ""}>
@@ -130,7 +64,7 @@ export default function OrganigramPage() {
                   }
                 >
                   {rank.members.map(m => (
-                    <div key={m.file} className={centered ? "w-56" : ""}>
+                    <div key={m.image} className={centered ? "w-56" : ""}>
                       <MemberCard member={m} accent={rank.accent} big={rank.title === "Fondateur"} />
                     </div>
                   ))}

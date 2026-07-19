@@ -5,7 +5,7 @@ import { useState, useEffect } from "react"
 import { Eye, Heart, Lightbulb, Sprout, Users, Zap, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
-import teamData from "@/data/team.json"
+import { ORG_MEMBERS } from "@/data/organisation"
 
 const objectives = [
   {
@@ -34,7 +34,7 @@ const objectives = [
   },
 ]
 
-const team = teamData
+const team = ORG_MEMBERS
 
 const values = [
   {
