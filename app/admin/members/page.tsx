@@ -33,6 +33,10 @@ type SortDir   = "asc" | "desc"
 
 // ── Constantes ────────────────────────────────────────────────────────────────
 const GRADE_OPTIONS  = ["Tous", "Aucun", "Leader", "Leader Senior", "Coordinateur", "Mentor", "Directeur"]
+const GRADE_VALUE: Record<string, string> = {
+  "Aucun": "MEMBER", "Leader": "LEADER", "Leader Senior": "LEADER_SENIOR",
+  "Coordinateur": "COORDINATOR", "Mentor": "MENTOR", "Directeur": "DIRECTOR",
+}
 const TYPE_OPTIONS   = [
   { value: "",           label: "Tous"       },
   { value: "ORDINARY",   label: "Ordinaire"  },
@@ -88,7 +92,7 @@ export default function MembersPage() {
         sort:  `${sortField},${sortDir}`,
       })
       if (q.trim())           params.set("search",  q.trim())
-      if (grade !== "Tous")   params.set("grade",   grade)
+      if (grade !== "Tous")   params.set("grade",   GRADE_VALUE[grade] ?? grade)
       if (type)               params.set("userType",type)
       if (country)            params.set("country", country)
 
