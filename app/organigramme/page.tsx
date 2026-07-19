@@ -1,82 +1,96 @@
-"use client"
+import Link from "next/link"
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import { GRADE_COLORS } from '@/lib/constants'
-import { ChevronDown, ChevronRight, Users } from 'lucide-react'
+interface Member { name: string; role: string; file: string }
+interface Rank { title: string; accent: string; members: Member[] }
 
-interface OrgNode {
-  id: string
-  firstName: string
-  lastName: string
-  gradeName: string
-  directSponsorshipsCount: number
-  totalPoints: number
-  sponsorshipCode: string
-  children: OrgNode[]
-}
+const ORG: Rank[] = [
+  {
+    title: "Fondateur",
+    accent: "#e8b41f",
+    members: [
+      { name: "Clément Emadouan", role: "Fondateur", file: "clement-emadouan.jpeg" },
+    ],
+  },
+  {
+    title: "Coordination",
+    accent: "#f97316",
+    members: [
+      { name: "Pasteur Bogni Abé Clotaire", role: "Coordinateur & Membre d'honneur", file: "bogni-clotaire.jpeg" },
+      { name: "Sylviane Kamenan", role: "Coordinatrice", file: "sylviane-kamenan.jpeg" },
+    ],
+  },
+  {
+    title: "Membre d'honneur",
+    accent: "#3f2f85",
+    members: [
+      { name: "Pasteur Fred Adinda", role: "Membre d'honneur", file: "fred-adinda.jpeg" },
+    ],
+  },
+  {
+    title: "Leaders Senior",
+    accent: "#3b82f6",
+    members: [
+      { name: "Esther Yokoi", role: "Leader Senior", file: "esther-yokoi.jpeg" },
+      { name: "Hilaire Lelou", role: "Leader Senior", file: "hilaire-lelou.jpeg" },
+      { name: "Kobenan Felix", role: "Leader Senior", file: "kobenan-felix.jpeg" },
+      { name: "Pasteur Vonopou Daniel", role: "Leader Senior", file: "vonopou-daniel.jpeg" },
+      { name: "Véronique Akoko", role: "Leader Senior", file: "veronique-akoko.jpeg" },
+    ],
+  },
+  {
+    title: "Leaders",
+    accent: "#22c55e",
+    members: [
+      { name: "Assiettou Kouakou", role: "Leader", file: "assiettou-kouakou.jpeg" },
+      { name: "Florence Guèhe", role: "Leader", file: "florence-guehe.jpeg" },
+      { name: "Mireille Obrou", role: "Leader", file: "mireille-obrou.jpeg" },
+      { name: "Nadège Bagui", role: "Leader", file: "nadege-bagui.jpeg" },
+      { name: "Pasteur Bai Zoko Marc Achille", role: "Leader", file: "bai-zoko-marc-achille.jpeg" },
+      { name: "Pasteur N'Guessan Yao Israël", role: "Leader", file: "nguessan-yao-israel.jpeg" },
+      { name: "Pasteur Viglo Yawori Oga Mawuena", role: "Leader", file: "viglo-yawori-oga-mawuena.jpeg" },
+    ],
+  },
+  {
+    title: "Membres",
+    accent: "#a3ade8",
+    members: [
+      { name: "Assiata Kabore", role: "Membre", file: "assiata-kabore.jpeg" },
+      { name: "Ayob Afonong Françoise", role: "Membre", file: "ayob-afonong-francoise.jpeg" },
+      { name: "Boula Romuald", role: "Membre", file: "boula-romuald.jpeg" },
+      { name: "Christelle Fouomene", role: "Membre", file: "christelle-fouomene.jpeg" },
+      { name: "Colette Emadouan", role: "Membre", file: "colette-emadouan.jpeg" },
+      { name: "Laurène Kadjeu", role: "Membre", file: "laurene-kadjeu.jpeg" },
+      { name: "Pasteur Tandy Tandy Jacques", role: "Membre", file: "tandy-tandy-jacques.jpeg" },
+    ],
+  },
+]
 
-function OrgCard({ node, level = 0 }: { node: OrgNode; level?: number }) {
-  const [open, setOpen] = useState(level < 2)
-  const hasChildren = node.children.length > 0
-  const color = GRADE_COLORS[node.gradeName as keyof typeof GRADE_COLORS] || '#a3ade8'
+const src = (file: string) => `/organisation/${encodeURIComponent(file)}`
 
+function MemberCard({ member, accent, big = false }: { member: Member; accent: string; big?: boolean }) {
   return (
-    <div className={level > 0 ? "ml-6 border-l-2 border-[#a3ade8]/30 pl-4" : ""}>
+    <div className="flex flex-col items-center rounded-xl bg-white p-4 text-center shadow-sm ring-1 ring-[#a3ade8]/20 transition hover:-translate-y-1 hover:shadow-md">
       <div
-        onClick={() => hasChildren && setOpen(!open)}
-        className={`flex items-center gap-3 rounded-lg p-3 mb-2 transition ${hasChildren ? "cursor-pointer" : ""} ${
-          level === 0 ? "bg-[#3f2f85] text-white shadow-md" : "bg-white border border-[#a3ade8]/30 hover:border-[#3f2f85]/40"
-        }`}
+        className={`${big ? "h-32 w-32" : "h-24 w-24"} overflow-hidden rounded-full`}
+        style={{ boxShadow: `0 0 0 3px ${accent}` }}
       >
-        <div className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
-          style={{ backgroundColor: level === 0 ? '#e8b41f' : color }}>
-          <span style={{ color: level === 0 ? '#3f2f85' : 'white' }}>
-            {node.firstName.charAt(0)}{node.lastName.charAt(0)}
-          </span>
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className={`text-sm font-semibold truncate ${level === 0 ? "text-white" : "text-[#3f2f85]"}`}>
-            {node.firstName} {node.lastName}
-          </p>
-          <div className="flex items-center gap-2 mt-0.5">
-            <span className="text-xs px-2 py-0.5 rounded-full font-medium"
-              style={{ backgroundColor: level === 0 ? 'rgba(255,255,255,0.15)' : `${color}20`, color: level === 0 ? '#e8b41f' : color }}>
-              {node.gradeName || 'Aucun grade'}
-            </span>
-            <span className={`text-xs ${level === 0 ? "text-[#a3ade8]" : "text-slate-400"}`}>
-              {node.directSponsorshipsCount} filleuls · {node.totalPoints} pts
-            </span>
-          </div>
-        </div>
-        {hasChildren && (
-          <div className={level === 0 ? "text-[#e8b41f]" : "text-[#3f2f85]"}>
-            {open ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-          </div>
-        )}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src(member.file)} alt={member.name} className="h-full w-full object-cover" loading="lazy" />
       </div>
-      {open && hasChildren && (
-        <div>{node.children.map(child => <OrgCard key={child.id} node={child} level={level + 1} />)}</div>
-      )}
+      <p className={`mt-3 font-bold text-[#3f2f85] ${big ? "text-lg" : "text-sm"}`}>{member.name}</p>
+      <span
+        className="mt-1.5 inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold"
+        style={{ backgroundColor: `${accent}22`, color: accent }}
+      >
+        {member.role}
+      </span>
     </div>
   )
 }
 
 export default function OrganigramPage() {
-  const [data, setData] = useState<OrgNode[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    fetch('/api/organigramme/public')
-      .then(r => r.json())
-      .then(d => setData(Array.isArray(d) ? d : []))
-      .catch(e => setError(e.message))
-      .finally(() => setLoading(false))
-  }, [])
-
   return (
     <main className="min-h-screen bg-[#f8f4ef]">
       <Header />
@@ -86,58 +100,44 @@ export default function OrganigramPage() {
         <section className="bg-[#3f2f85] text-white py-20">
           <div className="mx-auto max-w-6xl px-4">
             <div className="max-w-3xl">
-              <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Structure</p>
+              <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Notre équipe</p>
               <h1 className="mb-4 text-5xl font-bold leading-tight sm:text-6xl">Organigramme</h1>
               <p className="text-lg leading-relaxed text-slate-100">
-                Découvrez la structure de notre communauté Parents School et les relations de parrainage.
+                Les femmes et les hommes qui animent la communauté Parents School, du fondateur aux membres.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Légende */}
-        <section className="bg-[#a3ade8]/20 border-b border-[#a3ade8]/30">
-          <div className="mx-auto max-w-6xl px-4 py-6">
-            <div className="flex flex-wrap items-center gap-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[#3f2f85]">Grades :</p>
-              {Object.entries(GRADE_COLORS).filter(([n]) => n !== 'Aucun').map(([name, color]) => (
-                <div key={name} className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
-                  <span className="text-xs text-slate-600">{name}</span>
+        {/* Organigramme */}
+        <section className="mx-auto max-w-6xl px-4 py-14">
+          {ORG.map((rank, i) => {
+            const centered = rank.members.length <= 2
+            return (
+              <div key={rank.title} className={i > 0 ? "mt-12" : ""}>
+                <div className="mb-6 flex items-center gap-3">
+                  <span className="h-6 w-1.5 rounded-full" style={{ backgroundColor: rank.accent }} />
+                  <h2 className="text-2xl font-bold text-[#3f2f85]">{rank.title}</h2>
+                  <span className="text-sm text-slate-400">
+                    {rank.members.length} membre{rank.members.length > 1 ? "s" : ""}
+                  </span>
                 </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Contenu */}
-        <section className="mx-auto max-w-6xl px-4 py-12">
-          {loading && (
-            <div className="flex flex-col items-center py-20">
-              <div className="w-10 h-10 rounded-full border-4 border-[#a3ade8] border-t-[#3f2f85] animate-spin mb-4" />
-              <p className="text-[#3f2f85] font-medium">Chargement...</p>
-            </div>
-          )}
-
-          {error && (
-            <div className="rounded-lg border-l-4 border-red-400 bg-red-50 p-6 text-center">
-              <p className="text-red-600">Erreur : {error}</p>
-            </div>
-          )}
-
-          {!loading && !error && data.length === 0 && (
-            <div className="rounded-lg border border-[#a3ade8]/30 bg-white p-16 text-center">
-              <Users className="mx-auto mb-4 h-12 w-12 text-[#a3ade8]" />
-              <h3 className="text-xl font-semibold text-[#3f2f85] mb-2">Organigramme en construction</h3>
-              <p className="text-slate-500">L'organigramme sera bientôt disponible.</p>
-            </div>
-          )}
-
-          {!loading && !error && data.length > 0 && (
-            <div className="bg-white rounded-xl border border-[#a3ade8]/30 p-6 shadow-sm">
-              {data.map(node => <OrgCard key={node.id} node={node} level={0} />)}
-            </div>
-          )}
+                <div
+                  className={
+                    centered
+                      ? "flex flex-wrap justify-center gap-6"
+                      : "grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+                  }
+                >
+                  {rank.members.map(m => (
+                    <div key={m.file} className={centered ? "w-56" : ""}>
+                      <MemberCard member={m} accent={rank.accent} big={rank.title === "Fondateur"} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )
+          })}
         </section>
 
         {/* CTA */}
