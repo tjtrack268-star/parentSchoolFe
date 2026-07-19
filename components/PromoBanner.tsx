@@ -117,97 +117,95 @@ export default function PromoBanner() {
   }, [paused])
 
   return (
-    <section
-      className="bg-[#3f2f85] text-white"
+    <aside
+      className="lg:sticky lg:top-24"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="mx-auto max-w-6xl px-4 py-12">
-        <p className="mb-6 text-center text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">
+      <div className="overflow-hidden rounded-xl bg-[#3f2f85] text-white shadow-sm">
+        <p className="px-5 pt-5 text-center text-xs font-semibold uppercase tracking-widest text-[#e8b41f]">
           Découvrez aussi Parents School
         </p>
 
-        <div className="relative min-h-[340px] sm:min-h-[240px]">
+        <div className="relative mt-4 min-h-[430px]">
           {SLIDES.map((slide, i) => {
             const meta = META[slide.type]
             return (
               <div
                 key={i}
-                className={`absolute inset-0 flex flex-col items-center gap-6 transition-opacity duration-700 sm:flex-row ${
+                className={`absolute inset-0 flex flex-col px-5 pb-5 transition-opacity duration-700 ${
                   i === index ? "opacity-100" : "pointer-events-none opacity-0"
                 }`}
                 aria-hidden={i !== index}
               >
-                <div className="h-40 w-40 shrink-0 overflow-hidden rounded-xl bg-white/10 sm:h-52 sm:w-52">
+                <div className="h-40 w-full shrink-0 overflow-hidden rounded-lg bg-white/10">
                   {"image" in slide && slide.image ? (
                     <Image
                       src={slide.image}
                       alt={slide.title}
-                      width={208}
-                      height={208}
+                      width={320}
+                      height={200}
                       className="h-full w-full object-cover"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center">
                       {slide.type === "temoignage" ? (
-                        <Quote className="h-16 w-16 text-[#e8b41f]" />
+                        <Quote className="h-14 w-14 text-[#e8b41f]" />
                       ) : slide.type === "ouvrage" ? (
-                        <BookOpen className="h-16 w-16 text-[#e8b41f]" />
+                        <BookOpen className="h-14 w-14 text-[#e8b41f]" />
                       ) : (
-                        <GraduationCap className="h-16 w-16 text-[#e8b41f]" />
+                        <GraduationCap className="h-14 w-14 text-[#e8b41f]" />
                       )}
                     </div>
                   )}
                 </div>
 
-                <div className="flex-1 text-center sm:text-left">
-                  <span className={`inline-block rounded-full px-3 py-1 text-xs font-bold ${meta.badge}`}>
-                    {meta.label}
-                  </span>
+                <span className={`mt-4 inline-block w-fit rounded-full px-3 py-1 text-xs font-bold ${meta.badge}`}>
+                  {meta.label}
+                </span>
 
-                  {slide.type === "temoignage" ? (
-                    <>
-                      <p className="mt-3 text-lg italic leading-relaxed text-white/95">“{slide.text}”</p>
-                      <p className="mt-3 font-semibold text-[#e8b41f]">{slide.author}</p>
-                      <p className="text-sm text-white/70">{slide.role}</p>
-                    </>
-                  ) : (
-                    <>
-                      <h3 className="mt-3 text-2xl font-bold">{slide.title}</h3>
-                      {slide.type === "ouvrage" && (
-                        <p className="mt-1 text-sm font-semibold text-[#e8b41f]">
-                          {slide.auteur} — {slide.prix}
-                        </p>
-                      )}
-                      <p className="mt-2 leading-relaxed text-white/85">{slide.text}</p>
-                    </>
-                  )}
+                {slide.type === "temoignage" ? (
+                  <>
+                    <p className="mt-3 text-sm italic leading-relaxed text-white/95">“{slide.text}”</p>
+                    <p className="mt-3 text-sm font-semibold text-[#e8b41f]">{slide.author}</p>
+                    <p className="text-xs text-white/70">{slide.role}</p>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="mt-3 text-lg font-bold leading-snug">{slide.title}</h3>
+                    {slide.type === "ouvrage" && (
+                      <p className="mt-1 text-xs font-semibold text-[#e8b41f]">
+                        {slide.auteur} — {slide.prix}
+                      </p>
+                    )}
+                    <p className="mt-2 text-sm leading-relaxed text-white/85">{slide.text}</p>
+                  </>
+                )}
 
-                  <Link
-                    href={meta.href}
-                    className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[#e8b41f] px-5 py-2.5 text-sm font-semibold text-[#3f2f85] transition hover:opacity-90"
-                  >
-                    {meta.cta} <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </div>
+                <Link
+                  href={meta.href}
+                  className="mt-auto inline-flex items-center justify-center gap-2 rounded-lg bg-[#e8b41f] px-4 py-2.5 text-sm font-semibold text-[#3f2f85] transition hover:opacity-90"
+                >
+                  {meta.cta} <ArrowRight className="h-4 w-4" />
+                </Link>
               </div>
             )
           })}
         </div>
 
-        <div className="mt-8 flex justify-center gap-2">
+        <div className="flex flex-wrap justify-center gap-1.5 px-5 pb-5">
           {SLIDES.map((slide, i) => (
             <button
               key={i}
               onClick={() => setIndex(i)}
               aria-label={`Diapositive ${i + 1} — ${META[slide.type].label}`}
               className={`h-2 rounded-full transition-all ${
-                i === index ? "w-6 bg-[#e8b41f]" : "w-2 bg-white/40 hover:bg-white/70"
+                i === index ? "w-5 bg-[#e8b41f]" : "w-2 bg-white/40 hover:bg-white/70"
               }`}
             />
           ))}
         </div>
       </div>
-    </section>
+    </aside>
   )
 }

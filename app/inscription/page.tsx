@@ -221,7 +221,6 @@ export default function InscriptionPage() {
             </div>
           </div>
         </div>
-        <PromoBanner />
         <Footer />
       </main>
     )
@@ -246,8 +245,8 @@ export default function InscriptionPage() {
           </div>
         </section>
 
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-14 lg:grid-cols-5">
-          <aside className="space-y-8 lg:col-span-2">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-14 lg:grid-cols-12">
+          <aside className="space-y-8 lg:col-span-3">
             <div className="rounded-xl bg-white p-6 shadow-sm">
               <h2 className="mb-4 text-lg font-bold text-[#3f2f85]">Programme</h2>
               <ul className="space-y-3">
@@ -276,7 +275,7 @@ export default function InscriptionPage() {
             </div>
           </aside>
 
-          <form onSubmit={handleSubmit} className="space-y-8 rounded-xl bg-white p-6 shadow-sm sm:p-8 lg:col-span-3">
+          <form onSubmit={handleSubmit} className="space-y-8 rounded-xl bg-white p-6 shadow-sm sm:p-8 lg:col-span-6">
             <div className="space-y-5">
               <div>
                 <label htmlFor="fullName" className="mb-1.5 block text-sm font-semibold text-slate-700">
@@ -454,9 +453,12 @@ export default function InscriptionPage() {
               {!loading && <ArrowRight className="h-5 w-5" />}
             </button>
           </form>
+
+          <div className="lg:col-span-3">
+            <PromoBanner />
+          </div>
         </div>
       </div>
-      <PromoBanner />
       <Footer />
     </main>
   )
