@@ -145,9 +145,14 @@ export default function OuvragesPage() {
                         >
                           <ShoppingCart className="h-4 w-4" /> Commander
                         </a>
-                        <button className="flex items-center gap-1 rounded-lg border-2 border-[#3f2f85] px-3 py-2 text-sm font-semibold text-[#3f2f85] transition hover:bg-[#3f2f85] hover:text-white">
+                        <a
+                          href={`https://wa.me/237695150366?text=${encodeURIComponent(`Bonjour, je souhaite obtenir la version PDF de l'ouvrage « ${o.title} » (${o.prix}). Merci.`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 rounded-lg border-2 border-[#3f2f85] px-3 py-2 text-sm font-semibold text-[#3f2f85] transition hover:bg-[#3f2f85] hover:text-white"
+                        >
                           <Download className="h-4 w-4" /> PDF
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
