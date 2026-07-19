@@ -154,42 +154,6 @@ export default function InscriptionPage() {
   const inputClass =
     "w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#3f2f85]"
 
-  const RadioOption = ({
-    name,
-    value,
-    label,
-    detail,
-    checked,
-    onChange,
-  }: {
-    name: string
-    value: string
-    label: string
-    detail?: string
-    checked: boolean
-    onChange: (value: string) => void
-  }) => (
-    <label
-      className={`flex cursor-pointer items-start gap-3 rounded-lg border p-4 transition ${
-        checked ? "border-[#3f2f85] bg-[#3f2f85]/5" : "border-slate-200 bg-white hover:border-[#a3ade8]"
-      }`}
-    >
-      <input
-        type="radio"
-        name={name}
-        value={value}
-        checked={checked}
-        onChange={() => onChange(value)}
-        required
-        className="mt-1 h-4 w-4 accent-[#3f2f85]"
-      />
-      <span>
-        <span className="block text-sm font-medium text-slate-900">{label}</span>
-        {detail && <span className="mt-0.5 block text-xs text-slate-500">{detail}</span>}
-      </span>
-    </label>
-  )
-
   if (submitted) {
     return (
       <main className="min-h-screen bg-[#f8f4ef] text-slate-900">
@@ -303,37 +267,33 @@ export default function InscriptionPage() {
               </div>
             </div>
 
-            <fieldset className="space-y-3">
-              <legend className="mb-1 text-sm font-semibold text-slate-700">
+            <div>
+              <label htmlFor="source" className="mb-1.5 block text-sm font-semibold text-slate-700">
                 Comment avez-vous été informé de cette formation ? <span className="text-red-500">*</span>
-              </legend>
-              {SOURCE_OPTIONS.map(option => (
-                <RadioOption
-                  key={option.value}
-                  name="source"
-                  value={option.value}
-                  label={option.label}
-                  checked={form.source === option.value}
-                  onChange={value => setField("source", value)}
-                />
-              ))}
-              <RadioOption
-                name="source"
-                value="__other_option__"
-                label="Autre"
-                checked={form.source === "__other_option__"}
-                onChange={value => setField("source", value)}
-              />
+              </label>
+              <select
+                id="source"
+                value={form.source}
+                onChange={e => setField("source", e.target.value)}
+                required
+                className={inputClass}
+              >
+                <option value="" disabled>Sélectionnez…</option>
+                {SOURCE_OPTIONS.map(option => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+                <option value="__other_option__">Autre</option>
+              </select>
               {form.source === "__other_option__" && (
                 <input
                   value={form.sourceOther}
                   onChange={e => setField("sourceOther", e.target.value)}
                   required
-                  className={inputClass}
+                  className={`${inputClass} mt-3`}
                   placeholder="Précisez"
                 />
               )}
-            </fieldset>
+            </div>
 
             <div>
               <label htmlFor="referrer" className="mb-1.5 block text-sm font-semibold text-slate-700">
@@ -351,68 +311,84 @@ export default function InscriptionPage() {
               />
             </div>
 
-            <fieldset className="space-y-3">
-              <legend className="mb-1 text-sm font-semibold text-slate-700">
-                Je participe en qualité de <span className="text-red-500">*</span>
-              </legend>
-              {MEMBERSHIP_OPTIONS.map(option => (
-                <RadioOption
-                  key={option.value}
-                  name="membership"
-                  value={option.value}
-                  label={option.label}
-                  detail={option.detail}
-                  checked={form.membership === option.value}
-                  onChange={value => setField("membership", value)}
-                />
-              ))}
-            </fieldset>
-
-            <fieldset className="space-y-3">
-              <legend className="mb-1 text-sm font-semibold text-slate-700">
-                Modalité de paiement <span className="text-red-500">*</span>
-              </legend>
-              {PAYMENT_MODE_OPTIONS.map(option => (
-                <RadioOption
-                  key={option.value}
-                  name="paymentMode"
-                  value={option.value}
-                  label={option.label}
-                  checked={form.paymentMode === option.value}
-                  onChange={value => setField("paymentMode", value)}
-                />
-              ))}
-            </fieldset>
-
-            <fieldset className="space-y-3">
-              <legend className="mb-1 text-sm font-semibold text-slate-700">
-                Moyen de paiement <span className="text-red-500">*</span>
-              </legend>
-              {PAYMENT_METHOD_OPTIONS.map(option => (
-                <RadioOption
-                  key={option.value}
-                  name="paymentMethod"
-                  value={option.value}
-                  label={option.label}
-                  detail={option.detail}
-                  checked={form.paymentMethod === option.value}
-                  onChange={value => setField("paymentMethod", value)}
-                />
-              ))}
-            </fieldset>
-
             <div>
-              <label htmlFor="paymentDate" className="mb-1.5 block text-sm font-semibold text-slate-700">
-                Date de paiement <span className="text-red-500">*</span>
+              <label htmlFor="membership" className="mb-1.5 block text-sm font-semibold text-slate-700">
+                Je participe en qualité de <span className="text-red-500">*</span>
               </label>
-              <input
-                id="paymentDate"
-                type="date"
-                value={form.paymentDate}
-                onChange={e => setField("paymentDate", e.target.value)}
+              <select
+                id="membership"
+                value={form.membership}
+                onChange={e => setField("membership", e.target.value)}
                 required
                 className={inputClass}
-              />
+              >
+                <option value="" disabled>Sélectionnez…</option>
+                {MEMBERSHIP_OPTIONS.map(option => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
+              {form.membership && (
+                <p className="mt-1.5 text-xs text-slate-500">
+                  {MEMBERSHIP_OPTIONS.find(o => o.value === form.membership)?.detail}
+                </p>
+              )}
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div>
+                <label htmlFor="paymentMode" className="mb-1.5 block text-sm font-semibold text-slate-700">
+                  Modalité de paiement <span className="text-red-500">*</span>
+                </label>
+                <select
+                  id="paymentMode"
+                  value={form.paymentMode}
+                  onChange={e => setField("paymentMode", e.target.value)}
+                  required
+                  className={inputClass}
+                >
+                  <option value="" disabled>Sélectionnez…</option>
+                  {PAYMENT_MODE_OPTIONS.map(option => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="paymentDate" className="mb-1.5 block text-sm font-semibold text-slate-700">
+                  Date de paiement <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="paymentDate"
+                  type="date"
+                  value={form.paymentDate}
+                  onChange={e => setField("paymentDate", e.target.value)}
+                  required
+                  className={inputClass}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="paymentMethod" className="mb-1.5 block text-sm font-semibold text-slate-700">
+                Moyen de paiement <span className="text-red-500">*</span>
+              </label>
+              <select
+                id="paymentMethod"
+                value={form.paymentMethod}
+                onChange={e => setField("paymentMethod", e.target.value)}
+                required
+                className={inputClass}
+              >
+                <option value="" disabled>Sélectionnez…</option>
+                {PAYMENT_METHOD_OPTIONS.map(option => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
+              {form.paymentMethod && (
+                <p className="mt-1.5 rounded-lg bg-[#f8f4ef] px-4 py-3 text-xs leading-relaxed text-slate-600">
+                  {PAYMENT_METHOD_OPTIONS.find(o => o.value === form.paymentMethod)?.detail}
+                </p>
+              )}
             </div>
 
             <button
