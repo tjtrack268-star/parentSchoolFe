@@ -246,36 +246,7 @@ export default function InscriptionPage() {
         </section>
 
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-14 lg:grid-cols-12">
-          <aside className="space-y-8 lg:col-span-3">
-            <div className="rounded-xl bg-white p-6 shadow-sm">
-              <h2 className="mb-4 text-lg font-bold text-[#3f2f85]">Programme</h2>
-              <ul className="space-y-3">
-                {MODULES.map(module => (
-                  <li key={module} className="flex items-start gap-2 text-sm text-slate-600">
-                    <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-[#e8b41f]" />
-                    {module}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="rounded-xl bg-white p-6 shadow-sm">
-              <h2 className="mb-4 text-lg font-bold text-[#3f2f85]">La formation offre</h2>
-              <ul className="space-y-3">
-                {BENEFITS.map(benefit => (
-                  <li key={benefit} className="flex items-start gap-2 text-sm text-slate-600">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#e8b41f]" />
-                    {benefit}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="rounded-xl bg-[#3f2f85] p-6 text-white shadow-sm">
-              <h2 className="mb-2 text-lg font-bold text-[#e8b41f]">Notre objectif</h2>
-              <p className="text-sm text-slate-100">Équiper le maximum pour changer notre monde.</p>
-            </div>
-          </aside>
-
-          <form onSubmit={handleSubmit} className="space-y-8 rounded-xl bg-white p-6 shadow-sm sm:p-8 lg:col-span-6">
+          <form onSubmit={handleSubmit} className="space-y-8 rounded-xl bg-white p-6 shadow-sm sm:p-8 lg:col-span-8">
             <div className="space-y-5">
               <div>
                 <label htmlFor="fullName" className="mb-1.5 block text-sm font-semibold text-slate-700">
@@ -454,7 +425,33 @@ export default function InscriptionPage() {
             </button>
           </form>
 
-          <div className="lg:col-span-3">
+          <div className="space-y-8 lg:col-span-4">
+            <div className="rounded-xl bg-white p-6 shadow-sm">
+              <h2 className="mb-4 text-lg font-bold text-[#3f2f85]">Programme</h2>
+              <ul className="space-y-3">
+                {MODULES.map(module => (
+                  <li key={module} className="flex items-start gap-2 text-sm text-slate-600">
+                    <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-[#e8b41f]" />
+                    {module}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-xl bg-white p-6 shadow-sm">
+              <h2 className="mb-4 text-lg font-bold text-[#3f2f85]">La formation offre</h2>
+              <ul className="space-y-3">
+                {BENEFITS.map(benefit => (
+                  <li key={benefit} className="flex items-start gap-2 text-sm text-slate-600">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#e8b41f]" />
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-xl bg-[#3f2f85] p-6 text-white shadow-sm">
+              <h2 className="mb-2 text-lg font-bold text-[#e8b41f]">Notre objectif</h2>
+              <p className="text-sm text-slate-100">Équiper le maximum pour changer notre monde.</p>
+            </div>
             <PromoBanner />
           </div>
         </div>
