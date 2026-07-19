@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useCallback } from "react"
-import { Loader2, RefreshCw, GraduationCap } from "lucide-react"
+import { Loader2, RefreshCw, GraduationCap, Trash2 } from "lucide-react"
 import { apiClient } from "@/lib/api-client"
 
 interface FormationRegistration {
@@ -27,6 +27,7 @@ export default function FormationRegistrationsPage() {
   const [loading, setLoading] = useState(true)
   const [refreshing, setRefreshing] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [pendingId, setPendingId] = useState<number | null>(null)
 
   const load = useCallback(async (silent = false) => {
     if (!silent) setLoading(true); else setRefreshing(true)
@@ -42,6 +43,19 @@ export default function FormationRegistrationsPage() {
   }, [])
 
   useEffect(() => { load() }, [load])
+
+  const remove = async (id: number) => {
+    if (!confirm("Supprimer cette inscription ?")) return
+    setPendingId(id)
+    try {
+      await apiClient.delete(`/admin/formation-registrations/${id}`)
+      await load(true)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Suppression impossible")
+    } finally {
+      setPendingId(null)
+    }
+  }
 
   if (loading) return (
     <div className="flex items-center justify-center py-32">
@@ -96,6 +110,7 @@ export default function FormationRegistrationsPage() {
                 <th className="px-4 py-3">Source</th>
                 <th className="px-4 py-3">Référent</th>
                 <th className="px-4 py-3">Soumis le</th>
+                <th className="px-4 py-3"></th>
               </tr>
             </thead>
             <tbody>
@@ -127,6 +142,16 @@ export default function FormationRegistrationsPage() {
                   <td className="max-w-[150px] truncate px-4 py-3" title={r.infoSource}>{r.infoSource}</td>
                   <td className="max-w-[180px] truncate px-4 py-3" title={r.referrer}>{r.referrer}</td>
                   <td className="px-4 py-3 whitespace-nowrap text-slate-500">{formatDate(r.createdAt)}</td>
+                  <td className="px-4 py-3">
+                    <button
+                      onClick={() => remove(r.id)}
+                      disabled={pendingId === r.id}
+                      title="Supprimer"
+                      className="inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-sm font-medium text-slate-400 transition hover:text-red-600 disabled:opacity-60"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
