@@ -138,17 +138,25 @@ export default function TemoignagesPage() {
         <div className="mx-auto max-w-6xl px-4 py-16">
           <p className="mb-2 text-center text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">En vidéo</p>
           <h2 className="mb-10 text-center text-3xl font-bold text-white">Témoignages en vidéo</h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {["bJZNNSkbmks", "FYl5FSGuPKI", "2cenM0rspzI", "EHN0ahmjfW4"].map(id => (
-              <div key={id} className="relative aspect-video overflow-hidden rounded-xl shadow-lg ring-1 ring-white/10">
-                <iframe
-                  src={`https://www.youtube.com/embed/${id}`}
-                  title="Témoignage vidéo Parents School"
-                  loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                  className="absolute inset-0 h-full w-full"
-                />
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            {[
+              { id: "bJZNNSkbmks", title: "Impact de la formation de conseillers parentaux : témoignage de Hilaire Lelou" },
+              { id: "FYl5FSGuPKI", title: "Parents School : témoignages de transformation" },
+              { id: "2cenM0rspzI", title: "Cérémonie de remise de certificats — Conseillers parentaux & art oratoire" },
+              { id: "EHN0ahmjfW4", title: "Notre offre sociale de formation de conseiller parental" },
+            ].map(video => (
+              <div key={video.id}>
+                <div className="relative aspect-video overflow-hidden rounded-xl shadow-lg ring-1 ring-white/10">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${video.id}`}
+                    title={video.title}
+                    loading="lazy"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="absolute inset-0 h-full w-full"
+                  />
+                </div>
+                <p className="mt-3 text-center text-sm font-semibold text-white">{video.title}</p>
               </div>
             ))}
           </div>
