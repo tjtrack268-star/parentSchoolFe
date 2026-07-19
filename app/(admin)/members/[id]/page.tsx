@@ -302,7 +302,7 @@ export default function MemberDetailPage() {
                             style={{ backgroundColor: sgc }}>
                             {s.firstName.charAt(0)}{s.lastName.charAt(0)}
                           </div>
-                          <Link href={`/admin/members/${s.id}`}
+                          <Link href={`/members/${s.id}`}
                             className="font-medium text-[#3f2f85] hover:underline">
                             {s.firstName} {s.lastName}
                           </Link>
