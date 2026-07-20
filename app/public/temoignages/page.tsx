@@ -144,6 +144,7 @@ export default function TemoignagesPage() {
               { id: "FYl5FSGuPKI", title: "Parents School : témoignages de transformation" },
               { id: "2cenM0rspzI", title: "Cérémonie de remise de certificats — Conseillers parentaux & art oratoire" },
               { id: "EHN0ahmjfW4", title: "Notre offre sociale de formation de conseiller parental" },
+              { id: "o1-JEtSrK0w", title: "Devenez conseiller parental — témoignages" },
             ].map(video => (
               <div key={video.id}>
                 <div className="relative aspect-video overflow-hidden rounded-xl shadow-lg ring-1 ring-white/10">
