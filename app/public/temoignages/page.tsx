@@ -16,6 +16,14 @@ interface Testimonial {
   createdAt: string
 }
 
+const VIDEO_TESTIMONIALS = [
+  { id: "bJZNNSkbmks", title: "Impact de la formation de conseillers parentaux : témoignage de Hilaire Lelou" },
+  { id: "FYl5FSGuPKI", title: "Parents School : témoignages de transformation" },
+  { id: "2cenM0rspzI", title: "Cérémonie de remise de certificats — Conseillers parentaux & art oratoire" },
+  { id: "EHN0ahmjfW4", title: "Notre offre sociale de formation de conseiller parental" },
+  { id: "o1-JEtSrK0w", title: "Devenez conseiller parental — témoignages" },
+]
+
 function StarRating({ value, onChange }: { value: number; onChange?: (v: number) => void }) {
   return (
     <div className="flex gap-1">
@@ -108,46 +116,40 @@ export default function TemoignagesPage() {
       <section className="mx-auto max-w-6xl px-4 py-16">
         <h2 className="mb-10 text-center text-3xl font-bold text-[#3f2f85]">Ce que disent nos membres</h2>
 
-        {loading ? (
-          <div className="flex justify-center py-12">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#3f2f85] border-t-transparent" />
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          {/* Colonne principale : témoignages écrits */}
+          <div className="lg:col-span-2">
+            {loading ? (
+              <div className="flex justify-center py-12">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#3f2f85] border-t-transparent" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                {displayList.map((item, idx) => (
+                  <article key={item.id || idx} className="rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm">
+                    <div className="mb-4 flex items-center justify-between">
+                      <Quote className="h-7 w-7 text-[#e8b41f]" />
+                      <StarRating value={item.rating} />
+                    </div>
+                    <p className="text-slate-700 leading-relaxed italic">"{item.content}"</p>
+                    <div className="mt-5 border-t border-slate-200 pt-4">
+                      <p className="font-semibold text-[#3f2f85]">{item.authorName}</p>
+                      <p className="text-sm text-slate-500">
+                        {item.authorRole}{item.authorCity ? ` · ${item.authorCity}` : ""}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {displayList.map((item, idx) => (
-              <article key={item.id || idx} className="rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm">
-                <div className="mb-4 flex items-center justify-between">
-                  <Quote className="h-7 w-7 text-[#e8b41f]" />
-                  <StarRating value={item.rating} />
-                </div>
-                <p className="text-slate-700 leading-relaxed italic">"{item.content}"</p>
-                <div className="mt-5 border-t border-slate-200 pt-4">
-                  <p className="font-semibold text-[#3f2f85]">{item.authorName}</p>
-                  <p className="text-sm text-slate-500">
-                    {item.authorRole}{item.authorCity ? ` · ${item.authorCity}` : ""}
-                  </p>
-                </div>
-              </article>
-            ))}
-          </div>
-        )}
-      </section>
 
-      {/* Témoignages en vidéo */}
-      <section className="bg-[#3f2f85]">
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          <p className="mb-2 text-center text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">En vidéo</p>
-          <h2 className="mb-10 text-center text-3xl font-bold text-white">Témoignages en vidéo</h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            {[
-              { id: "bJZNNSkbmks", title: "Impact de la formation de conseillers parentaux : témoignage de Hilaire Lelou" },
-              { id: "FYl5FSGuPKI", title: "Parents School : témoignages de transformation" },
-              { id: "2cenM0rspzI", title: "Cérémonie de remise de certificats — Conseillers parentaux & art oratoire" },
-              { id: "EHN0ahmjfW4", title: "Notre offre sociale de formation de conseiller parental" },
-              { id: "o1-JEtSrK0w", title: "Devenez conseiller parental — témoignages" },
-            ].map(video => (
-              <div key={video.id}>
-                <div className="relative aspect-video overflow-hidden rounded-xl shadow-lg ring-1 ring-white/10">
+          {/* Colonne latérale : témoignages vidéo */}
+          <div className="space-y-4">
+            <p className="text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">En vidéo</p>
+            {VIDEO_TESTIMONIALS.map(video => (
+              <div key={video.id} className="flex items-center gap-3 rounded-lg border border-[#a3ade8]/30 bg-white p-3 shadow-sm">
+                <div className="relative aspect-video w-32 shrink-0 overflow-hidden rounded-md">
                   <iframe
                     src={`https://www.youtube.com/embed/${video.id}`}
                     title={video.title}
@@ -157,7 +159,7 @@ export default function TemoignagesPage() {
                     className="absolute inset-0 h-full w-full"
                   />
                 </div>
-                <p className="mt-3 text-center text-sm font-semibold text-white">{video.title}</p>
+                <p className="text-sm font-semibold text-[#3f2f85]">{video.title}</p>
               </div>
             ))}
           </div>
