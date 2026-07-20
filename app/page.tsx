@@ -214,8 +214,8 @@ export default function Home() {
                       {idx + 1}
                     </div>
                     <p className="font-bold text-[#3f2f85] text-sm">{item.grade}</p>
-                    <p className="text-xs text-slate-500 mt-1">{item.desc}</p>
-                    <p className="text-xs font-semibold text-[#e8b41f] mt-2">{item.benefit}</p>
+                    {/* <p className="text-xs text-slate-500 mt-1">{item.desc}</p>
+                    <p className="text-xs font-semibold text-[#e8b41f] mt-2">{item.benefit}</p> */}
                   </div>
                 )
               })}
