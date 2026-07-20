@@ -147,6 +147,7 @@ export default function TemoignagesPage() {
           {/* Colonne latérale : témoignages vidéo */}
           <div className="space-y-4">
             <p className="text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">En vidéo</p>
+            <div className="max-h-[420px] space-y-4 overflow-y-auto pr-1">
             {VIDEO_TESTIMONIALS.map(video => (
               <div key={video.id} className="flex items-center gap-3 rounded-lg border border-[#a3ade8]/30 bg-white p-3 shadow-sm">
                 <div className="relative aspect-video w-32 shrink-0 overflow-hidden rounded-md">
@@ -162,6 +163,7 @@ export default function TemoignagesPage() {
                 <p className="text-sm font-semibold text-[#3f2f85]">{video.title}</p>
               </div>
             ))}
+            </div>
           </div>
         </div>
       </section>
