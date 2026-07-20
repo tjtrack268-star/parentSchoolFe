@@ -253,8 +253,8 @@ export default function OrgChartPage() {
 
   const centerTree = useCallback(() => {
     if (containerRef.current) {
-      const { width } = containerRef.current.getBoundingClientRect()
-      setTranslate({ x: width / 2, y: 80 })
+      const { height } = containerRef.current.getBoundingClientRect()
+      setTranslate({ x: 140, y: height / 2 })
     }
   }, [])
 
@@ -453,9 +453,9 @@ export default function OrgChartPage() {
         <Tree
           key={renderKey}
           data={treeData}
-          orientation="vertical"
+          orientation="horizontal"
           translate={translate}
-          nodeSize={{ x: 210, y: 150 }}
+          nodeSize={{ x: 260, y: 120 }}
           separation={{ siblings: 1.02, nonSiblings: 1.2 }}
           renderCustomNodeElement={CustomNode}
           pathFunc="diagonal"
