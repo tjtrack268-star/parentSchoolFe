@@ -11,7 +11,7 @@ const LINKS = [
   { href: "/",                label: "Accueil"     },
   { href: "/public/about",    label: "À propos"    },
   { href: "/public/formations",label: "Formations" },
-  { href: "/simulator",       label: "Simulateur" },
+  { href: "/simulator",       label: "Simulateur", memberOnly: true },
   { href: "/public/ouvrages", label: "Ouvrages"   },
   { href: "/organisation",    label: "Organisation"},
   { href: "/public/temoignages",label: "Témoignages"},
@@ -26,6 +26,8 @@ export default function Header() {
   useEffect(() => {
     setIsLoggedIn(!!authClient.getToken())
   }, [pathname])
+
+  const links = LINKS.filter(l => !l.memberOnly || isLoggedIn)
 
   const handleLogout = async () => {
     try { await fetch("/api/logout", { method: "POST" }) } catch {}
@@ -81,7 +83,7 @@ export default function Header() {
 
         {/* Menu desktop */}
         <div className="hidden md:flex items-center gap-6">
-          {LINKS.map(({ href, label }) => (
+          {links.map(({ href, label }) => (
             <Link key={href} href={href}
               className={`text-sm font-medium transition ${
                 pathname === href ? "text-[#e8b41f]" : "text-[#3f2f85] hover:text-[#e8b41f]"
@@ -105,7 +107,7 @@ export default function Header() {
       {/* Menu mobile */}
       {open && (
         <div className="md:hidden bg-white border-t border-[#a3ade8]/30 px-4 py-4 space-y-1 shadow-lg">
-          {LINKS.map(({ href, label }) => (
+          {links.map(({ href, label }) => (
             <Link key={href} href={href} onClick={() => setOpen(false)}
               className={`flex items-center px-4 py-3 rounded-lg text-sm font-medium transition ${
                 pathname === href ? "bg-[#3f2f85] text-white" : "text-[#3f2f85] hover:bg-[#a3ade8]/20"

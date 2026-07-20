@@ -1,10 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { ArrowRight, Lock, CheckCircle2, Trophy } from "lucide-react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
+import { apiClient, ApiError } from "@/lib/api-client"
 
 // ── Seuils hardcodés (doc d'implémentation) ───────────────────────────────────
 const GRADES = [
@@ -26,7 +28,18 @@ function getGradeIndex(referrals: number): number {
 }
 
 export default function SimulatorPage() {
+  const router = useRouter()
+  const started = useRef(false)
+  const [checking, setChecking] = useState(true)
   const [referrals, setReferrals] = useState(0)
+
+  useEffect(() => {
+    if (started.current) return
+    started.current = true
+    apiClient.get('/fetch-user')
+      .then(data => { if (!data) router.push("/auth/login"); else setChecking(false) })
+      .catch(err => { if (!(err instanceof ApiError) || err.status === 401 || err.status === 403) router.push("/auth/login") })
+  }, [router])
 
   const gradeIdx    = getGradeIndex(referrals)
   const currentGrade = GRADES[gradeIdx]
@@ -37,6 +50,14 @@ export default function SimulatorPage() {
 
   // Largeur de la barre de progression dans le curseur
   const pct = Math.round((referrals / 60) * 100)
+
+  if (checking) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#f8f4ef]">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#a3ade8] border-t-[#3f2f85]" />
+      </div>
+    )
+  }
 
   return (
     <main className="min-h-screen bg-[#f8f4ef]">
