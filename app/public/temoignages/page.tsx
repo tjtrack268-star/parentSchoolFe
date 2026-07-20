@@ -116,30 +116,58 @@ export default function TemoignagesPage() {
       <section className="mx-auto max-w-6xl px-4 py-16">
         <h2 className="mb-10 text-center text-3xl font-bold text-[#3f2f85]">Ce que disent nos membres</h2>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          {/* Colonne principale : témoignages écrits */}
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:items-center">
+          {/* Colonne principale : témoignages écrits en double tapis roulant */}
           <div className="lg:col-span-2">
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#3f2f85] border-t-transparent" />
               </div>
             ) : (
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                {displayList.map((item, idx) => (
-                  <article key={item.id || idx} className="rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm">
-                    <div className="mb-4 flex items-center justify-between">
-                      <Quote className="h-7 w-7 text-[#e8b41f]" />
-                      <StarRating value={item.rating} />
-                    </div>
-                    <p className="text-slate-700 leading-relaxed italic">"{item.content}"</p>
-                    <div className="mt-5 border-t border-slate-200 pt-4">
-                      <p className="font-semibold text-[#3f2f85]">{item.authorName}</p>
-                      <p className="text-sm text-slate-500">
-                        {item.authorRole}{item.authorCity ? ` · ${item.authorCity}` : ""}
-                      </p>
-                    </div>
-                  </article>
-                ))}
+              <div className="flex flex-col justify-center gap-8">
+                {/* Rangée 1 : défile vers la gauche */}
+                <div className="group overflow-x-hidden">
+                  <div className="marquee-left flex w-max items-center gap-6 group-hover:[animation-play-state:paused]">
+                    {[...displayList, ...displayList].map((item, idx) => (
+                      <article key={`r1-${item.id || idx}-${idx}`}
+                        className={`flex h-52 w-80 shrink-0 flex-col justify-center rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm ${idx % 2 === 0 ? "-translate-y-4" : "translate-y-4"}`}>
+                        <div className="mb-3 flex items-center justify-between">
+                          <Quote className="h-6 w-6 text-[#e8b41f]" />
+                          <StarRating value={item.rating} />
+                        </div>
+                        <p className="line-clamp-3 text-sm italic leading-relaxed text-slate-700">"{item.content}"</p>
+                        <div className="mt-4 border-t border-slate-200 pt-3">
+                          <p className="font-semibold text-[#3f2f85]">{item.authorName}</p>
+                          <p className="text-xs text-slate-500">
+                            {item.authorRole}{item.authorCity ? ` · ${item.authorCity}` : ""}
+                          </p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Rangée 2 : défile vers la droite */}
+                <div className="group overflow-x-hidden">
+                  <div className="marquee-right flex w-max items-center gap-6 group-hover:[animation-play-state:paused]">
+                    {[...displayList, ...displayList].map((item, idx) => (
+                      <article key={`r2-${item.id || idx}-${idx}`}
+                        className={`flex h-52 w-80 shrink-0 flex-col justify-center rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm ${idx % 2 === 0 ? "translate-y-4" : "-translate-y-4"}`}>
+                        <div className="mb-3 flex items-center justify-between">
+                          <Quote className="h-6 w-6 text-[#e8b41f]" />
+                          <StarRating value={item.rating} />
+                        </div>
+                        <p className="line-clamp-3 text-sm italic leading-relaxed text-slate-700">"{item.content}"</p>
+                        <div className="mt-4 border-t border-slate-200 pt-3">
+                          <p className="font-semibold text-[#3f2f85]">{item.authorName}</p>
+                          <p className="text-xs text-slate-500">
+                            {item.authorRole}{item.authorCity ? ` · ${item.authorCity}` : ""}
+                          </p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
           </div>
