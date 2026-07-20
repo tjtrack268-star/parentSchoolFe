@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { Quote, Star, Users, Send, CheckCircle } from "lucide-react"
 import Header from "@/components/Header"
@@ -48,6 +48,10 @@ export default function TemoignagesPage() {
   const [submitting, setSubmitting] = useState(false)
   const [form, setForm] = useState({ authorName: "", authorCity: "", authorRole: "", content: "", rating: 5 })
 
+  // Escalier de témoignages : fenêtre glissante de 3 marches, avance d'un cran en boucle
+  const [stairStart, setStairStart] = useState(0)
+  const stairPaused = useRef(false)
+
   useEffect(() => {
     fetch("/api/testimonials")
       .then(r => r.json())
@@ -78,6 +82,16 @@ export default function TemoignagesPage() {
     { id: 0, content: "La communauté est bienveillante. On se sent accompagné, pas jugé. C'est un vrai soutien pour les parents.", authorName: "Sarah M.", authorCity: "Abidjan", authorRole: "Parent relais", rating: 5, createdAt: "" },
     { id: 0, content: "Au-delà de la formation, j'ai gagné en confiance dans mon rôle de parent et de mentor dans ma communauté.", authorName: "Clotaire A.", authorCity: "Bafoussam", authorRole: "Leader Senior", rating: 5, createdAt: "" },
   ]
+
+  const stairSteps = Math.min(3, displayList.length)
+
+  useEffect(() => {
+    if (displayList.length <= stairSteps) return
+    const id = setInterval(() => {
+      if (!stairPaused.current) setStairStart(i => (i + 1) % displayList.length)
+    }, 4000)
+    return () => clearInterval(id)
+  }, [displayList.length, stairSteps])
 
   return (
     <main className="min-h-screen bg-[#f8f4ef]">
@@ -117,20 +131,25 @@ export default function TemoignagesPage() {
         <h2 className="mb-10 text-center text-3xl font-bold text-[#3f2f85]">Ce que disent nos membres</h2>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:items-center">
-          {/* Colonne principale : témoignages écrits en double tapis roulant */}
+          {/* Colonne principale : témoignages écrits en escalier */}
           <div className="lg:col-span-2">
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#3f2f85] border-t-transparent" />
               </div>
             ) : (
-              <div className="flex flex-col justify-center gap-8">
-                {/* Rangée 1 : défile vers la gauche */}
-                <div className="group overflow-x-hidden">
-                  <div className="marquee-left flex w-max items-center gap-6 group-hover:[animation-play-state:paused]">
-                    {[...displayList, ...displayList].map((item, idx) => (
-                      <article key={`r1-${item.id || idx}-${idx}`}
-                        className={`flex h-52 w-80 shrink-0 flex-col justify-center rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm ${idx % 2 === 0 ? "-translate-y-4" : "translate-y-4"}`}>
+              <div
+                className="flex items-center justify-center gap-6 py-8 sm:justify-start"
+                onMouseEnter={() => { stairPaused.current = true }}
+                onMouseLeave={() => { stairPaused.current = false }}
+              >
+                {Array.from({ length: stairSteps }).map((_, step) => {
+                  const item = displayList[(stairStart + step) % displayList.length]
+                  const lift = (step - (stairSteps - 1) / 2) * -32
+                  return (
+                    <div key={`slot-${step}`} style={{ transform: `translateY(${lift}px)` }}>
+                      <article key={`stair-${stairStart}-${step}`}
+                        className="stair-in flex h-52 w-72 shrink-0 flex-col justify-center rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm">
                         <div className="mb-3 flex items-center justify-between">
                           <Quote className="h-6 w-6 text-[#e8b41f]" />
                           <StarRating value={item.rating} />
@@ -143,31 +162,9 @@ export default function TemoignagesPage() {
                           </p>
                         </div>
                       </article>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Rangée 2 : défile vers la droite */}
-                <div className="group overflow-x-hidden">
-                  <div className="marquee-right flex w-max items-center gap-6 group-hover:[animation-play-state:paused]">
-                    {[...displayList, ...displayList].map((item, idx) => (
-                      <article key={`r2-${item.id || idx}-${idx}`}
-                        className={`flex h-52 w-80 shrink-0 flex-col justify-center rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm ${idx % 2 === 0 ? "translate-y-4" : "-translate-y-4"}`}>
-                        <div className="mb-3 flex items-center justify-between">
-                          <Quote className="h-6 w-6 text-[#e8b41f]" />
-                          <StarRating value={item.rating} />
-                        </div>
-                        <p className="line-clamp-3 text-sm italic leading-relaxed text-slate-700">"{item.content}"</p>
-                        <div className="mt-4 border-t border-slate-200 pt-3">
-                          <p className="font-semibold text-[#3f2f85]">{item.authorName}</p>
-                          <p className="text-xs text-slate-500">
-                            {item.authorRole}{item.authorCity ? ` · ${item.authorCity}` : ""}
-                          </p>
-                        </div>
-                      </article>
-                    ))}
-                  </div>
-                </div>
+                    </div>
+                  )
+                })}
               </div>
             )}
           </div>
