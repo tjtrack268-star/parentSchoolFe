@@ -87,13 +87,13 @@ function NodeCard({
               <p className={`font-medium ${isRoot ? 'opacity-75' : 'text-gray-600'}`}>
                 Grade
               </p>
-              <p className="font-semibold truncate">{node.gradeName}</p>
+              <p className="font-medium truncate">{node.gradeName}</p>
             </div>
             <div>
               <p className={`font-medium ${isRoot ? 'opacity-75' : 'text-gray-600'}`}>
                 Code
               </p>
-              <p className="font-mono text-xs font-bold truncate">{node.sponsorshipCode}</p>
+              <p className="font-mono text-xs font-medium truncate">{node.sponsorshipCode}</p>
             </div>
           </div>
         </div>
@@ -101,13 +101,13 @@ function NodeCard({
         <div className={`mt-2 sm:mt-3 grid grid-cols-2 gap-1 sm:gap-2 text-xs ${isRoot ? 'bg-white/10' : 'bg-gray-50'} rounded-lg p-2`}>
           <div className="text-center">
             <p className={`font-medium ${isRoot ? 'opacity-75' : 'text-gray-600'}`}>Parrainages</p>
-            <p className={`text-base sm:text-lg font-bold ${isRoot ? 'text-accent' : 'text-primary'}`}>
+            <p className={`text-base sm:text-lg font-semibold ${isRoot ? 'text-accent' : 'text-primary'}`}>
               {node.directSponsorshipsCount}
             </p>
           </div>
           <div className="text-center">
             <p className={`font-medium ${isRoot ? 'opacity-75' : 'text-gray-600'}`}>Points</p>
-            <p className={`text-base sm:text-lg font-bold ${isRoot ? 'text-accent' : 'text-primary'}`}>
+            <p className={`text-base sm:text-lg font-semibold ${isRoot ? 'text-accent' : 'text-primary'}`}>
               {node.totalPoints}
             </p>
           </div>

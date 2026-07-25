@@ -13,6 +13,7 @@ const OUVRAGES = [
     categorie: "Parentalité",
     format: "Broché + PDF",
     prix: "5 000 FCFA",
+    prixMembre: "Offert au nouveau membre",
     image: "/Ouvrage_img/Réussir le metier de parent auteur clement Emadouan.jpeg",
     description: "Un guide pratique avec des techniques, approches et astuces pour accompagner efficacement les parents dans leur mission éducative.",
     themes: ["Techniques parentales pratiques", "Approches éducatives modernes", "Mission éducative des parents", "Astuces du quotidien"],
@@ -25,6 +26,7 @@ const OUVRAGES = [
     categorie: "Paternité",
     format: "Broché + PDF",
     prix: "7 000 FCFA",
+    prixMembre: "7 000 FCFA",
     image: "/Ouvrage_img/Et vous pères Comment être un papa inspirant et impactant Auteur Clement Emadouan.jpeg",
     description: "Un livre qui met en lumière le rôle, la mission et la fonction du père dans l'éducation des enfants et le bien-être de la famille. Il explore en profondeur la relation père-fille et père-fils.",
     themes: ["Rôle et mission du père", "Relation père-fille", "Relation père-fils", "Bien-être familial"],
@@ -36,6 +38,7 @@ const OUVRAGES = [
     categorie: "Guérison & Famille",
     format: "Broché + PDF",
     prix: "10 000 FCFA",
+    prixMembre: "8 000 FCFA",
     image: "/Ouvrage_img/Brise la chaine des blessures Emotionnelles dans ta famille auteur Laurène Kadjeu.jpeg",
     description: "Inspiré du parcours personnel de l'auteur, ce livre explore les blessures émotionnelles, leurs impacts et les voies de guérison pour restaurer l'équilibre familial.",
     themes: ["Blessures émotionnelles", "Impacts sur la famille", "Voies de guérison", "Restauration de l'équilibre familial"],
@@ -46,7 +49,8 @@ const OUVRAGES = [
     auteur: "Clément Emadouan",
     categorie: "Reconstruction & Espoir",
     format: "Broché + PDF",
-    prix: "10000 XAF",
+    prix: "10 000 FCFA",
+    prixMembre: "8 000 FCFA",
     image: "/Ouvrage_img/Se Réinventer après une séparation auteur Clement Emadouan.jpeg",
     description: "Un accompagnement bienveillant pour se reconstruire après une séparation et retrouver sa place de parent épanoui.",
     themes: ["Reconstruction personnelle", "Co-parentalité", "Pardon et guérison", "Nouveau départ"],
@@ -135,6 +139,7 @@ export default function OuvragesPage() {
                       <div>
                         <p className="text-xs text-slate-400">{o.format}</p>
                         <p className="text-xl font-bold text-[#3f2f85]">{o.prix}</p>
+                        <p className="text-xs text-[#e8b41f] font-semibold">Membre : {o.prixMembre}</p>
                       </div>
                       <div className="flex gap-2">
                         <a

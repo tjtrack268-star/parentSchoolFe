@@ -92,11 +92,12 @@ function TeamCarousel() {
                   i === 1 ? "border-[#e8b41f] scale-105 shadow-xl" : "border-[#3f2f85] opacity-80"
                 }`}
               >
-                <div className="h-56 w-full overflow-hidden">
+                <div className="h-72 w-full overflow-hidden">
                   <img
                     src={member.image}
                     alt={member.name}
-                    className="h-full w-full object-cover object-top"
+                    className="h-full w-full object-cover"
+                    style={{ objectPosition: "center 20%" }}
                   />
                 </div>
                 <div className="flex flex-col items-center p-5 text-center">

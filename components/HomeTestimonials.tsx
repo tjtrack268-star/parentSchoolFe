@@ -14,9 +14,9 @@ interface Testimonial {
 }
 
 const FALLBACK: Testimonial[] = [
-  { id: -1, authorName: "Mireille K.", authorRole: "Maman de 3 enfants", authorCity: "Douala", content: "Parents School m'a aidée à mieux comprendre mes enfants. Notre communication est devenue plus apaisée et constructive.", rating: 5 },
-  { id: -2, authorName: "Paul N.", authorRole: "Père de famille", authorCity: "Yaoundé", content: "Les modules sont pratiques, concrets et adaptés à notre réalité africaine. J'applique chaque semaine ce que j'apprends.", rating: 5 },
-  { id: -3, authorName: "Sarah M.", authorRole: "Parent relais", authorCity: "Abidjan", content: "La communauté est bienveillante. On se sent accompagné, pas jugé. C'est un vrai soutien pour les parents.", rating: 5 },
+  { id: -1, authorName: "Yokoi Ahoua Esther", authorRole: "Présidente ONG Carrefour Famille", authorCity: "Côte d'Ivoire", content: "La formation certifiante de conseiller parental m'a permis de rencontrer des personnes et d'apprendre d'elles. Mes yeux ont été ouverts sur la thérapie familiale, j'ai appris à faire une consultation des parents et des enfants.", rating: 5 },
+  { id: -2, authorName: "Pasteur Yao Israël Nguessan", authorRole: "Pasteur", authorCity: "Sénégal", content: "La formation des conseillers parentaux a eu un impact significatif sur ma vie et mon ministère. Elle a changé ma perception et m'a permis d'acquérir des compétences essentielles pour accompagner les familles.", rating: 5 },
+  { id: -3, authorName: "Mireille Obrou", authorRole: "Mère de 3 enfants", authorCity: "Côte d'Ivoire", content: "J'ai acquis des compétences en écoute active, en analyse des conflits et en accompagnement émotionnel. Cette formation a révélé en moi une nouvelle force pour accompagner les familles en difficulté.", rating: 5 },
 ]
 
 export default function HomeTestimonials() {

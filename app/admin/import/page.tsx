@@ -77,10 +77,20 @@ export default function ImportPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
 
-        <div className="mb-8">
+        <div className="mb-6">
           <p className="text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">Administration</p>
           <h1 className="text-3xl font-bold text-[#3f2f85]">Import de membres</h1>
           <p className="mt-1 text-sm text-slate-500">Importez des membres en masse via un fichier Excel (.xlsx)</p>
+        </div>
+
+        {/* Explication Importation */}
+        <div className="mb-6 rounded-lg border border-[#a3ade8]/40 bg-white p-4 text-xs leading-relaxed text-slate-600 shadow-sm">
+          <p className="font-semibold text-[#3f2f85] text-sm mb-1">💡 Instructions d'importation Excel :</p>
+          <ul className="list-disc list-inside space-y-0.5">
+            <li><strong>Format accepté :</strong> Fichier Microsoft Excel (<code>.xlsx</code>).</li>
+            <li><strong>Colonnes requises :</strong> Prénom, Nom, Email, Téléphone, Pays, Type de membre (Optionnel: Code Parrain, Grade).</li>
+            <li><strong>Doublons :</strong> Les membres existants (même email) seront ignorés pour éviter les doublons.</li>
+          </ul>
         </div>
 
         {/* Zone dépôt fichier */}

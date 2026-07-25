@@ -242,8 +242,18 @@ export default function FormationsPage() {
                       <div className="text-xs text-slate-500">{s.label}</div>
                     </div>
                   ))}
-                </div>
                 <p className="mt-3 text-xs text-slate-500">Participants : Cameroun, Côte d'Ivoire, États-Unis, Italie, France</p>
+
+                <div className="mt-6">
+                  <a
+                    href="https://forms.gle/z7XQXNY5nVygK7rT6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#e8b41f] px-6 py-3 font-semibold text-[#3f2f85] transition hover:opacity-90 shadow-sm"
+                  >
+                    S'inscrire à la formation <ArrowRight className="h-4 w-4" />
+                  </a>
+                </div>
               </div>
 
               <div className="overflow-hidden rounded-xl shadow-lg">
