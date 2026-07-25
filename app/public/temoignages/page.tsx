@@ -61,9 +61,19 @@ export default function TemoignagesPage() {
   const [submitting, setSubmitting] = useState(false)
   const [form, setForm] = useState({ authorName: "", authorCity: "", authorRole: "", content: "", rating: 5 })
 
-  // Escalier de témoignages : fenêtre glissante de 3 marches, avance d'un cran en boucle
+  // Escalier de témoignages : fenêtre glissante, avance d'un cran en boucle
+  // 1 carte visible sur petit écran, 2 à partir du breakpoint lg (1024px)
   const [stairStart, setStairStart] = useState(0)
+  const [screenSteps, setScreenSteps] = useState(1)
   const stairPaused = useRef(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)")
+    const update = () => setScreenSteps(mq.matches ? 2 : 1)
+    update()
+    mq.addEventListener("change", update)
+    return () => mq.removeEventListener("change", update)
+  }, [])
 
   useEffect(() => {
     fetch("/api/testimonials")
@@ -104,7 +114,7 @@ export default function TemoignagesPage() {
     { id: -13, content: "J'étais régulièrement en conflit avec ma fille aînée et je ne savais comment gérer cette crise. J'ai suivi la formation des conseillers parentaux. J'ai réalisé que j'étais blessée et je faisais subir cela à ma fille. J'ai décidé de changer et avec les cours, je me suis mise dans mon processus de transformation. Aujourd'hui, je suis une maman heureuse.", authorName: "Agathe Zrimba", authorCity: "Côte d'Ivoire", authorRole: "Mère de famille", rating: 5, createdAt: "" },
   ]
 
-  const stairSteps = Math.min(3, displayList.length)
+  const stairSteps = Math.min(screenSteps, displayList.length)
 
   useEffect(() => {
     if (displayList.length <= stairSteps) return
