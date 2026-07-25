@@ -146,6 +146,16 @@ export default function GradesPage() {
         <p className="text-sm text-slate-400">Seuils et répartition des membres par grade</p>
       </div>
 
+      {/* Explication Gestion des Grades */}
+      <div className="rounded-lg border border-[#a3ade8]/40 bg-white p-4 text-xs leading-relaxed text-slate-600 shadow-sm">
+        <p className="font-semibold text-[#3f2f85] text-sm mb-1">💡 Comment fonctionne le système de grades ?</p>
+        <ul className="list-disc list-inside space-y-0.5">
+          <li><strong>Système de Parrainage & Points :</strong> Les membres montent en grade en accumulant un nombre minimum de parrainages et de points.</li>
+          <li><strong>Grades successifs :</strong> Leader → Leader Senior → Coordinateur → Mentor → Directeur.</li>
+          <li><strong>Recalcul automatique :</strong> En modifiant les seuils ci-dessous, le système réévalue automatiquement le grade de chaque membre.</li>
+        </ul>
+      </div>
+
       {/* Résultat application */}
       {changed !== null && (
         <div className="flex items-center gap-3 rounded-xl border border-green-300 bg-green-50 px-5 py-3 text-green-700">

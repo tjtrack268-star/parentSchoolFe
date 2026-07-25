@@ -51,6 +51,7 @@ export const ORG_RANKS: OrgRank[] = [
     title: "Leaders",
     accent: "#22c55e",
     members: [
+      { name: "Colette Emadouan", role: "Leader", image: img("colette-emadouan"), description: "Leader de la communauté" },
       { name: "Assiettou Kouakou", role: "Leader", image: img("assiettou-kouakou"), description: "Leader de la communauté" },
       { name: "Florence Guèhe", role: "Leader", image: img("florence-guehe"), description: "Leader de la communauté" },
       { name: "Mireille Obrou", role: "Leader", image: img("mireille-obrou"), description: "Leader de la communauté" },
@@ -58,6 +59,7 @@ export const ORG_RANKS: OrgRank[] = [
       { name: "Pasteur Bai Zoko Marc Achille", role: "Leader", image: img("bai-zoko-marc-achille"), description: "Leader de la communauté" },
       { name: "Pasteur N'Guessan Yao Israël", role: "Leader", image: img("nguessan-yao-israel"), description: "Leader de la communauté" },
       { name: "Pasteur Viglo Yawori Oga Mawuena", role: "Leader", image: img("viglo-yawori-oga-mawuena"), description: "Leader de la communauté" },
+      { name: "Kessé Béatrice", role: "Leader", image: img("kesse-beatrice"), description: "Leader de la communauté" },
     ],
   },
   {

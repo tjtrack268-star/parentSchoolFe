@@ -146,10 +146,20 @@ export default function MembersPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-[#3f2f85]">Membres</h1>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-500">
             {loading ? "Chargement…" : `${total.toLocaleString("fr-FR")} membre${total > 1 ? "s" : ""} trouvé${total > 1 ? "s" : ""}`}
           </p>
         </div>
+      </div>
+
+      {/* Explication Espace Membres */}
+      <div className="rounded-lg border border-[#a3ade8]/40 bg-white p-4 text-xs leading-relaxed text-slate-600 shadow-sm">
+        <p className="font-semibold text-[#3f2f85] text-sm mb-1">💡 Guide de gestion des membres :</p>
+        <ul className="list-disc list-inside space-y-0.5">
+          <li><strong>Code parrain :</strong> Identifiant unique généré à l'inscription servant à attribuer les parrainages.</li>
+          <li><strong>Grades & Points :</strong> Chaque parrainage accumule des points. Les seuils de grade sont attribués automatiquement.</li>
+          <li><strong>Filtres :</strong> Vous pouvez filtrer la liste par grade, type de membre (Ordinaire, D'honneur, Bienfaiteur) et pays.</li>
+        </ul>
       </div>
 
       {/* Barre de recherche */}
