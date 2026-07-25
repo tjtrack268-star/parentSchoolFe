@@ -109,7 +109,7 @@ export default function TemoignagesPage() {
   useEffect(() => {
     if (displayList.length <= stairSteps) return
     const id = setInterval(() => {
-      if (!stairPaused.current) setStairStart(i => (i + 1) % displayList.length)
+      if (!stairPaused.current) setStairStart(i => i + 1)
     }, 4000)
     return () => clearInterval(id)
   }, [displayList.length, stairSteps])
@@ -153,24 +153,36 @@ export default function TemoignagesPage() {
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:items-center">
           {/* Colonne principale : témoignages écrits en escalier */}
-          <div className="lg:col-span-2">
+          <div className="relative z-0 lg:col-span-2">
             {loading ? (
               <div className="flex justify-center py-12">
                 <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#3f2f85] border-t-transparent" />
               </div>
             ) : (
               <div
-                className="flex items-center justify-center gap-6 py-8 sm:justify-start"
+                className="relative overflow-hidden"
+                style={{ height: 280 }}
                 onMouseEnter={() => { stairPaused.current = true }}
                 onMouseLeave={() => { stairPaused.current = false }}
               >
-                {Array.from({ length: stairSteps }).map((_, step) => {
-                  const item = displayList[(stairStart + step) % displayList.length]
-                  const lift = (step - (stairSteps - 1) / 2) * -32
+                {Array.from({ length: stairSteps + 2 }, (_, i) => i - 1).map(offset => {
+                  const absoluteIndex = stairStart + offset
+                  const idx = ((absoluteIndex % displayList.length) + displayList.length) % displayList.length
+                  const item = displayList[idx]
+                  const lift = (offset - (stairSteps - 1) / 2) * -32
+                  const visible = offset >= 0 && offset <= stairSteps - 1
                   return (
-                    <div key={`slot-${step}`} style={{ transform: `translateY(${lift}px)` }}>
-                      <article key={`stair-${stairStart}-${step}`}
-                        className="stair-in flex h-52 w-72 shrink-0 flex-col justify-center rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm">
+                    <div
+                      key={absoluteIndex}
+                      className="absolute top-8 transition-all duration-700 ease-in-out"
+                      style={{
+                        left: `${(offset * 100) / stairSteps}%`,
+                        width: `${100 / stairSteps}%`,
+                        transform: `translateY(${lift}px)`,
+                        opacity: visible ? 1 : 0,
+                      }}
+                    >
+                      <article className="mx-3 flex h-52 flex-col justify-center rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm">
                         <div className="mb-3 flex items-center justify-between">
                           <Quote className="h-6 w-6 text-[#e8b41f]" />
                           <StarRating value={item.rating} />
@@ -191,7 +203,7 @@ export default function TemoignagesPage() {
           </div>
 
           {/* Colonne latérale : témoignages vidéo */}
-          <div className="space-y-4">
+          <div className="relative z-10 space-y-4">
             <p className="text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">En vidéo</p>
             <div className="max-h-[420px] space-y-4 overflow-y-auto pr-1">
             {VIDEO_TESTIMONIALS.map(video => (
