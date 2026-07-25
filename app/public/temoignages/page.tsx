@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { Quote, Star, Users, Send, CheckCircle } from "lucide-react"
+import { Quote, Users, Send, CheckCircle } from "lucide-react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 
@@ -210,32 +210,6 @@ export default function TemoignagesPage() {
               </div>
             ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Galerie vidéo complète — 2 colonnes */}
-      <section className="bg-white py-16">
-        <div className="mx-auto max-w-6xl px-4">
-          <h2 className="mb-10 text-center text-3xl font-bold text-[#3f2f85]">Tous nos témoignages vidéo</h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            {VIDEO_TESTIMONIALS.map(video => (
-              <div key={`full-${video.id}`} className="overflow-hidden rounded-lg border border-[#a3ade8]/30 bg-[#f8f4ef] shadow-sm">
-                <div className="relative aspect-video w-full">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${video.id}`}
-                    title={video.title}
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    className="absolute inset-0 h-full w-full"
-                  />
-                </div>
-                <div className="p-4">
-                  <p className="text-sm font-semibold text-[#3f2f85]">{video.title}</p>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
