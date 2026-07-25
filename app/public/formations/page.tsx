@@ -255,6 +255,7 @@ export default function FormationsPage() {
                   </a>
                 </div>
               </div>
+              </div>
 
               <div className="overflow-hidden rounded-xl shadow-lg">
                 <Image
