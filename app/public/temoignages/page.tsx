@@ -162,7 +162,7 @@ export default function TemoignagesPage() {
         <h2 className="mb-10 text-center text-3xl font-bold text-[#3f2f85]">Ce que disent nos membres</h2>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 lg:items-center">
-          {/* Colonne principale : témoignages écrits en escalier */}
+          {/* Colonne principale : témoignages écrits, texte intégral (comme sur l'accueil) */}
           <div className="relative z-0 lg:col-span-2">
             {loading ? (
               <div className="flex justify-center py-12">
@@ -170,42 +170,30 @@ export default function TemoignagesPage() {
               </div>
             ) : (
               <div
-                className="relative overflow-hidden"
-                style={{ height: 280 }}
+                className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2"
                 onMouseEnter={() => { stairPaused.current = true }}
                 onMouseLeave={() => { stairPaused.current = false }}
               >
-                {Array.from({ length: stairSteps + 2 }, (_, i) => i - 1).map(offset => {
-                  const absoluteIndex = stairStart + offset
-                  const idx = ((absoluteIndex % displayList.length) + displayList.length) % displayList.length
+                {Array.from({ length: stairSteps }).map((_, step) => {
+                  const idx = (((stairStart + step) % displayList.length) + displayList.length) % displayList.length
                   const item = displayList[idx]
-                  const lift = (offset - (stairSteps - 1) / 2) * -32
-                  const visible = offset >= 0 && offset <= stairSteps - 1
                   return (
-                    <div
-                      key={absoluteIndex}
-                      className="absolute top-8 transition-all duration-700 ease-in-out"
-                      style={{
-                        left: `${(offset * 100) / stairSteps}%`,
-                        width: `${100 / stairSteps}%`,
-                        transform: `translateY(${lift}px)`,
-                        opacity: visible ? 1 : 0,
-                      }}
+                    <article
+                      key={`stair-${stairStart}-${step}`}
+                      className="stair-in flex flex-col rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm"
                     >
-                      <article className="mx-3 flex h-52 flex-col justify-center rounded-lg border-l-4 border-[#e8b41f] bg-white p-6 shadow-sm">
-                        <div className="mb-3 flex items-center justify-between">
-                          <Quote className="h-6 w-6 text-[#e8b41f]" />
-                          <StarRating value={item.rating} />
-                        </div>
-                        <p className="line-clamp-3 text-sm italic leading-relaxed text-slate-700">"{item.content}"</p>
-                        <div className="mt-4 border-t border-slate-200 pt-3">
-                          <p className="font-semibold text-[#3f2f85]">{item.authorName}</p>
-                          <p className="text-xs text-slate-500">
-                            {item.authorRole}{item.authorCity ? ` · ${item.authorCity}` : ""}
-                          </p>
-                        </div>
-                      </article>
-                    </div>
+                      <div className="mb-3 flex items-center justify-between">
+                        <Quote className="h-6 w-6 text-[#e8b41f]" />
+                        <StarRating value={item.rating} />
+                      </div>
+                      <p className="text-sm italic leading-relaxed text-slate-700">"{item.content}"</p>
+                      <div className="mt-4 border-t border-slate-200 pt-3">
+                        <p className="font-semibold text-[#3f2f85]">{item.authorName}</p>
+                        <p className="text-xs text-slate-500">
+                          {item.authorRole}{item.authorCity ? ` · ${item.authorCity}` : ""}
+                        </p>
+                      </div>
+                    </article>
                   )
                 })}
               </div>
