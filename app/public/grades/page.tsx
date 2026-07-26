@@ -16,7 +16,7 @@ export default function GradesPage() {
             <Link href="/auth/login">
               <Button variant="ghost">Se connecter</Button>
             </Link>
-            <Link href="/inscription">
+            <Link href="/auth/signup">
               <Button>S'inscrire</Button>
             </Link>
           </div>

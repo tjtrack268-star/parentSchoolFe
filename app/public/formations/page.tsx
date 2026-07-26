@@ -141,7 +141,7 @@ export default function FormationsPage() {
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:items-start">
               <div className="overflow-hidden rounded-xl shadow-lg">
                 <Image
-                  src="/formation_img/Conseiller parental.jpeg"
+                  src="/mission/New_conseiller.jpeg"
                   alt="Formation Conseiller Parental"
                   width={600}
                   height={400}
@@ -193,6 +193,15 @@ export default function FormationsPage() {
                       <div className="text-xs text-slate-500">{s.label}</div>
                     </div>
                   ))}
+                </div>
+
+                <div className="mt-6">
+                  <Link
+                    href="/inscription"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#e8b41f] px-6 py-3 font-semibold text-[#3f2f85] transition hover:opacity-90 shadow-sm"
+                  >
+                    S'inscrire à la formation <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </div>
               </div>
             </div>
@@ -259,7 +268,7 @@ export default function FormationsPage() {
 
               <div className="overflow-hidden rounded-xl shadow-lg">
                 <Image
-                  src="/formation_img/Art oratoire.jpeg"
+                  src="/mission/New_art.jpeg"
                   alt="Formation Art Oratoire"
                   width={600}
                   height={400}

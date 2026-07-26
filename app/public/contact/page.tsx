@@ -23,12 +23,10 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    // Simulate form submission
-    setTimeout(() => {
-      alert('Message envoyé! Nous vous répondrons bientôt.')
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      setLoading(false)
-    }, 1000)
+    const text = `Bonjour Parents School,\n\nNom : ${formData.name}\nEmail : ${formData.email}\nSujet : ${formData.subject}\n\n${formData.message}`
+    window.open(`https://wa.me/237674700408?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer')
+    setFormData({ name: '', email: '', subject: '', message: '' })
+    setLoading(false)
   }
 
   return (
@@ -42,7 +40,7 @@ export default function ContactPage() {
             <Link href="/auth/login">
               <Button variant="ghost">Se connecter</Button>
             </Link>
-            <Link href="/inscription">
+            <Link href="/auth/signup">
               <Button>S'inscrire</Button>
             </Link>
           </div>
@@ -67,14 +65,23 @@ export default function ContactPage() {
                   <span className="text-2xl">📧</span>
                   <div>
                     <p className="font-semibold text-slate-900">Email</p>
-                    <p className="text-slate-600">contact@parentsschool.dev</p>
+                    <a href="mailto:cleenleadersacademy@gmail.com" className="text-slate-600 hover:text-blue-600">
+                      cleenleadersacademy@gmail.com
+                    </a>
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <span className="text-2xl">📱</span>
                   <div>
-                    <p className="font-semibold text-slate-900">Téléphone</p>
-                    <p className="text-slate-600">+237 XXX XXX XXX</p>
+                    <p className="font-semibold text-slate-900">WhatsApp</p>
+                    <a
+                      href="https://wa.me/237674700408"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-slate-600 hover:text-blue-600"
+                    >
+                      +237 674 700 408
+                    </a>
                   </div>
                 </div>
                 <div className="flex gap-4">

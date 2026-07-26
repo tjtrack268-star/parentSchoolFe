@@ -15,6 +15,7 @@ const LINKS = [
   { href: "/public/ouvrages", label: "Ouvrages"   },
   { href: "/organisation",    label: "Organisation"},
   { href: "/public/temoignages",label: "Témoignages"},
+  { href: "/public/contact",  label: "Contact"     },
 ]
 
 export default function Header() {

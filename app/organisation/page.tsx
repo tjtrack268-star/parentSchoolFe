@@ -79,7 +79,7 @@ export default function OrganigramPage() {
           <div className="mx-auto max-w-4xl px-4 text-center">
             <h2 className="text-3xl font-bold mb-4">Rejoindre la communauté</h2>
             <p className="mb-8 text-white/90">Inscrivez-vous et intégrez notre réseau de parrainage</p>
-            <Link href="/inscription"
+            <Link href="/auth/signup"
               className="inline-flex items-center gap-2 rounded-lg bg-[#e8b41f] px-8 py-4 font-semibold text-[#3f2f85] transition hover:opacity-90">
               S'inscrire maintenant
             </Link>

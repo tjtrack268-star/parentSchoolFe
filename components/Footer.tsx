@@ -35,8 +35,23 @@ export default function Footer() {
             <h4 className="text-[#e8b41f] font-semibold mb-4">Aide</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a href="mailto:contact@parentsschool.com" className="hover:text-[#e8b41f]">
+                <Link href="/public/contact" className="hover:text-[#e8b41f]">
                   Contact
+                </Link>
+              </li>
+              <li>
+                <a href="mailto:cleenleadersacademy@gmail.com" className="hover:text-[#e8b41f]">
+                  Email
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://wa.me/237674700408"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#e8b41f]"
+                >
+                  WhatsApp
                 </a>
               </li>
               <li>

@@ -51,10 +51,10 @@ function NodeCard({
         
         <div className="flex items-start justify-between gap-2 sm:gap-3">
           <div className="flex-1 min-w-0">
-            <h3 className={`font-bold truncate ${isMobile ? 'text-sm' : 'text-sm sm:text-base'}`}>
+            <h3 className={`font-normal truncate ${isMobile ? 'text-sm' : 'text-sm sm:text-base'}`}>
               {node.firstName}
             </h3>
-            <p className={`font-semibold truncate opacity-90 ${isMobile ? 'text-xs' : 'text-xs sm:text-sm'}`}>
+            <p className={`font-normal truncate opacity-90 ${isMobile ? 'text-xs' : 'text-xs sm:text-sm'}`}>
               {node.lastName}
             </p>
           </div>

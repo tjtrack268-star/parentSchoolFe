@@ -317,7 +317,7 @@ export default function TemoignagesPage() {
           <h2 className="text-3xl font-bold mb-4">Rejoignez notre communauté</h2>
           <p className="mb-8 text-white/90">Devenez membre et transformez votre vie familiale</p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <Link href="/inscription" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#e8b41f] px-8 py-4 font-semibold text-[#3f2f85] transition hover:opacity-90">
+            <Link href="/auth/signup" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#e8b41f] px-8 py-4 font-semibold text-[#3f2f85] transition hover:opacity-90">
               S'inscrire maintenant
             </Link>
             <Link href="/public/formations" className="inline-flex items-center justify-center rounded-lg border-2 border-[#e8b41f] px-8 py-4 font-semibold text-[#e8b41f] transition hover:bg-[#e8b41f] hover:text-[#3f2f85]">

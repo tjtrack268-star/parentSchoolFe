@@ -84,7 +84,7 @@ export default function Home() {
                   title: "Formation des Conseillers",
                   desc: "Formation certifiante de 3 mois pour devenir conseiller parental, avec soutenance et certificat officiel.",
                   link: "/public/formations",
-                  stat: "79 récipiendaires formés",
+                  stat: "110 récipiendaires formés",
                 },
                 {
                   icon: BookOpen,

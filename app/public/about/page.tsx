@@ -156,7 +156,7 @@ export default function AboutPage() {
           </div>
           <div className="order-1 lg:order-2 overflow-hidden rounded-xl border border-white/10">
             <img
-              src="/vision/vision.jpeg"
+              src="/mission/New_Mission.jpeg"
               alt="Vision Parents School"
               className="h-full w-full object-cover"
             />

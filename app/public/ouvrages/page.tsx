@@ -12,7 +12,7 @@ const OUVRAGES = [
     auteur: "Clément Emadouan",
     categorie: "Parentalité",
     format: "Broché + PDF",
-    prix: "5 000 FCFA",
+    prix: "10 000 FCFA",
     prixMembre: "Offert au nouveau membre",
     image: "/Ouvrage_img/Réussir le metier de parent auteur clement Emadouan.jpeg",
     description: "Un guide pratique avec des techniques, approches et astuces pour accompagner efficacement les parents dans leur mission éducative.",
@@ -25,7 +25,7 @@ const OUVRAGES = [
     auteur: "Clément Emadouan",
     categorie: "Paternité",
     format: "Broché + PDF",
-    prix: "7 000 FCFA",
+    prix: "8 000 FCFA",
     prixMembre: "7 000 FCFA",
     image: "/Ouvrage_img/Et vous pères Comment être un papa inspirant et impactant Auteur Clement Emadouan.jpeg",
     description: "Un livre qui met en lumière le rôle, la mission et la fonction du père dans l'éducation des enfants et le bien-être de la famille. Il explore en profondeur la relation père-fille et père-fils.",
@@ -143,7 +143,7 @@ export default function OuvragesPage() {
                       </div>
                       <div className="flex gap-2">
                         <a
-                          href={`https://wa.me/237695150366?text=${encodeURIComponent(`Bonjour, je souhaite commander l'ouvrage « ${o.title} » (${o.prix}). Merci.`)}`}
+                          href={`https://wa.me/237674700408?text=${encodeURIComponent(`Bonjour, je souhaite commander l'ouvrage « ${o.title} » (${o.prix}). Merci.`)}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-1 rounded-lg bg-[#3f2f85] px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
@@ -151,7 +151,7 @@ export default function OuvragesPage() {
                           <ShoppingCart className="h-4 w-4" /> Commander
                         </a>
                         <a
-                          href={`https://wa.me/237695150366?text=${encodeURIComponent(`Bonjour, je souhaite obtenir la version PDF de l'ouvrage « ${o.title} » (${o.prix}). Merci.`)}`}
+                          href={`https://wa.me/237674700408?text=${encodeURIComponent(`Bonjour, je souhaite obtenir la version PDF de l'ouvrage « ${o.title} » (${o.prix}). Merci.`)}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-1 rounded-lg border-2 border-[#3f2f85] px-3 py-2 text-sm font-semibold text-[#3f2f85] transition hover:bg-[#3f2f85] hover:text-white"
