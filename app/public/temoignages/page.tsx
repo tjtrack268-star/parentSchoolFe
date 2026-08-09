@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
-import { Quote, Users, Send, CheckCircle } from "lucide-react"
+import { Quote, Users, Send, CheckCircle, Play, X } from "lucide-react"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 
@@ -60,6 +60,7 @@ export default function TemoignagesPage() {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [form, setForm] = useState({ authorName: "", authorCity: "", authorRole: "", content: "", rating: 5 })
+  const [activeVideo, setActiveVideo] = useState<{ id: string; title: string } | null>(null)
 
   // Escalier de témoignages : fenêtre glissante, avance d'un cran en boucle
   // 1 carte visible sur petit écran, 2 à partir du breakpoint lg (1024px)
@@ -74,6 +75,17 @@ export default function TemoignagesPage() {
     mq.addEventListener("change", update)
     return () => mq.removeEventListener("change", update)
   }, [])
+
+  useEffect(() => {
+    if (!activeVideo) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setActiveVideo(null) }
+    window.addEventListener("keydown", onKey)
+    document.body.style.overflow = "hidden"
+    return () => {
+      window.removeEventListener("keydown", onKey)
+      document.body.style.overflow = ""
+    }
+  }, [activeVideo])
 
   useEffect(() => {
     fetch("/api/testimonials")
@@ -205,19 +217,27 @@ export default function TemoignagesPage() {
             <p className="text-sm font-semibold uppercase tracking-widest text-[#e8b41f]">En vidéo</p>
             <div className="max-h-[420px] space-y-4 overflow-y-auto pr-1">
             {VIDEO_TESTIMONIALS.map(video => (
-              <div key={video.id} className="flex items-center gap-3 rounded-lg border border-[#a3ade8]/30 bg-white p-3 shadow-sm">
-                <div className="relative aspect-video w-32 shrink-0 overflow-hidden rounded-md">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${video.id}`}
-                    title={video.title}
+              <button
+                key={video.id}
+                type="button"
+                onClick={() => setActiveVideo(video)}
+                className="group flex w-full items-center gap-3 rounded-lg border border-[#a3ade8]/30 bg-white p-3 text-left shadow-sm transition hover:border-[#3f2f85]/40 hover:shadow-md"
+              >
+                <div className="relative aspect-video w-32 shrink-0 overflow-hidden rounded-md bg-slate-200">
+                  <img
+                    src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+                    alt={video.title}
                     loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowFullScreen
-                    className="absolute inset-0 h-full w-full"
+                    className="absolute inset-0 h-full w-full object-cover"
                   />
+                  <span className="absolute inset-0 flex items-center justify-center bg-black/20 transition group-hover:bg-black/40">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#3f2f85]/90 transition group-hover:scale-110">
+                      <Play className="ml-0.5 h-4 w-4 fill-white text-white" />
+                    </span>
+                  </span>
                 </div>
                 <p className="text-sm font-semibold text-[#3f2f85]">{video.title}</p>
-              </div>
+              </button>
             ))}
             </div>
           </div>
@@ -326,6 +346,40 @@ export default function TemoignagesPage() {
           </div>
         </div>
       </section>
+
+      {/* Modale vidéo */}
+      {activeVideo && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setActiveVideo(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={activeVideo.title}
+        >
+          <div className="w-full max-w-3xl" onClick={e => e.stopPropagation()}>
+            <div className="mb-2 flex items-center justify-between gap-4">
+              <p className="text-sm font-semibold text-white">{activeVideo.title}</p>
+              <button
+                type="button"
+                onClick={() => setActiveVideo(null)}
+                aria-label="Fermer la vidéo"
+                className="rounded-full bg-white/10 p-2 text-white transition hover:bg-white/25"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black shadow-2xl">
+              <iframe
+                src={`https://www.youtube.com/embed/${activeVideo.id}?autoplay=1`}
+                title={activeVideo.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </main>
